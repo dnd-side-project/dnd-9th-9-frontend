@@ -1,1 +1,1 @@
-export * from './MatchesScreen';
+export * from './MatchScreen';
