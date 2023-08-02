@@ -6,34 +6,34 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 
 import {BottomTabStackParamList, RootStackParamList} from '../../navigators';
 
-import {RecordsTabScreen} from './RecordsTabScreen';
-import {SummaryTabScreen} from './SummaryTabScreen';
+import {TotalMatchListTabScreen} from './TotalMatchListTabScreen';
+import {MyMatchListTabScreen} from './MyMatchListTabScreen';
 
 type Props = CompositeScreenProps<
-  BottomTabScreenProps<BottomTabStackParamList, 'Records'>,
+  BottomTabScreenProps<BottomTabStackParamList, 'Match'>,
   NativeStackScreenProps<RootStackParamList>
 >;
 
 const Tab = createMaterialTopTabNavigator();
 
-export function RecordsScreen({navigation}: Props) {
+export function MatchScreen({navigation}: Props) {
   return (
     <>
       <SafeAreaView style={{backgroundColor: '#ffffff'}} />
       <Tab.Navigator>
         <Tab.Screen
-          name="RecordsTab"
+          name="TotalMatchListTab"
           options={{
-            tabBarLabel: '운동 기록',
+            tabBarLabel: '매칭',
           }}
-          component={RecordsTabScreen}
+          component={TotalMatchListTabScreen}
         />
         <Tab.Screen
-          name="SummaryTab"
+          name="MyMatchListTab"
           options={{
-            tabBarLabel: '요약',
+            tabBarLabel: 'My매칭',
           }}
-          component={SummaryTabScreen}
+          component={MyMatchListTabScreen}
         />
       </Tab.Navigator>
     </>

@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {RecordsScreen} from '../screens/record';
 import {HomeScreen} from '../screens/home';
-import {MatchesScreen} from '../screens/match';
+import {MatchScreen} from '../screens/match';
 import {MyScreen} from '../screens/my';
 
 export type BottomTabStackParamList = {
@@ -32,7 +32,7 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         name="Match"
-        component={MatchesScreen}
+        component={MatchScreen}
         options={{
           headerShown: false,
         }}
