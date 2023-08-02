@@ -1,7 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {LandingScreen} from '../screens/auth/LandingScreen';
-import {LoginScreen, SignupScreen} from '../screens';
+import {LandingScreen, LoginScreen, SignupScreen} from '../screens/auth';
 import {BottomTabNavigator} from './BottomTabNavigator';
 
 export type RootStackParamList = {
