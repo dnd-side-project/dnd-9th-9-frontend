@@ -1,18 +1,29 @@
-// stories/MyButton.stories.tsx
-
 import {ComponentMeta, StoryObj} from '@storybook/react';
+import {IButtonProps, Button} from './Button';
 
-import {ButtonProps, MyButton} from './Button';
+const buttonSizeOptions = ['sm', 'md', 'lg'];
 
 export default {
-  title: 'components/MyButton',
-  argTypes: {onPress: {action: 'pressed'}},
-  component: MyButton,
-} as ComponentMeta<typeof MyButton>;
+  title: 'components/Button',
+  component: Button,
+  argTypes: {
+    onPress: {action: 'pressed'},
+    disabled: {
+      control: 'boolean',
+    },
+    size: {
+      control: {
+        type: 'select',
+        options: buttonSizeOptions,
+      },
+    },
+  },
+} as ComponentMeta<typeof Button>;
 
-export const Basic: StoryObj<ButtonProps> = {
+export const Basic: StoryObj<IButtonProps> = {
   args: {
-    text: 'Hello World!!',
-    color: 'purple',
+    text: '다음',
+    disabled: false,
+    size: 'md',
   },
 };
