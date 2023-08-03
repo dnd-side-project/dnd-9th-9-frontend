@@ -26,10 +26,6 @@ const StyledButton = styled.TouchableOpacity<IStyledButton>`
     props.disabled
       ? props.theme.palette['gray-200']
       : props.theme.palette['main-300']};
-  color: ${props =>
-    props.disabled
-      ? props.theme.palette['gray-600']
-      : props.theme.palette['gray-0']};
 
   ${props => props.style}
 `;
