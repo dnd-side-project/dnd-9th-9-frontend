@@ -1,42 +1,51 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import styled from '@emotion/native';
+import {Text} from '../Text';
 
-export type ButtonProps = {
-  onPress: () => void;
+export interface IButtonProps {
+  disabled?: boolean;
   text: string;
-  color?: string;
-  textColor?: string;
+  size: 'sm' | 'md' | 'lg';
+  style?: any;
+  onPress: () => void;
+}
+
+interface IStyledButton {
+  disabled: boolean;
+  style?: any;
+}
+
+const buttonSizes = {
+  sm: '56px',
+  md: '72px',
+  lg: '96px',
 };
 
-const styles = StyleSheet.create({
-  button: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
-    alignSelf: 'flex-start',
-    flexGrow: 0,
-    backgroundColor: 'purple',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  buttonContainer: {
-    alignItems: 'flex-start',
-    flex: 1,
-  },
-});
+const StyledButton = styled.TouchableOpacity<IStyledButton>`
+  background: ${props =>
+    props.disabled
+      ? props.theme.palette['gray-200']
+      : props.theme.palette['main-300']};
 
-export const MyButton = ({text, onPress, color, textColor}: ButtonProps) => (
-  <View style={styles.buttonContainer}>
-    <TouchableOpacity
-      style={[styles.button, !!color && {backgroundColor: color}]}
-      onPress={onPress}
-      activeOpacity={0.8}>
-      <Text style={[styles.buttonText, !!textColor && {color: textColor}]}>
-        {text}
-      </Text>
-    </TouchableOpacity>
-  </View>
+  ${props => props.style}
+`;
+
+export const Button = (
+  {text, size, onPress, disabled = false, style}: IButtonProps,
+  props: any,
+) => (
+  <StyledButton
+    activeOpacity={0.8}
+    disabled={disabled}
+    onPress={onPress}
+    style={style}>
+    <Text
+      text={text}
+      color={disabled ? 'gray-600' : 'gray-0'}
+      type="body1"
+      fontWeight="bold"
+      lineHeight={buttonSizes[size]}
+      style={{textAlign: 'center'}}
+    />
+  </StyledButton>
 );

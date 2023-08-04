@@ -5,11 +5,17 @@
  * @format
  */
 
-import React, {PropsWithChildren} from 'react';
+import React from 'react';
+import {ThemeProvider as EmotionThemeProvider} from '@emotion/react';
 import {AppNavigator} from './navigators';
+import {theme} from './assets/styles/theme';
 
 function App(): JSX.Element {
-  return <AppNavigator />;
+  return (
+    <EmotionThemeProvider theme={theme}>
+      <AppNavigator />
+    </EmotionThemeProvider>
+  );
 }
 
 export default App;
