@@ -23,43 +23,35 @@ const palette = {
 
 const typography = {
   head1: {
-    fontFamily: 'Pretendard',
-    fontWeight: 'bold',
+    fontFamily: 'Pretendard-Bold',
     fontSize: '34px',
   },
   head2: {
-    fontFamily: 'Pretendard',
-    fontWeight: 'bold',
+    fontFamily: 'Pretendard-Bold',
     fontSize: '26px',
   },
   head3: {
-    fontFamily: 'Pretendard',
-    fontWeight: 'semibold',
+    fontFamily: 'Pretendard-SemiBold',
     fontSize: '24px',
   },
   head4: {
-    fontFamily: 'Pretendard',
-    fontWeight: 'semibold',
+    fontFamily: 'Pretendard-SemiBold',
     fontSize: '20px',
   },
   body1: {
-    fontFamily: 'Pretendard',
-    fontWeight: 'regular',
+    fontFamily: 'Pretendard-Regular',
     fontSize: '18px',
   },
   body2: {
-    fontFamily: 'Pretendard',
-    fontWeight: 'regular',
+    fontFamily: 'Pretendard-Regular',
     fontSize: '16px',
   },
   body3: {
-    fontFamily: 'Pretendard',
-    fontWeight: 'regular',
+    fontFamily: 'Pretendard-Regular',
     fontSize: '14px',
   },
   caption: {
-    fontFamily: 'Pretendard',
-    fontWeight: 'regular',
+    fontFamily: 'Pretendard-Regular',
     fontSize: '12px',
   },
 };

@@ -42,7 +42,6 @@ declare module '@emotion/react' {
     typography: {
       [key in Ttypography]: {
         fontFamily: string;
-        fontWeight: string | number;
         fontSize: string | number;
       };
     };
