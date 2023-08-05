@@ -5,7 +5,7 @@ import {Text} from '../Text';
 export interface IButtonProps {
   disabled?: boolean;
   text: string;
-  size: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   style?: any;
   onPress: () => void;
 }
@@ -31,7 +31,7 @@ const StyledButton = styled.TouchableOpacity<IStyledButton>`
 `;
 
 export const Button = (
-  {text, size, onPress, disabled = false, style}: IButtonProps,
+  {text, size = 'sm', onPress, disabled = false, style}: IButtonProps,
   props: any,
 ) => (
   <StyledButton
