@@ -18,13 +18,12 @@ export function LandingScreen({navigation}: Props) {
       <Button
         text="로그인"
         size="sm"
-        disabled={true}
         onPress={() => navigation.push('Login')}
       />
       <Button
+        disabled
         text="회원가입"
         size="md"
-        disabled={false}
         onPress={() => navigation.push('Signup')}
       />
 
