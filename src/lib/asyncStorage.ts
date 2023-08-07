@@ -1,7 +1,7 @@
 import AsyncStorage, {
   useAsyncStorage as _useAsyncStorage,
 } from '@react-native-async-storage/async-storage';
-import {ValueOf} from '../../utils/types';
+import {ValueOf} from '../utils/types';
 
 const PREFIX = 'matchup' as const;
 

@@ -1,8 +1,5 @@
 import {useEffect, useState} from 'react';
-import {
-  ASYNC_STORAGE_KEYS,
-  useAsyncStorage,
-} from '../../../store/local/asyncStorage';
+import {ASYNC_STORAGE_KEYS, useAsyncStorage} from '../../../lib/asyncStorage';
 
 // example code
 export function useAuthStorage() {
