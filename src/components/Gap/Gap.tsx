@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/native';
 
-interface IGapProps {
+export interface IGapProps {
   size: string;
 }
 
