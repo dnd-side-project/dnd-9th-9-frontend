@@ -2,11 +2,12 @@ import AsyncStorage, {
   useAsyncStorage as _useAsyncStorage,
 } from '@react-native-async-storage/async-storage';
 import {ValueOf} from '../utils/types';
+import {AsyncStorageHook} from '@react-native-async-storage/async-storage/lib/typescript/types';
 
 const PREFIX = 'matchup' as const;
 
 export const ASYNC_STORAGE_KEYS = {
-  AUTH_JWT: `${PREFIX}-auth-jwt-token`,
+  AUTH_JWT: 'auth-jwt-token',
 } as const;
 
 type TAsyncStorageKey = ValueOf<typeof ASYNC_STORAGE_KEYS>;
@@ -22,11 +23,13 @@ export const asyncStorage = {
     errorHandler: TErrorHandlingFunction = defaultErrorHandler,
   ): Promise<T | null> => {
     try {
-      const data = await AsyncStorage.getItem(key);
+      const data = await AsyncStorage.getItem(`${PREFIX}-${key}`);
       return data ? (JSON.parse(data) as T) : null;
     } catch (error) {
       if (error instanceof Error) {
         errorHandler(error, key);
+      } else {
+        console.error(`AsyncStorage Error: get ${key}`);
       }
       return null;
     }
@@ -39,10 +42,12 @@ export const asyncStorage = {
   ): Promise<void> => {
     try {
       const data = JSON.stringify(value);
-      await AsyncStorage.setItem(key, data);
+      await AsyncStorage.setItem(`${PREFIX}-${key}`, data);
     } catch (error) {
       if (error instanceof Error) {
         errorHandler(error, key);
+      } else {
+        console.error(`AsyncStorage Error: set ${key}`);
       }
     }
   },
@@ -52,10 +57,12 @@ export const asyncStorage = {
     errorHandler: TErrorHandlingFunction = defaultErrorHandler,
   ): Promise<void> => {
     try {
-      await AsyncStorage.removeItem(key);
+      await AsyncStorage.removeItem(`${PREFIX}-${key}`);
     } catch (error) {
       if (error instanceof Error) {
         errorHandler(error, key);
+      } else {
+        console.error(`AsyncStorage Error: remove ${key}`);
       }
     }
   },
@@ -68,11 +75,13 @@ export const asyncStorage = {
     } catch (error) {
       if (error instanceof Error) {
         errorHandler(error);
+      } else {
+        console.error(`AsyncStorage Error: clear `);
       }
     }
   },
 };
 
-export const useAsyncStorage = (key: TAsyncStorageKey) => {
-  return _useAsyncStorage(key);
+export const useAsyncStorage = (key: TAsyncStorageKey): AsyncStorageHook => {
+  return _useAsyncStorage(`${PREFIX}-${key}`);
 };
