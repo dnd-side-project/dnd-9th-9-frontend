@@ -1,16 +1,6 @@
 import {ComponentMeta, StoryObj} from '@storybook/react';
 import {ITextProps, Text} from './Text';
-
-const TypographyOptions = [
-  'head1',
-  'head2',
-  'head3',
-  'head4',
-  'body1',
-  'body2',
-  'body3',
-  'caption',
-];
+import {typographyOptions} from '../../assets/styles/option';
 
 export default {
   title: 'components/Text',
@@ -19,7 +9,7 @@ export default {
     type: {
       control: {
         type: 'select',
-        options: TypographyOptions,
+        options: typographyOptions,
       },
     },
   },

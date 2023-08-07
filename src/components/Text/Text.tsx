@@ -21,8 +21,7 @@ interface IStyledText {
 
 const StyledText = styled.Text<IStyledText>`
   font-family: ${props => props.theme.typography[props.type].fontFamily};
-  font-weight: ${props =>
-    props.fontWeight ?? props.theme.typography[props.type].fontWeight};
+  font-weight: ${props => props.fontWeight};
   font-size: ${props => props.theme.typography[props.type].fontSize};
   color: ${props => props.theme.palette[props.color]};
   line-height: ${props => props.lineHeight};
