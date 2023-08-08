@@ -1,4 +1,3 @@
-import React from 'react';
 import {SafeAreaView} from 'react-native';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
@@ -7,9 +6,8 @@ import {BottomTabStackParamList, RootStackParamList} from '../../navigators';
 import {RecordsTabScreen} from './RecordsTabScreen';
 import {SummaryTabScreen} from './SummaryTabScreen';
 
-import {theme} from '../../assets/styles/theme';
-
 import {TopTabNavigator} from '../../components/TopTabNavigator';
+import {theme} from '../../assets/styles/theme';
 
 type Props = CompositeScreenProps<
   BottomTabScreenProps<BottomTabStackParamList, 'Records'>,
