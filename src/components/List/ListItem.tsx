@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from '@emotion/native';
 import {View} from 'react-native';
-import {lockXmlData} from '../../assets/svg';
-import {Tag, Tags} from '../Tag';
-import {Text} from '../Text';
-import {Icon} from '../Icon';
 import {Gap} from '../Gap';
+import {Text} from '../Text';
+import {Tag, Tags} from '../Tag';
 
 export interface IListItemProps {
   image?: string;
@@ -13,7 +11,6 @@ export interface IListItemProps {
   level: string;
   matchingType: string;
   isFinish: boolean;
-  isSecret: boolean;
   currentMember: number;
   maximumMember: number;
   period: 1 | 2 | 3;
@@ -41,10 +38,6 @@ const StyledProfile = styled.View`
   background-color: ${props => props.theme.palette['gray-600']};
 `;
 
-const StyledIcon = styled.View`
-  align-self: flex-start;
-`;
-
 export const ListItem = ({
   image,
   title,
@@ -54,7 +47,6 @@ export const ListItem = ({
   matchingType,
   period,
   level,
-  isSecret,
 }: IListItemProps) => (
   <StyledListItem activeOpacity={0.8}>
     <StyledInfoView>
@@ -82,11 +74,5 @@ export const ListItem = ({
         />
       </View>
     </StyledInfoView>
-
-    {isSecret && (
-      <StyledIcon>
-        <Icon svgXml={lockXmlData} />
-      </StyledIcon>
-    )}
   </StyledListItem>
 );
