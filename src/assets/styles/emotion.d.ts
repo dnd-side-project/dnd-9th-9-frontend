@@ -20,7 +20,7 @@ export type Tpalette =
   | 'gray-800'
   | 'gray-900'
   | 'gray-950'
-  | black;
+  | 'black';
 
 export type Ttypography =
   | 'head1'
