@@ -6,12 +6,14 @@ import {Text} from '../Text';
 
 const Tab = createMaterialTopTabNavigator();
 
+export interface ITopTabScreen {
+  name: string;
+  label: string;
+  component: React.FC<any>;
+}
+
 interface ITopTabNavigatorProps {
-  screens: {
-    name: string;
-    label: string;
-    component: React.FC<any>;
-  }[];
+  screens: ITopTabScreen[];
   size?: 'sm' | 'md';
 }
 

@@ -6,7 +6,7 @@ import {BottomTabStackParamList, RootStackParamList} from '../../navigators';
 import {RecordsTabScreen} from './RecordsTabScreen';
 import {SummaryTabScreen} from './SummaryTabScreen';
 
-import {TopTabNavigator} from '../../components/TopTabNavigator';
+import {ITopTabScreen, TopTabNavigator} from '../../components/TopTabNavigator';
 import {theme} from '../../assets/styles/theme';
 
 type Props = CompositeScreenProps<
@@ -14,7 +14,7 @@ type Props = CompositeScreenProps<
   NativeStackScreenProps<RootStackParamList>
 >;
 
-const screens = [
+const screens: ITopTabScreen[] = [
   {
     name: 'RecordsTab',
     label: '운동 기록',
