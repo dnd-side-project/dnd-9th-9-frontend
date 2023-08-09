@@ -3,12 +3,17 @@ import styled from '@emotion/native';
 import {Tpalette, Ttypography} from '../../assets/styles/emotion';
 import {StyleProp, TextProps, TextStyle} from 'react-native';
 
-export interface ITextProps extends IStyledText {
+export interface ITextProps extends TextProps {
   text: string;
+  type?: Ttypography;
+  color?: Tpalette;
+  fontWeight?: string;
+  lineHeight?: string;
+  textAlign?: string;
   style?: StyleProp<TextStyle>;
 }
 
-interface IStyledText extends TextProps {
+interface IStyledText {
   type: Ttypography;
   color: Tpalette;
   fontWeight?: string;
