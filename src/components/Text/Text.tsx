@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from '@emotion/native';
 import {Tpalette, Ttypography} from '../../assets/styles/emotion';
+import {TextProps} from 'react-native';
 
-export interface ITextProps {
+export interface ITextProps extends TextProps {
   text: string;
   fontWeight?: string;
   lineHeight?: string;
@@ -29,17 +30,15 @@ const StyledText = styled.Text<IStyledText>`
   ${props => props.style}
 `;
 
-export const Text = (
-  {
-    text,
-    color = 'black',
-    type = 'body1',
-    fontWeight,
-    lineHeight,
-    style,
-  }: ITextProps,
-  props: any,
-) => {
+export const Text = ({
+  text,
+  color = 'black',
+  type = 'body1',
+  fontWeight,
+  lineHeight,
+  style,
+  ...props
+}: ITextProps) => {
   return (
     <StyledText
       {...props}
