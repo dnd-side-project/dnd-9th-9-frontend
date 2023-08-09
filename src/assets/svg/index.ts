@@ -11,4 +11,15 @@ const lockXmlData = `
 </svg>
 `;
 
-export {lockXmlData};
+const filterXmlData = `
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="11" viewBox="0 0 16 11" fill="none">
+<path d="M7.11111 10.9091H8.88889C9.37778 10.9091 9.77778 10.5 9.77778 10C9.77778 9.5 9.37778 9.09091 8.88889 9.09091H7.11111C6.62222 9.09091 6.22222 9.5 6.22222 10C6.22222 10.5 6.62222 10.9091 7.11111 10.9091ZM0 0.909091C0 1.40909 0.4 1.81818 0.888889 1.81818H15.1111C15.6 1.81818 16 1.40909 16 0.909091C16 0.409091 15.6 0 15.1111 0H0.888889C0.4 0 0 0.409091 0 0.909091ZM3.55556 6.36364H12.4444C12.9333 6.36364 13.3333 5.95455 13.3333 5.45455C13.3333 4.95455 12.9333 4.54545 12.4444 4.54545H3.55556C3.06667 4.54545 2.66667 4.95455 2.66667 5.45455C2.66667 5.95455 3.06667 6.36364 3.55556 6.36364Z" fill="white"/>
+</svg>`;
+
+const searchingXmlData = `
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <circle cx="10" cy="10" r="7" stroke="#CDCED6" stroke-width="2"/>
+  <rect x="14" y="15.4141" width="2" height="7.97296" rx="0.8" transform="rotate(-45 14 15.4141)" fill="#CDCED6"/>
+</svg>`;
+
+export {lockXmlData, filterXmlData, searchingXmlData};

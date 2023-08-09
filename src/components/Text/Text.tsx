@@ -3,21 +3,17 @@ import styled from '@emotion/native';
 import {Tpalette, Ttypography} from '../../assets/styles/emotion';
 import {TextProps} from 'react-native';
 
-export interface ITextProps extends TextProps {
+export interface ITextProps extends IStyledText {
   text: string;
-  fontWeight?: string;
-  lineHeight?: string;
-  color?: Tpalette;
-  type?: Ttypography;
   style?: any;
 }
 
-interface IStyledText {
+interface IStyledText extends TextProps {
+  type: Ttypography;
+  color: Tpalette;
   fontWeight?: string;
   lineHeight?: string;
-  color: Tpalette;
-  type: Ttypography;
-  style?: any;
+  textAlign?: string;
 }
 
 const StyledText = styled.Text<IStyledText>`
@@ -26,8 +22,7 @@ const StyledText = styled.Text<IStyledText>`
   font-size: ${props => props.theme.typography[props.type].fontSize};
   color: ${props => props.theme.palette[props.color]};
   line-height: ${props => props.lineHeight};
-
-  ${props => props.style}
+  text-align: ${props => props.textAlign};
 `;
 
 export const Text = ({
@@ -36,6 +31,7 @@ export const Text = ({
   type = 'body1',
   fontWeight,
   lineHeight,
+  textAlign,
   style,
   ...props
 }: ITextProps) => {
@@ -46,7 +42,8 @@ export const Text = ({
       color={color}
       fontWeight={fontWeight}
       lineHeight={lineHeight}
-      style={style}>
+      style={style}
+      textAlign={textAlign}>
       {text}
     </StyledText>
   );
