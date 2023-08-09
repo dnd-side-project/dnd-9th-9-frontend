@@ -50,7 +50,7 @@ export function WeeklyCalendar({
             ? theme.palette['gray-950']
             : theme.palette['gray-400'],
         }}
-        calendarHeaderFormat="YYYY년 MM월"
+        calendarHeaderFormat="YYYY년 M월"
         calendarHeaderStyle={{
           ...theme.typography.body2,
           alignSelf: 'flex-start',
