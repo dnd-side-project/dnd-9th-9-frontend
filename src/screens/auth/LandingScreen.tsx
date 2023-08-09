@@ -4,6 +4,7 @@ import useStore from '../../store/client/useStore';
 import {Text} from '../../components/Text';
 import {Button} from '../../components/Button';
 import {RootStackParamList} from '../../navigators';
+import {WeeklyCalendar} from '../../components/WeeklyCalendar/WeeklyCalendar';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Landing'>;
 
@@ -31,6 +32,7 @@ export function LandingScreen({navigation}: Props) {
       <Text text={`${counter} ♪`} type="head2" />
       <Button text="증가" onPress={increase} />
       <Button text="감소" onPress={decrease} />
+      <WeeklyCalendar />
     </SafeAreaView>
   );
 }
