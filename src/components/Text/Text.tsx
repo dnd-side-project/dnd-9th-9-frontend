@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from '@emotion/native';
 import {Tpalette, Ttypography} from '../../assets/styles/emotion';
-import {TextProps} from 'react-native';
+import {StyleProp, TextProps, TextStyle} from 'react-native';
 
 export interface ITextProps extends IStyledText {
   text: string;
-  style?: any;
+  style?: StyleProp<TextStyle>;
 }
 
 interface IStyledText extends TextProps {
