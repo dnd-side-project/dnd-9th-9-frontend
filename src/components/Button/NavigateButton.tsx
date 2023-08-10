@@ -10,7 +10,7 @@ export interface INavigateButtonProps {
   width?: string;
   color?: Tpalette;
   backgroundColor?: Tpalette;
-  onPress: () => {};
+  onPress: () => void;
 }
 
 interface IStyledNavigateButton {
