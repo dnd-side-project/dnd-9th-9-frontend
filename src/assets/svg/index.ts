@@ -22,4 +22,9 @@ const searchingXmlData = `
   <rect x="14" y="15.4141" width="2" height="7.97296" rx="0.8" transform="rotate(-45 14 15.4141)" fill="#CDCED6"/>
 </svg>`;
 
-export {lockXmlData, filterXmlData, searchingXmlData};
+const arrowRightXmlData = `
+<svg xmlns="http://www.w3.org/2000/svg" fill="none">
+<path d="M18.3554 26.4958L23.0692 21.7821L18.3554 17.0683C17.8816 16.5945 17.8816 15.8292 18.3554 15.3554C18.8292 14.8815 19.5946 14.8815 20.0684 15.3554L25.6447 20.9317C26.1185 21.4055 26.1185 22.1708 25.6447 22.6446L20.0684 28.221C19.5946 28.6948 18.8292 28.6948 18.3554 28.221C17.8938 27.7472 17.8816 26.9696 18.3554 26.4958Z" fill="black"/>
+</svg>`;
+
+export {lockXmlData, filterXmlData, searchingXmlData, arrowRightXmlData};
