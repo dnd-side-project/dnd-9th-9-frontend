@@ -1,19 +1,24 @@
 import React from 'react';
 import styled from '@emotion/native';
 import {Tpalette, Ttypography} from '../../assets/styles/emotion';
+import {StyleProp, TextProps, TextStyle} from 'react-native';
 
-export interface ITextProps {
+export interface ITextProps extends TextProps {
   text: string;
+  type?: Ttypography;
+  color?: Tpalette;
   fontWeight?: string;
   lineHeight?: string;
-  color?: Tpalette;
-  type?: Ttypography;
-  style?: any;
   textAlign?: string;
+  style?: StyleProp<TextStyle>;
 }
 
-interface IStyledText extends ITextProps {
+interface IStyledText {
   type: Ttypography;
+  color: Tpalette;
+  fontWeight?: string;
+  lineHeight?: string;
+  textAlign?: string;
 }
 
 const StyledText = styled.Text<IStyledText>`
@@ -25,18 +30,16 @@ const StyledText = styled.Text<IStyledText>`
   text-align: ${props => props.textAlign};
 `;
 
-export const Text = (
-  {
-    text,
-    color = 'black',
-    type = 'body1',
-    fontWeight,
-    lineHeight,
-    style,
-    textAlign,
-  }: ITextProps,
-  props: any,
-) => {
+export const Text = ({
+  text,
+  color = 'black',
+  type = 'body1',
+  fontWeight,
+  lineHeight,
+  textAlign,
+  style,
+  ...props
+}: ITextProps) => {
   return (
     <StyledText
       {...props}

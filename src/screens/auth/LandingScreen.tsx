@@ -6,12 +6,13 @@ import {Text} from '../../components/Text';
 import {Button} from '../../components/Button';
 import {ListItem} from '../../components/List';
 import {RootStackParamList} from '../../navigators';
+import {WeeklyCalendar} from '../../components/WeeklyCalendar/WeeklyCalendar';
 import {ConfirmModal, Modal} from '../../components/Modal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Landing'>;
 
 export function LandingScreen({navigation}: Props) {
-  const {counter, increase} = useStore();
+  const {counter, increase, decrease} = useStore();
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   return (
@@ -34,6 +35,8 @@ export function LandingScreen({navigation}: Props) {
       <Text text="Store TEST " type="head1" />
       <Text text={`${counter} ♪`} type="head2" />
       <Button text="증가" onPress={increase} />
+      <Button text="감소" onPress={decrease} />
+      <WeeklyCalendar />
 
       <ListItem
         title="테스트"
