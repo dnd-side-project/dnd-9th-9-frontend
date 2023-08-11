@@ -10,6 +10,7 @@ import {
 } from '../../../../lib/AppleHealthKit';
 import {Icon} from '../../../../components/Icon';
 import {verticalDotsData} from '../../../../assets/svg';
+import {useMemo} from 'react';
 
 // TODO: activity별로 묶일 경우 id -> activityId 사용
 export type TWorkoutCardItemProps = Pick<
@@ -29,8 +30,19 @@ export function WorkoutCardItem({
   onPressCard,
   onPressSetting,
 }: TWorkoutCardItemProps) {
-  const hours = Math.floor(duration / 3600);
-  const minutes = Math.floor((duration % 3600) / 60);
+  const durationText = useMemo(() => {
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.floor((duration % 3600) / 60);
+
+    let text = '운동시간 ';
+    if (hours > 0) {
+      text += `${hours}시간 `;
+    }
+    if (minutes > 0) {
+      text += `${minutes}분`;
+    }
+    return text;
+  }, [duration]);
 
   return (
     <View>
@@ -66,7 +78,7 @@ export function WorkoutCardItem({
             color="gray-600"
           />
           <Tag
-            text={`운동시간 ${hours}시간 ${minutes}분`}
+            text={durationText}
             type="sm"
             hasBorder
             borderColor="gray-200"
