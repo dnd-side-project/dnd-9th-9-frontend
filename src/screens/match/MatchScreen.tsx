@@ -10,6 +10,7 @@ import {MyMatchListTabScreen} from './MyMatchListTabScreen';
 
 import {ITopTabScreen, TopTabNavigator} from '../../components/TopTabNavigator';
 import {theme} from '../../assets/styles/theme';
+import {MatchListScreen} from './list/MatchListScreen';
 
 type Props = CompositeScreenProps<
   BottomTabScreenProps<BottomTabStackParamList, 'Match'>,
@@ -20,7 +21,7 @@ const screens: ITopTabScreen[] = [
   {
     name: 'TotalMatchListTab',
     label: '매칭',
-    component: TotalMatchListTabScreen,
+    component: MatchListScreen,
   },
   {
     name: 'MyMatchListTab',
