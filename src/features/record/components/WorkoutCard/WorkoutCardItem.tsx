@@ -21,7 +21,7 @@ export type TWorkoutCardItemProps = Pick<
   onPressSetting?: (id: string) => void;
 };
 
-export function WorkoutCardItem({
+export const WorkoutCardItem = ({
   id,
   activityId,
   activityName,
@@ -29,7 +29,7 @@ export function WorkoutCardItem({
   duration,
   onPressCard,
   onPressSetting,
-}: TWorkoutCardItemProps) {
+}: TWorkoutCardItemProps) => {
   const durationText = useMemo(() => {
     const hours = Math.floor(duration / 3600);
     const minutes = Math.floor((duration % 3600) / 60);
@@ -89,7 +89,7 @@ export function WorkoutCardItem({
       </StyledWorkoutCard>
     </View>
   );
-}
+};
 
 const StyledWorkoutCard = styled.TouchableOpacity`
   border-radius: 12px;

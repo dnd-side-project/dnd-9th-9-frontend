@@ -16,7 +16,7 @@ interface WorkoutCardGroupProps {
   selectedDate: dayjs.Dayjs;
 }
 
-export function WorkoutCardGroup({selectedDate}: WorkoutCardGroupProps) {
+export const WorkoutCardGroup = ({selectedDate}: WorkoutCardGroupProps) => {
   const [selectedDateWorkouts, setSelectedDateWorkouts] = useState<
     HKWorkoutQueriedSampleType[]
   >([]);
@@ -58,7 +58,7 @@ export function WorkoutCardGroup({selectedDate}: WorkoutCardGroupProps) {
       )}
     </StyledWorkoutCardGroup>
   );
-}
+};
 
 const StyledWorkoutCardGroup = styled.ScrollView`
   border-top-width: 1px;

@@ -5,7 +5,7 @@ import {WorkoutCardGroup} from '../../features/record/components';
 import styled from '@emotion/native';
 import {Gap} from '../../components/Gap';
 
-export function RecordsTabScreen() {
+export const RecordsTabScreen = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
   return (
@@ -18,7 +18,7 @@ export function RecordsTabScreen() {
       <WorkoutCardGroup selectedDate={selectedDate} />
     </StyledRecordsTabScreen>
   );
-}
+};
 
 const StyledRecordsTabScreen = styled.View`
   background-color: ${props => props.theme.palette['gray-0']};
