@@ -68,6 +68,7 @@
     "babel-loader": "^8.2.4",
     "babel-plugin-react-native-web": "^0.18.9",
     "eslint": "8.45.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard-with-typescript": "37.0.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-n": "16.0.1",
