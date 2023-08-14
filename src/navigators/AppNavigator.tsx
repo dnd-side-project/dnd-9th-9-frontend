@@ -1,7 +1,10 @@
+import React from 'react';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {LandingScreen, LoginScreen, SignupScreen} from '../screens/auth';
+
 import {BottomTabNavigator} from './BottomTabNavigator';
+import {LandingScreen, LoginScreen, SignupScreen} from '../screens/auth';
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -12,7 +15,7 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export function AppNavigator() {
+export function AppNavigator(): React.JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">

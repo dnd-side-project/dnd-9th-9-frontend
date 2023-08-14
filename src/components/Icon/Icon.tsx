@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {SvgXml} from 'react-native-svg';
 
 export interface IIconProps {
@@ -7,6 +8,10 @@ export interface IIconProps {
   height?: number;
 }
 
-export const Icon = ({svgXml, width = 44, height = 44}: IIconProps) => {
+export const Icon = ({
+  svgXml,
+  width = 44,
+  height = 44,
+}: IIconProps): React.JSX.Element => {
   return <SvgXml xml={svgXml} width={width} height={height} />;
 };

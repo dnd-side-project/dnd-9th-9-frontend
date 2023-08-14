@@ -1,34 +1,38 @@
+import React, {useEffect, useState} from 'react';
+
 import styled from '@emotion/native';
 import {
   type HKWorkoutQueriedSampleType,
   type HealthInputOptions,
 } from 'react-native-health';
-import {dayjs} from '../../../../lib/dayjs';
+
 import {WorkoutCardItem} from './WorkoutCardItem';
-import {useEffect, useState} from 'react';
+import {Text} from '../../../../components/Text';
 import {
   AppleHealthKit,
   observeNewWorkout,
 } from '../../../../lib/AppleHealthKit/AppleHealthKit';
-import {Text} from '../../../../components/Text';
+import {type dayjs} from '../../../../lib/dayjs';
 
 interface WorkoutCardGroupProps {
   selectedDate: dayjs.Dayjs;
 }
 
-export const WorkoutCardGroup = ({selectedDate}: WorkoutCardGroupProps) => {
+export const WorkoutCardGroup = ({
+  selectedDate,
+}: WorkoutCardGroupProps): React.JSX.Element => {
   const [selectedDateWorkouts, setSelectedDateWorkouts] = useState<
     HKWorkoutQueriedSampleType[]
   >([]);
 
-  const loadAnchoredWorkouts = (selectedDate: dayjs.Dayjs) => {
+  const loadAnchoredWorkouts = (selectedDate: dayjs.Dayjs): void => {
     const options: HealthInputOptions = {
       startDate: selectedDate.startOf('hour').toISOString(),
       endDate: selectedDate.startOf('hour').add(1, 'day').toISOString(),
       anchor: 'base64encodedstring',
     };
 
-    AppleHealthKit.getAnchoredWorkouts(options, (err, results) => {
+    AppleHealthKit.getAnchoredWorkouts(options, (_err, results) => {
       setSelectedDateWorkouts(results.data);
       console.log(results.data);
     });
@@ -47,7 +51,7 @@ export const WorkoutCardGroup = ({selectedDate}: WorkoutCardGroupProps) => {
       contentContainerStyle={{
         rowGap: 10,
       }}>
-      {selectedDateWorkouts.length ? (
+      {selectedDateWorkouts.length > 0 ? (
         selectedDateWorkouts.map(workout => (
           <WorkoutCardItem {...workout} key={workout.id} />
         ))

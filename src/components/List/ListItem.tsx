@@ -1,9 +1,11 @@
 import React from 'react';
+
 import styled from '@emotion/native';
 import {View} from 'react-native';
+
 import {Gap} from '../Gap';
-import {Text} from '../Text';
 import {Tag, Tags} from '../Tag';
+import {Text} from '../Text';
 
 export interface IListItemProps {
   image?: string;
@@ -47,7 +49,7 @@ export const ListItem = ({
   matchingType,
   period,
   level,
-}: IListItemProps) => (
+}: IListItemProps): React.JSX.Element => (
   <StyledListItem activeOpacity={0.8}>
     <StyledInfoView>
       <StyledProfile />

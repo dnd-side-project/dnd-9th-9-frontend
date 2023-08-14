@@ -1,15 +1,21 @@
+import React from 'react';
+
+import {type BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {type CompositeScreenProps} from '@react-navigation/native';
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
-import {CompositeScreenProps} from '@react-navigation/native';
-import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-import {BottomTabStackParamList, RootStackParamList} from '../../navigators';
-
-import {TotalMatchListTabScreen} from './TotalMatchListTabScreen';
 import {MyMatchListTabScreen} from './MyMatchListTabScreen';
-
-import {ITopTabScreen, TopTabNavigator} from '../../components/TopTabNavigator';
+import {TotalMatchListTabScreen} from './TotalMatchListTabScreen';
 import {theme} from '../../assets/styles/theme';
+import {
+  type ITopTabScreen,
+  TopTabNavigator,
+} from '../../components/TopTabNavigator';
+import {
+  type BottomTabStackParamList,
+  type RootStackParamList,
+} from '../../navigators';
 
 type Props = CompositeScreenProps<
   BottomTabScreenProps<BottomTabStackParamList, 'Match'>,
@@ -29,7 +35,7 @@ const screens: ITopTabScreen[] = [
   },
 ];
 
-export function MatchScreen({navigation}: Props) {
+export function MatchScreen({navigation}: Props): React.JSX.Element {
   return (
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />

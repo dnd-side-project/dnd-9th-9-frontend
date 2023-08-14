@@ -1,4 +1,4 @@
-import {StateCreator} from 'zustand';
+import {type StateCreator} from 'zustand';
 
 export interface IAuthSlice {
   username: string;
@@ -7,5 +7,7 @@ export interface IAuthSlice {
 
 export const createAuthSlice: StateCreator<IAuthSlice> = set => ({
   username: '',
-  changeUsername: name => set(state => ({username: name})),
+  changeUsername: name => {
+    set(state => ({username: name}));
+  },
 });

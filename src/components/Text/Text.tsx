@@ -1,7 +1,9 @@
 import React from 'react';
+
 import styled from '@emotion/native';
-import {Tpalette, Ttypography} from '../../assets/styles/emotion';
-import {StyleProp, TextProps, TextStyle} from 'react-native';
+import {type StyleProp, type TextProps, type TextStyle} from 'react-native';
+
+import {type Tpalette, type Ttypography} from '../../assets/styles/emotion';
 
 export interface ITextProps extends TextProps {
   text: string;
@@ -39,7 +41,7 @@ export const Text = ({
   textAlign,
   style,
   ...props
-}: ITextProps) => {
+}: ITextProps): React.JSX.Element => {
   return (
     <StyledText
       {...props}

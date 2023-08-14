@@ -1,8 +1,10 @@
 import React from 'react';
+
 import styled from '@emotion/native';
-import {Icon} from '../Icon';
+
 import {theme} from '../../assets/styles/theme';
 import {searchingXmlData} from '../../assets/svg';
+import {Icon} from '../Icon';
 
 export interface ISearchingProps {
   placeholder: string;
@@ -24,14 +26,19 @@ const StyledSearchingInput = styled.TextInput`
   font-weight: 400;
 `;
 
-export const Searching = ({placeholder, handleSearch}: ISearchingProps) => {
+export const Searching = ({
+  placeholder,
+  handleSearch,
+}: ISearchingProps): React.JSX.Element => {
   return (
     <StyledSearching>
       <Icon svgXml={searchingXmlData} width={24} height={24} />
       <StyledSearchingInput
         placeholder={placeholder}
         placeholderTextColor={theme.palette['gray-400']}
-        onChangeText={text => handleSearch(text)}
+        onChangeText={text => {
+          handleSearch(text);
+        }}
       />
     </StyledSearching>
   );
