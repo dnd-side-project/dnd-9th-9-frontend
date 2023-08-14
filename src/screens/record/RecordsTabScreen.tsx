@@ -1,34 +1,26 @@
-import {useEffect} from 'react';
-import {View, Text} from 'react-native';
-import {
-  AppleHealthKit,
-  observeNewWorkout,
-  HealthInputOptions,
-} from '../../lib/AppleHealthKit';
+import {useState} from 'react';
+import {WeeklyCalendar} from '../../components/WeeklyCalendar';
+import {dayjs} from '../../lib/dayjs';
+import {WorkoutCardGroup} from '../../features/record/components';
+import styled from '@emotion/native';
+import {Gap} from '../../components/Gap';
 
-export function RecordsTabScreen() {
-  // example code
-  useEffect(() => {
-    const options: HealthInputOptions = {
-      // TODO: time 관련 library
-      startDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
-      anchor: 'base64encodedstring',
-    };
-
-    AppleHealthKit.getAnchoredWorkouts(options, (err, results) => {
-      console.log(results.data);
-    });
-
-    observeNewWorkout(() => {
-      AppleHealthKit.getAnchoredWorkouts(options, (err, results) => {
-        console.log(results.data);
-      });
-    });
-  }, []);
+export const RecordsTabScreen = () => {
+  const [selectedDate, setSelectedDate] = useState(dayjs());
 
   return (
-    <View>
-      <Text>운동 기록 뷰</Text>
-    </View>
+    <StyledRecordsTabScreen>
+      <Gap size="16px" />
+      <WeeklyCalendar
+        defaultSelectedDate={selectedDate}
+        onChangeSelectedDate={setSelectedDate}
+      />
+      <WorkoutCardGroup selectedDate={selectedDate} />
+    </StyledRecordsTabScreen>
   );
-}
+};
+
+const StyledRecordsTabScreen = styled.View`
+  background-color: ${props => props.theme.palette['gray-0']};
+  height: 100%;
+`;
