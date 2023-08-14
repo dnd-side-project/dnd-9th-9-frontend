@@ -5,7 +5,7 @@ import {Gap} from '../Gap';
 import {Text} from '../Text';
 import {Tag, Tags} from '../Tag';
 
-export interface IListItemProps {
+export interface IMatchListItem {
   image?: string;
   title: string;
   level: string;
@@ -15,6 +15,52 @@ export interface IListItemProps {
   maximumMember: number;
   period: 1 | 2 | 3;
 }
+
+interface IListItemProps extends IMatchListItem {
+  onPress: () => void;
+}
+
+export const ListItem = ({
+  image,
+  title,
+  isFinish,
+  currentMember,
+  maximumMember,
+  matchingType,
+  period,
+  level,
+  onPress,
+}: IListItemProps) => {
+  return (
+    <StyledListItem activeOpacity={0.8} onPress={onPress}>
+      <StyledInfoView>
+        <StyledProfile />
+        <View>
+          <Text text={title} type="body1" color="gray-700" fontWeight="600" />
+          <Gap size="8px" />
+          <Tag
+            type={isFinish ? 'sm' : 'xs'}
+            color={isFinish ? 'gray-0' : 'gray-600'}
+            backgroundColor={isFinish ? 'gray-700' : 'gray-0'}
+            text={
+              isFinish
+                ? `팀원 모집완료 ${currentMember}/${maximumMember}`
+                : `팀원 모집 중 ${currentMember}/${maximumMember}`
+            }
+          />
+          <Gap size="8px" />
+
+          <Tags
+            type="sm"
+            color="gray-700"
+            backgroundColor="gray-200"
+            texts={[matchingType, `${period}주동안`, `운동레벨 ${level}`]}
+          />
+        </View>
+      </StyledInfoView>
+    </StyledListItem>
+  );
+};
 
 const StyledListItem = styled.TouchableOpacity`
   flex-direction: row;
@@ -37,42 +83,3 @@ const StyledProfile = styled.View`
   margin: 0 16px 0 0;
   background-color: ${props => props.theme.palette['gray-600']};
 `;
-
-export const ListItem = ({
-  image,
-  title,
-  isFinish,
-  currentMember,
-  maximumMember,
-  matchingType,
-  period,
-  level,
-}: IListItemProps) => (
-  <StyledListItem activeOpacity={0.8}>
-    <StyledInfoView>
-      <StyledProfile />
-      <View>
-        <Text text={title} type="body1" color="gray-700" fontWeight="600" />
-        <Gap size="8px" />
-        <Tag
-          type={isFinish ? 'sm' : 'xs'}
-          color={isFinish ? 'gray-0' : 'gray-600'}
-          backgroundColor={isFinish ? 'gray-700' : 'gray-0'}
-          text={
-            isFinish
-              ? `팀원 모집완료 ${currentMember}/${maximumMember}`
-              : `팀원 모집 중 ${currentMember}/${maximumMember}`
-          }
-        />
-        <Gap size="8px" />
-
-        <Tags
-          type="sm"
-          color="gray-700"
-          backgroundColor="gray-200"
-          texts={[matchingType, `${period}주동안`, `운동레벨 ${level}`]}
-        />
-      </View>
-    </StyledInfoView>
-  </StyledListItem>
-);
