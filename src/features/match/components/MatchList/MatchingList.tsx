@@ -1,11 +1,12 @@
 import React from 'react';
-import {IListItemProps, ListItem} from '../../../../components/List';
+import {IMatchListItem, ListItem} from '../../../../components/List';
 
 interface IMatchingListProps {
-  data: IListItemProps[];
+  data: IMatchListItem[];
+  onPress: (matchId: string) => void;
 }
 
-export const MatchingList = ({data}: IMatchingListProps) => {
+export const MatchingList = ({data, onPress}: IMatchingListProps) => {
   return (
     <>
       {data.map((item, idx) => (
@@ -19,6 +20,7 @@ export const MatchingList = ({data}: IMatchingListProps) => {
           currentMember={item.currentMember}
           maximumMember={item.maximumMember}
           period={item.period}
+          onPress={() => onPress(idx.toString())}
         />
       ))}
     </>

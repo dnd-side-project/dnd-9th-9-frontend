@@ -5,6 +5,7 @@ import {
   CreateTeamProfileScreen,
   CreateTeamScreen,
 } from '../screens/match/create';
+import {MatchDetailScreen} from '../screens/match/detail';
 
 export type MatchStackParamList = {
   MatchList: undefined;
@@ -12,6 +13,7 @@ export type MatchStackParamList = {
   TeamInformation: undefined;
   TeamProfile: undefined;
   AutoMatch: undefined;
+  MatchDetail: undefined;
 };
 
 const Stack = createNativeStackNavigator<MatchStackParamList>();
@@ -40,6 +42,11 @@ export function MatchNavigator() {
       <Stack.Screen
         name="AutoMatch"
         component={AutoMatchScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetail"
+        component={MatchDetailScreen}
         options={{headerTitle: ''}}
       />
       {/* TODO: 하위 스크린 MatchNavigator 에 셋팅 */}

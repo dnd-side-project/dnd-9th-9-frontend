@@ -5,7 +5,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Gap} from '../../../components/Gap';
 import {Text} from '../../../components/Text';
 import {Searching} from '../../../components/Searching';
-import {IListItemProps} from '../../../components/List';
+import {IMatchListItem} from '../../../components/List';
 import {FilterButton} from '../../../components/Button/FilterButton';
 import {MatchStackParamList} from '../../../navigators/MatchNavigator';
 import {MatchingFloating} from '../../../features/match/components/MatchingFloating';
@@ -17,7 +17,7 @@ type TMatchListScreenProps = NativeStackScreenProps<
   'MatchList'
 >;
 
-const DUMMY_DATA: IListItemProps[] = [
+const DUMMY_DATA: IMatchListItem[] = [
   {
     image: '',
     title: '2주만 빡세게',
@@ -74,6 +74,10 @@ export const MatchListScreen = ({navigation}: TMatchListScreenProps) => {
   const [matchingTypeFilter, setMatchingTypeFilter] = useState('1vs1');
   const [activeFloating, setActiveFloating] = useState(false);
 
+  const handleTeamDetail = (teamId: string) => {
+    navigation.navigate('MatchDetail');
+  };
+
   return (
     <StyledScreen>
       <ScrollView>
@@ -101,7 +105,10 @@ export const MatchListScreen = ({navigation}: TMatchListScreenProps) => {
         </StyledFlexView>
 
         {/* TODO: 매칭 리스트 없는 경우 화면 추가 */}
-        <MatchingList data={DUMMY_DATA} />
+        <MatchingList
+          data={DUMMY_DATA}
+          onPress={(value: string) => handleTeamDetail(value)}
+        />
       </ScrollView>
 
       <MatchingFloating
