@@ -8,10 +8,10 @@ import {Text} from '../Text';
 interface ICommonTag {
   type: 'xs' | 'sm' | 'md' | 'lg';
   fontWeight?: string;
-  hasBorder?: boolean;
+  hasBorder: boolean;
   color?: Tpalette;
-  backgroundColor?: Tpalette;
-  borderColor?: Tpalette;
+  backgroundColor: Tpalette;
+  borderColor: Tpalette;
 }
 
 export interface ITagProps extends ICommonTag {
