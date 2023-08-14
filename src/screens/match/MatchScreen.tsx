@@ -4,8 +4,6 @@ import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {BottomTabStackParamList, RootStackParamList} from '../../navigators';
-
-import {TotalMatchListTabScreen} from './TotalMatchListTabScreen';
 import {MyMatchListTabScreen} from './MyMatchListTabScreen';
 
 import {ITopTabScreen, TopTabNavigator} from '../../components/TopTabNavigator';
