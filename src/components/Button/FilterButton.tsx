@@ -1,8 +1,10 @@
 import React from 'react';
+
 import styled from '@emotion/native';
-import {Text} from '../Text';
-import {Icon} from '../Icon';
+
 import {filterXmlData} from '../../assets/svg';
+import {Icon} from '../Icon';
+import {Text} from '../Text';
 
 interface IFilterButtonProps {
   isActive: boolean;
@@ -26,7 +28,10 @@ const StyledFilterButton = styled.TouchableOpacity<IStyledFilterButton>`
   padding: 4px 7px;
 `;
 
-export const FilterButton = ({isActive, onPress}: IFilterButtonProps) => {
+export const FilterButton = ({
+  isActive,
+  onPress,
+}: IFilterButtonProps): React.JSX.Element => {
   return (
     <StyledFlexView>
       <StyledFilterButton

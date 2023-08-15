@@ -1,5 +1,7 @@
 import React from 'react';
+
 import styled from '@emotion/native';
+
 import {Text} from '../Text';
 
 export interface IButtonProps {
@@ -33,7 +35,7 @@ const StyledButton = styled.TouchableOpacity<IStyledButton>`
 export const Button = (
   {text, size = 'sm', onPress, disabled = false, style}: IButtonProps,
   props: any,
-) => (
+): React.JSX.Element => (
   <StyledButton
     activeOpacity={0.8}
     disabled={disabled}

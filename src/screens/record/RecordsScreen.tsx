@@ -1,18 +1,18 @@
+import React from 'react';
+
+import {type BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {SafeAreaView} from 'react-native';
-import {CompositeScreenProps} from '@react-navigation/native';
-import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {BottomTabStackParamList, RootStackParamList} from '../../navigators';
+
 import {RecordsTabScreen} from './RecordsTabScreen';
 import {SummaryTabScreen} from './SummaryTabScreen';
-
-import {ITopTabScreen, TopTabNavigator} from '../../components/TopTabNavigator';
 import {theme} from '../../assets/styles/theme';
+import {
+  type ITopTabScreen,
+  TopTabNavigator,
+} from '../../components/TopTabNavigator';
+import {type BottomTabStackParamList} from '../../navigators';
 
-type Props = CompositeScreenProps<
-  BottomTabScreenProps<BottomTabStackParamList, 'Records'>,
-  NativeStackScreenProps<RootStackParamList>
->;
+type Props = BottomTabScreenProps<BottomTabStackParamList, 'Records'>;
 
 const screens: ITopTabScreen[] = [
   {
@@ -27,7 +27,7 @@ const screens: ITopTabScreen[] = [
   },
 ];
 
-export function RecordsScreen({navigation}: Props) {
+export function RecordsScreen({navigation}: Props): React.JSX.Element {
   return (
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />

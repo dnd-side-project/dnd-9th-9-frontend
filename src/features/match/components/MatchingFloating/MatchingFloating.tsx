@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styled from '@emotion/native';
 import {
   Modal as RNModal,
@@ -6,11 +7,12 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {Icon} from '../../../../components/Icon';
+
 import {AddMatchingButton} from './AddMatchingButton';
 import {AutoMatchingButton} from './AutoMatchingButton';
 import {CloseMatchingButton} from './CloseMatchingButton';
 import {matchingFloatingXmlData} from '../../../../assets/svg';
+import {Icon} from '../../../../components/Icon';
 
 interface IMatchingFloatingProps {
   isActive: boolean;
@@ -26,8 +28,8 @@ export const MatchingFloating = ({
   closeMenu,
   createMatch,
   autoMatch,
-}: IMatchingFloatingProps) => {
-  const moveMenu = (to: 'create' | 'matching') => {
+}: IMatchingFloatingProps): React.JSX.Element => {
+  const moveMenu = (to: 'create' | 'matching'): void => {
     to === 'create' ? createMatch() : autoMatch();
     closeMenu();
   };
@@ -38,8 +40,16 @@ export const MatchingFloating = ({
         <TouchableWithoutFeedback onPress={closeMenu}>
           <StyledFloatWrapper>
             <View>
-              <AddMatchingButton createMatch={() => moveMenu('create')} />
-              <AutoMatchingButton autoMatch={() => moveMenu('matching')} />
+              <AddMatchingButton
+                createMatch={() => {
+                  moveMenu('create');
+                }}
+              />
+              <AutoMatchingButton
+                autoMatch={() => {
+                  moveMenu('matching');
+                }}
+              />
               <CloseMatchingButton closeMenu={closeMenu} />
             </View>
           </StyledFloatWrapper>

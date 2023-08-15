@@ -1,11 +1,14 @@
+import React from 'react';
+
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
 import {MatchScreen} from '../screens/match';
-import {AutoMatchScreen, MatchFilterScreen} from '../screens/match/list';
 import {
   CreateTeamProfileScreen,
   CreateTeamScreen,
 } from '../screens/match/create';
 import {MatchDetailScreen} from '../screens/match/detail';
+import {AutoMatchScreen, MatchFilterScreen} from '../screens/match/list';
 
 export type MatchStackParamList = {
   MatchList: undefined;
@@ -18,12 +21,12 @@ export type MatchStackParamList = {
 
 const Stack = createNativeStackNavigator<MatchStackParamList>();
 
-export function MatchNavigator() {
+export function MatchNavigator(): React.JSX.Element {
   return (
     <Stack.Navigator initialRouteName="MatchList">
       <Stack.Screen
         name="MatchList"
-        component={MatchScreen} // TODO: 타입 이슈 해결
+        component={MatchScreen}
         options={{
           headerShown: false,
         }}

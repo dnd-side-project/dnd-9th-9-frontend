@@ -6,10 +6,12 @@
  */
 
 import React from 'react';
+
 import {ThemeProvider as EmotionThemeProvider} from '@emotion/react';
-import {AppNavigator} from './navigators';
+
 import {theme} from './assets/styles/theme';
 import {initHealthKit} from './lib/AppleHealthKit';
+import {AppNavigator} from './navigators';
 
 initHealthKit();
 

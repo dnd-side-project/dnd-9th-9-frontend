@@ -1,15 +1,17 @@
 import React from 'react';
+
 import styled from '@emotion/native';
-import {Tpalette, Ttypography} from '../../assets/styles/emotion';
+
+import {type Tpalette, type Ttypography} from '../../assets/styles/emotion';
 import {Text} from '../Text';
 
 interface ICommonTag {
   type: 'xs' | 'sm' | 'md' | 'lg';
   fontWeight?: string;
-  hasBorder?: boolean;
+  hasBorder: boolean;
   color?: Tpalette;
-  backgroundColor?: Tpalette;
-  borderColor?: Tpalette;
+  backgroundColor: Tpalette;
+  borderColor: Tpalette;
 }
 
 export interface ITagProps extends ICommonTag {
@@ -25,7 +27,7 @@ interface ITagTypeStyle {
   padding: string;
 }
 
-const tagTypeStyle: {[key: string]: ITagTypeStyle} = {
+const tagTypeStyle: Record<string, ITagTypeStyle> = {
   xs: {
     textType: 'body3',
     padding: '2px 0px',
@@ -68,7 +70,7 @@ export const Tag = ({
   borderColor = 'gray-950',
   fontWeight = '700',
   text,
-}: ITagProps) => {
+}: ITagProps): React.JSX.Element => {
   return (
     <StyledTags>
       <StyledTag
@@ -95,7 +97,7 @@ export const Tags = ({
   borderColor = 'gray-950',
   fontWeight = '700',
   texts,
-}: ITagsProps) => {
+}: ITagsProps): React.JSX.Element => {
   return (
     <StyledTags>
       {texts.map((text, idx) => (

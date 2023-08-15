@@ -1,9 +1,11 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
+
+import {View} from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
+
 import {theme} from '../../assets/styles/theme';
 import {dayjs} from '../../lib/dayjs';
 import {Text} from '../Text';
-import {View} from 'react-native';
 
 interface IWeeklyCalendarProps {
   defaultSelectedDate?: dayjs.Dayjs;
@@ -13,19 +15,19 @@ interface IWeeklyCalendarProps {
 export function WeeklyCalendar({
   defaultSelectedDate,
   onChangeSelectedDate,
-}: IWeeklyCalendarProps) {
+}: IWeeklyCalendarProps): React.JSX.Element {
   const today = dayjs();
   const [selectedDate, setSelectedDate] = useState(
-    defaultSelectedDate || today,
+    defaultSelectedDate ?? today,
   );
 
-  const handleDateSelected = (selectedDate: dayjs.Dayjs) => {
-    onChangeSelectedDate && onChangeSelectedDate(selectedDate);
+  const handleDateSelected = (selectedDate: dayjs.Dayjs): void => {
+    onChangeSelectedDate?.(selectedDate);
     setSelectedDate(selectedDate);
   };
 
-  const goToToday = () => {
-    onChangeSelectedDate && onChangeSelectedDate(today);
+  const goToToday = (): void => {
+    onChangeSelectedDate?.(today);
     setSelectedDate(today);
   };
 
@@ -85,7 +87,7 @@ export function WeeklyCalendar({
         ]}
         selectedDate={selectedDate.toDate()}
         onDateSelected={date => {
-          handleDateSelected(dayjs(date.toString()));
+          handleDateSelected(dayjs(date.toDate()));
         }}
       />
     </View>

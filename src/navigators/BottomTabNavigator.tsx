@@ -1,8 +1,11 @@
+import React from 'react';
+
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {MyScreen} from '../screens/my';
-import {HomeScreen} from '../screens/home';
-import {RecordsScreen} from '../screens/record';
+
 import {MatchNavigator} from './MatchNavigator';
+import {HomeScreen} from '../screens/home';
+import {MyScreen} from '../screens/my';
+import {RecordsScreen} from '../screens/record';
 
 export type BottomTabStackParamList = {
   Home: undefined;
@@ -13,7 +16,7 @@ export type BottomTabStackParamList = {
 
 const Tab = createBottomTabNavigator<BottomTabStackParamList>();
 
-export function BottomTabNavigator() {
+export function BottomTabNavigator(): React.JSX.Element {
   return (
     <Tab.Navigator initialRouteName="Home">
       <Tab.Screen

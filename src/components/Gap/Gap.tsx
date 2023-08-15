@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styled from '@emotion/native';
 
 export interface IGapProps {
@@ -13,4 +14,6 @@ const StyledGap = styled.View<IStyledGap>`
   height: ${props => props.size};
 `;
 
-export const Gap = ({size}: IGapProps) => <StyledGap size={size} />;
+export const Gap = ({size}: IGapProps): React.JSX.Element => (
+  <StyledGap size={size} />
+);

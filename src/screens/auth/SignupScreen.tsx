@@ -1,6 +1,7 @@
-import {SafeAreaView, Text} from 'react-native';
+import React from 'react';
 
-export function SignupScreen() {
+import {SafeAreaView, Text} from 'react-native';
+export function SignupScreen(): React.JSX.Element {
   return (
     <SafeAreaView>
       <Text>SignupScreen</Text>

@@ -1,11 +1,13 @@
-import {useState} from 'react';
-import {WeeklyCalendar} from '../../components/WeeklyCalendar';
-import {dayjs} from '../../lib/dayjs';
-import {WorkoutCardGroup} from '../../features/record/components';
-import styled from '@emotion/native';
-import {Gap} from '../../components/Gap';
+import React, {useState} from 'react';
 
-export const RecordsTabScreen = () => {
+import styled from '@emotion/native';
+
+import {Gap} from '../../components/Gap';
+import {WeeklyCalendar} from '../../components/WeeklyCalendar';
+import {WorkoutCardGroup} from '../../features/record/components';
+import {dayjs} from '../../lib/dayjs';
+
+export const RecordsTabScreen = (): React.JSX.Element => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
   return (

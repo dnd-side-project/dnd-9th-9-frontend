@@ -1,11 +1,13 @@
 import React from 'react';
-import {View} from 'react-native';
+
 import styled from '@emotion/native';
+import {View} from 'react-native';
+
+import {type Tpalette} from '../../assets/styles/emotion';
+import {dayjs} from '../../lib/dayjs';
+import {checkValidDateTimeFormat} from '../../utils/regex';
 import {Gap} from '../Gap';
 import {Text} from '../Text';
-import {dayjs} from '../../lib/dayjs';
-import {Tpalette} from '../../assets/styles/emotion';
-import {checkValidDateTimeFormat} from '../../utils/regex';
 
 export interface IAlarmItemProps {
   alarmType: 'matching' | 'member' | 'team';
@@ -23,14 +25,18 @@ interface IAlarmTypeData {
   team: {text: string; color: Tpalette};
 }
 
-export const AlarmItem = ({alarmType, message, time}: IAlarmItemProps) => {
+export const AlarmItem = ({
+  alarmType,
+  message,
+  time,
+}: IAlarmItemProps): React.JSX.Element => {
   const alarmTypeData: IAlarmTypeData = {
     matching: {text: '매칭', color: 'main-200'},
     member: {text: '팀원', color: 'sub-400'},
     team: {text: '팀 소식', color: 'gray-600'},
   };
 
-  const getAlarmTimeText = (date: string) => {
+  const getAlarmTimeText = (date: string): string => {
     if (!checkValidDateTimeFormat(date)) return '';
 
     const currentDate = dayjs();

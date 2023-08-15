@@ -1,16 +1,17 @@
+import React, {useMemo} from 'react';
+
 import styled from '@emotion/native';
 import {View} from 'react-native';
+import {type HKWorkoutQueriedSampleType} from 'react-native-health';
+
+import {verticalDotsData} from '../../../../assets/svg';
+import {Icon} from '../../../../components/Icon';
 import {Tag} from '../../../../components/Tag';
 import {Text} from '../../../../components/Text';
-import {HKWorkoutQueriedSampleType} from 'react-native-health';
-
 import {
-  TWorkoutActivityType,
+  type TWorkoutActivityType,
   WORKOUT_ACTIVITY,
 } from '../../../../lib/AppleHealthKit';
-import {Icon} from '../../../../components/Icon';
-import {verticalDotsData} from '../../../../assets/svg';
-import {useMemo} from 'react';
 
 // TODO: activity별로 묶일 경우 id -> activityId 사용
 export type TWorkoutCardItemProps = Pick<
@@ -29,7 +30,7 @@ export const WorkoutCardItem = ({
   duration,
   onPressCard,
   onPressSetting,
-}: TWorkoutCardItemProps) => {
+}: TWorkoutCardItemProps): React.JSX.Element => {
   const durationText = useMemo(() => {
     const hours = Math.floor(duration / 3600);
     const minutes = Math.floor((duration % 3600) / 60);
@@ -46,22 +47,28 @@ export const WorkoutCardItem = ({
 
   return (
     <View>
-      <StyledSetting onPress={() => onPressSetting && onPressSetting(id)}>
+      <StyledSetting
+        onPress={() => {
+          onPressSetting?.(id);
+        }}>
         <Icon svgXml={verticalDotsData} width={20} height={4} />
       </StyledSetting>
-      <StyledWorkoutCard onPress={() => onPressCard && onPressCard(id)}>
+      <StyledWorkoutCard
+        onPress={() => {
+          onPressCard?.(id);
+        }}>
         <StyledWorkoutCardHeader>
           <StyledWorkoutProfile>
             <Text
               type="head3"
               text={
-                WORKOUT_ACTIVITY[activityName as TWorkoutActivityType].emoji ||
+                WORKOUT_ACTIVITY[activityName as TWorkoutActivityType].emoji ??
                 '🏃'
               }></Text>
           </StyledWorkoutProfile>
           <Text
             text={
-              WORKOUT_ACTIVITY[activityName as TWorkoutActivityType].label ||
+              WORKOUT_ACTIVITY[activityName as TWorkoutActivityType].label ??
               activityName
             }
             type="body1"
