@@ -26,7 +26,7 @@ export function MatchNavigator(): React.JSX.Element {
     <Stack.Navigator initialRouteName="MatchList">
       <Stack.Screen
         name="MatchList"
-        component={MatchScreen} // TODO: 타입 이슈 해결
+        component={MatchScreen}
         options={{
           headerShown: false,
         }}

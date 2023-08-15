@@ -1,8 +1,6 @@
 import React from 'react';
 
 import {type BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {type CompositeScreenProps} from '@react-navigation/native';
-import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
 
 import {RecordsTabScreen} from './RecordsTabScreen';
@@ -12,15 +10,9 @@ import {
   type ITopTabScreen,
   TopTabNavigator,
 } from '../../components/TopTabNavigator';
-import {
-  type BottomTabStackParamList,
-  type RootStackParamList,
-} from '../../navigators';
+import {type BottomTabStackParamList} from '../../navigators';
 
-type Props = CompositeScreenProps<
-  BottomTabScreenProps<BottomTabStackParamList, 'Records'>,
-  NativeStackScreenProps<RootStackParamList>
->;
+type Props = BottomTabScreenProps<BottomTabStackParamList, 'Records'>;
 
 const screens: ITopTabScreen[] = [
   {
