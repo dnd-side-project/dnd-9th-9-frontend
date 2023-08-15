@@ -7,7 +7,7 @@ import {Gap} from '../Gap';
 import {Tag, Tags} from '../Tag';
 import {Text} from '../Text';
 
-export interface IListItemProps {
+export interface IMatchListItem {
   image?: string;
   title: string;
   level: string;
@@ -18,27 +18,9 @@ export interface IListItemProps {
   period: 1 | 2 | 3;
 }
 
-const StyledListItem = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 19px 16px;
-  background-color: ${props => props.theme.palette['gray-0']};
-  border: 1px solid ${props => props.theme.palette['gray-50']};
-`;
-
-const StyledInfoView = styled.View`
-  flex-direction: row;
-  align-items: center;
-`;
-
-const StyledProfile = styled.View`
-  height: 58px;
-  width: 58px;
-  border-radius: 29px;
-  margin: 0 16px 0 0;
-  background-color: ${props => props.theme.palette['gray-600']};
-`;
+interface IListItemProps extends IMatchListItem {
+  onPress: () => void;
+}
 
 export const ListItem = ({
   image,
@@ -78,3 +60,25 @@ export const ListItem = ({
     </StyledInfoView>
   </StyledListItem>
 );
+
+const StyledListItem = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 19px 16px;
+  background-color: ${props => props.theme.palette['gray-0']};
+  border: 1px solid ${props => props.theme.palette['gray-50']};
+`;
+
+const StyledInfoView = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const StyledProfile = styled.View`
+  height: 58px;
+  width: 58px;
+  border-radius: 29px;
+  margin: 0 16px 0 0;
+  background-color: ${props => props.theme.palette['gray-600']};
+`;

@@ -2,8 +2,8 @@ import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+import {MatchNavigator} from './MatchNavigator';
 import {HomeScreen} from '../screens/home';
-import {MatchScreen} from '../screens/match';
 import {MyScreen} from '../screens/my';
 import {RecordsScreen} from '../screens/record';
 
@@ -35,7 +35,7 @@ export function BottomTabNavigator(): React.JSX.Element {
       />
       <Tab.Screen
         name="Match"
-        component={MatchScreen}
+        component={MatchNavigator}
         options={{
           headerShown: false,
         }}

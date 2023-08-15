@@ -21,7 +21,7 @@ export const initHealthKit = (): void => {
   };
 
   AppleHealthKit.initHealthKit(permissions, (error: string) => {
-    if (error.length > 0) {
+    if (error !== '') {
       // TODO: error screen 추가 필요
       console.log('[ERROR] Cannot grant permissions!');
     }

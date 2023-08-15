@@ -5,8 +5,8 @@ import {type CompositeScreenProps} from '@react-navigation/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
 
+import {MatchListScreen} from './list/MatchListScreen';
 import {MyMatchListTabScreen} from './MyMatchListTabScreen';
-import {TotalMatchListTabScreen} from './TotalMatchListTabScreen';
 import {theme} from '../../assets/styles/theme';
 import {
   type ITopTabScreen,
@@ -26,7 +26,7 @@ const screens: ITopTabScreen[] = [
   {
     name: 'TotalMatchListTab',
     label: '매칭',
-    component: TotalMatchListTabScreen,
+    component: MatchListScreen,
   },
   {
     name: 'MyMatchListTab',
