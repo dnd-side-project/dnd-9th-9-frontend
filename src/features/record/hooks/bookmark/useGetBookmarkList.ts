@@ -9,16 +9,16 @@ import {axios} from '../../../../lib/axios';
 
 interface IBookmarkListInfo {
   bookmarks: Array<{
-    id: 0;
-    sports: 'AMERICAN_FOOTBALL';
+    id: number;
+    sports: string;
   }>;
-  totalCount: 0;
+  totalCount: number;
 }
 
 const fetcher = async (): Promise<IBookmarkListInfo> =>
   await axios.get(`/bookmarks`).then(({data}) => data);
 
-export const useGetExerciseList = (
+export const useGetBookmarkList = (
   options?: UseQueryOptions<IBookmarkListInfo, Error>,
 ): UseQueryResult<IBookmarkListInfo, Error> =>
   useQuery({
