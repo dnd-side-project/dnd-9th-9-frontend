@@ -25,12 +25,7 @@ export const useGetBookmarkList = (
     queryKey: KEYS.list(),
     queryFn: async () => await fetcher(),
     initialData: {
-      bookmarks: [
-        {
-          id: 0,
-          sports: 'AMERICAN_FOOTBALL',
-        },
-      ],
+      bookmarks: [],
       totalCount: 0,
     },
     ...options,

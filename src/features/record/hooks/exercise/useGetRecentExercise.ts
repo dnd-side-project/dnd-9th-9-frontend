@@ -38,13 +38,7 @@ export const useGetRecentExercise = (
     queryKey: KEYS.recent(date),
     queryFn: async () => await fetcher({date}),
     initialData: {
-      recentSports: [
-        {
-          burnedCalorie: 0,
-          exerciseMinute: 0,
-          sports: 'AMERICAN_FOOTBALL',
-        },
-      ],
+      recentSports: [],
       totalBurnedCalorie: 0,
       totalExerciseMinute: 0,
     },
