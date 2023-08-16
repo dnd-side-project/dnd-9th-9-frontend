@@ -1,8 +1,4 @@
-import {
-  useQuery,
-  type UseQueryOptions,
-  type UseQueryResult,
-} from '@tanstack/react-query';
+import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
@@ -18,9 +14,10 @@ interface IBookmarkListInfo {
 const fetcher = async (): Promise<IBookmarkListInfo> =>
   await axios.get(`/bookmarks`).then(({data}) => data);
 
-export const useGetBookmarkList = (
-  options?: UseQueryOptions<IBookmarkListInfo, Error>,
-): UseQueryResult<IBookmarkListInfo, Error> =>
+export const useGetBookmarkList = (): UseQueryResult<
+  IBookmarkListInfo,
+  Error
+> =>
   useQuery({
     queryKey: KEYS.list(),
     queryFn: async () => await fetcher(),
@@ -28,5 +25,4 @@ export const useGetBookmarkList = (
       bookmarks: [],
       totalCount: 0,
     },
-    ...options,
   });

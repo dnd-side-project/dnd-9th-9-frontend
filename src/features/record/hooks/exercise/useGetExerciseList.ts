@@ -1,8 +1,4 @@
-import {
-  useQuery,
-  type UseQueryOptions,
-  type UseQueryResult,
-} from '@tanstack/react-query';
+import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
@@ -36,10 +32,9 @@ const fetcher = async ({date}: IProps): Promise<IExerciseListInfo> =>
     })
     .then(({data}) => data);
 
-export const useGetExerciseList = (
-  {date}: IProps,
-  options?: UseQueryOptions<IExerciseListInfo, Error>,
-): UseQueryResult<IExerciseListInfo, Error> =>
+export const useGetExerciseList = ({
+  date,
+}: IProps): UseQueryResult<IExerciseListInfo, Error> =>
   useQuery({
     queryKey: KEYS.list(date),
     queryFn: async () => await fetcher({date}),
@@ -47,5 +42,4 @@ export const useGetExerciseList = (
       exerciseList: [],
       totalCount: 0,
     },
-    ...options,
   });

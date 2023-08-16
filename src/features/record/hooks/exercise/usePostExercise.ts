@@ -35,6 +35,5 @@ export const usePostExercise = (
     onSuccess: () => {
       void queryClient.invalidateQueries(KEYS.all);
     },
-    ...options,
   });
 };

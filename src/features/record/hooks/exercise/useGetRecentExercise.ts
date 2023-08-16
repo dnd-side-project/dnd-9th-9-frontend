@@ -1,8 +1,4 @@
-import {
-  useQuery,
-  type UseQueryOptions,
-  type UseQueryResult,
-} from '@tanstack/react-query';
+import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
@@ -30,10 +26,9 @@ const fetcher = async ({date}: IProps): Promise<IRecentExercise> =>
     })
     .then(({data}) => data);
 
-export const useGetRecentExercise = (
-  {date}: IProps,
-  options?: UseQueryOptions<IRecentExercise, Error>,
-): UseQueryResult<IRecentExercise, Error> =>
+export const useGetRecentExercise = ({
+  date,
+}: IProps): UseQueryResult<IRecentExercise, Error> =>
   useQuery({
     queryKey: KEYS.recent(date),
     queryFn: async () => await fetcher({date}),
@@ -42,5 +37,4 @@ export const useGetRecentExercise = (
       totalBurnedCalorie: 0,
       totalExerciseMinute: 0,
     },
-    ...options,
   });

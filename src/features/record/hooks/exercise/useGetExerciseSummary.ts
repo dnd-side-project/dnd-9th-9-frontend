@@ -1,8 +1,4 @@
-import {
-  useQuery,
-  type UseQueryOptions,
-  type UseQueryResult,
-} from '@tanstack/react-query';
+import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
@@ -27,10 +23,9 @@ const fetcher = async ({date}: IProps): Promise<IDailyExerciseSummary> =>
     })
     .then(({data}) => data);
 
-export const useGetExerciseSummary = (
-  {date}: IProps,
-  options?: UseQueryOptions<IDailyExerciseSummary, Error>,
-): UseQueryResult<IDailyExerciseSummary, Error> =>
+export const useGetExerciseSummary = ({
+  date,
+}: IProps): UseQueryResult<IDailyExerciseSummary, Error> =>
   useQuery({
     queryKey: KEYS.summary(date),
     queryFn: async () => await fetcher({date}),
@@ -40,5 +35,4 @@ export const useGetExerciseSummary = (
       totalExerciseTimeMinute: 0,
       totalRecordCount: 0,
     },
-    ...options,
   });

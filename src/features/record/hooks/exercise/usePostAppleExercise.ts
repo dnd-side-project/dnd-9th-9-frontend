@@ -1,8 +1,4 @@
-import {
-  type UseMutationResult,
-  useMutation,
-  type UseMutationOptions,
-} from '@tanstack/react-query';
+import {type UseMutationResult, useMutation} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
@@ -27,14 +23,15 @@ const fetcher = async ({body}: IProps): Promise<string> =>
     })
     .then(({data}) => data);
 
-export const usePostAppleExercise = (
-  options?: UseMutationOptions<string, Error, IProps>,
-): UseMutationResult<string, Error, IProps> => {
+export const usePostAppleExercise = (): UseMutationResult<
+  string,
+  Error,
+  IProps
+> => {
   return useMutation({
     mutationFn: fetcher,
     onSuccess: () => {
       void queryClient.invalidateQueries(KEYS.all);
     },
-    ...options,
   });
 };
