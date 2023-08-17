@@ -23,7 +23,7 @@ export const useGetExerciseList = ({
   useQuery({
     queryKey: KEYS.list(date),
     queryFn: async () => await fetcher({date}),
-    initialData: {
+    placeholderData: {
       exerciseList: [],
       totalCount: 0,
     },

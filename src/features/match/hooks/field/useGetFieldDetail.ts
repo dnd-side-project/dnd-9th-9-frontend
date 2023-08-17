@@ -17,7 +17,7 @@ export const useGetFieldDetail = ({
   useQuery({
     queryKey: KEYS.detail(id),
     queryFn: async () => await fetcher({id}),
-    initialData: {
+    placeholderData: {
       assignedFieldDto: {
         currentSize: 0,
         fieldType: '',

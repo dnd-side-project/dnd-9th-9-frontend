@@ -14,7 +14,7 @@ export const useGetBookmarkList = (): UseQueryResult<
   useQuery({
     queryKey: KEYS.list(),
     queryFn: async () => await fetcher(),
-    initialData: {
+    placeholderData: {
       bookmarks: [],
       totalCount: 0,
     },
