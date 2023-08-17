@@ -2,38 +2,10 @@ import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
+import {type IFieldDetailInfo} from '../../types';
 
 interface IProps {
   id: number;
-}
-
-interface IFieldDetailInfo {
-  assignedFieldDto: {
-    currentSize: number;
-    fieldType: string;
-    goal: string;
-    id: number;
-    maxSize: number;
-    name: string;
-    period: string;
-    profileImg: string;
-    skillLevel: string;
-  };
-  fieldDto: {
-    currentSize: number;
-    description: string;
-    endDate: string;
-    fieldType: string;
-    goal: string;
-    id: number;
-    maxSize: number;
-    name: string;
-    period: string;
-    profileImg: string;
-    rule: string;
-    skillLevel: string;
-    strength: string;
-  };
 }
 
 const fetcher = async ({id}: IProps): Promise<IFieldDetailInfo> =>

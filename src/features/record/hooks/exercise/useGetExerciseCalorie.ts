@@ -2,14 +2,10 @@ import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
+import {type IDailyCalories} from '../../types';
 
 interface IProps {
   date: string;
-}
-
-interface IDailyCalories {
-  burnedCalorie: number;
-  goalCalorie: number;
 }
 
 const fetcher = async ({date}: IProps): Promise<IDailyCalories> =>

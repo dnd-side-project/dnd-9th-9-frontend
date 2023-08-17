@@ -2,14 +2,7 @@ import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
-
-interface IBookmarkListInfo {
-  bookmarks: Array<{
-    id: number;
-    sports: string;
-  }>;
-  totalCount: number;
-}
+import {type IBookmarkListInfo} from '../../types';
 
 const fetcher = async (): Promise<IBookmarkListInfo> =>
   await axios.get(`/bookmarks`).then(({data}) => data);

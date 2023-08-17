@@ -2,19 +2,10 @@ import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
+import {type IRecentExercise} from '../../types';
 
 interface IProps {
   date: string;
-}
-
-interface IRecentExercise {
-  recentSports: Array<{
-    burnedCalorie: number;
-    exerciseMinute: number;
-    sports: string;
-  }>;
-  totalBurnedCalorie: number;
-  totalExerciseMinute: number;
 }
 
 const fetcher = async ({date}: IProps): Promise<IRecentExercise> =>
