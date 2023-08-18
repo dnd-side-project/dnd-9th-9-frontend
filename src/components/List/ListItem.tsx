@@ -31,8 +31,9 @@ export const ListItem = ({
   matchingType,
   period,
   level,
+  onPress,
 }: IListItemProps): React.JSX.Element => (
-  <StyledListItem activeOpacity={0.8}>
+  <StyledListItem activeOpacity={0.8} onPress={onPress}>
     <StyledInfoView>
       <StyledProfile />
       <View>

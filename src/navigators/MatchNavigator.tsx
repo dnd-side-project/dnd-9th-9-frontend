@@ -7,16 +7,30 @@ import {
   CreateTeamProfileScreen,
   CreateTeamScreen,
 } from '../screens/match/create';
-import {MatchDetailScreen} from '../screens/match/detail';
+import {
+  MatchDetailMatchingScreen,
+  MatchDetailMemberScreen,
+  MatchDetailProfileScreen,
+  MatchDetailRecordScreen,
+  MatchDetailScreen,
+} from '../screens/match/detail';
 import {AutoMatchScreen, MatchFilterScreen} from '../screens/match/list';
 
 export type MatchStackParamList = {
   MatchList: undefined;
+  // 필터 화면
   MatchFilter: undefined;
+  // 팀 생성 화면
   TeamInformation: undefined;
   TeamProfile: undefined;
+  // 자동 매칭 화면
   AutoMatch: undefined;
+  // 팀 상세 화면
   MatchDetail: undefined;
+  MatchDetailProfile: undefined;
+  MatchDetailRecord: undefined;
+  MatchDetailMatching: undefined;
+  MatchDetailMember: undefined;
 };
 
 const Stack = createNativeStackNavigator<MatchStackParamList>();
@@ -50,6 +64,26 @@ export function MatchNavigator(): React.JSX.Element {
       <Stack.Screen
         name="MatchDetail"
         component={MatchDetailScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailProfile"
+        component={MatchDetailProfileScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailRecord"
+        component={MatchDetailRecordScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailMatching"
+        component={MatchDetailMatchingScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailMember"
+        component={MatchDetailMemberScreen}
         options={{headerTitle: ''}}
       />
       {/* TODO: 하위 스크린 MatchNavigator 에 셋팅 */}
