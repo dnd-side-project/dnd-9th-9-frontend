@@ -1,5 +1,6 @@
-import styled from '@emotion/native';
 import React from 'react';
+
+import styled from '@emotion/native';
 
 export interface ILineProps {
   size: 'sm' | 'lg';
@@ -7,7 +8,7 @@ export interface ILineProps {
 
 interface IStyledLine extends ILineProps {}
 
-export const Line = ({size}: ILineProps) => {
+export const Line = ({size}: ILineProps): React.JSX.Element => {
   return <StyledLine size={size} />;
 };
 

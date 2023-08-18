@@ -1,9 +1,11 @@
 import React from 'react';
+
 import styled from '@emotion/native';
-import {Text} from '../../../../components/Text';
-import {Icon} from '../../../../components/Icon';
+
 import {arrowRightXmlData} from '../../../../assets/svg';
-import {IMatchMember} from '../../types/member';
+import {Icon} from '../../../../components/Icon';
+import {Text} from '../../../../components/Text';
+import {type IMatchMember} from '../../types/member';
 
 interface IMatchDetailMembersProps {
   currentSize: number;
@@ -15,7 +17,7 @@ export const MatchDetailMembers = ({
   currentSize,
   maxSize,
   members,
-}: IMatchDetailMembersProps) => {
+}: IMatchDetailMembersProps): React.JSX.Element => {
   return (
     <StyledMatchDetailMembersWrapper>
       <StyledHeaderWrapper activeOpacity={0.8}>
