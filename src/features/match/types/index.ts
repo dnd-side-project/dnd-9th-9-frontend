@@ -1,15 +1,23 @@
-export type TFieldType = 'DUEL' | 'TEAM' | 'TEAM_BATTLE';
-export type TPeriod = 'ONE_WEEK' | 'TWO_WEEKS' | 'THREE_WEEKS';
-export type TGoal = 'GAIN' | 'LOSS' | 'MAINTENANCE' | 'PROFILE';
-export type TSkillLevel =
-  | 'ADVANCED_INTERMEDIATE'
-  | 'BEGINNER'
-  | 'EXPERT'
-  | 'INTERMEDIATE';
-export type TStrength = 'HIGH' | 'LOW' | 'MODERATE';
+import {type ValueOf} from '../../../utils/types';
+import {
+  type FieldTypes,
+  type Periods,
+  type Goals,
+  type SkillLevels,
+  type Strengths,
+} from '../const';
 
-export * from './detail';
-export * from './member';
+export type TFieldType = keyof typeof FieldTypes;
+export type TFieldTypeLabel = ValueOf<typeof FieldTypes>;
 
-export * from './field';
-export * from './userField';
+export type TPeriod = keyof typeof Periods;
+export type TPeriodLabel = ValueOf<typeof Periods>;
+
+export type TGoal = keyof typeof Goals;
+export type TGoalLabel = ValueOf<typeof Goals>;
+
+export type TSkillLevel = keyof typeof SkillLevels;
+export type TSkillLevelLabel = ValueOf<typeof SkillLevels>;
+
+export type TStrength = keyof typeof Strengths;
+export type TStrengthLabel = ValueOf<typeof Strengths>;

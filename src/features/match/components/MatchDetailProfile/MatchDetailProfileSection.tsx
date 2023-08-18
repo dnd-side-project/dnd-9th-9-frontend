@@ -1,18 +1,14 @@
 import React from 'react';
+
 import styled from '@emotion/native';
 import {TouchableOpacity, View} from 'react-native';
+
 import {Gap} from '../../../../components/Gap';
-import {Text} from '../../../../components/Text';
-import {Tag, Tags} from '../../../../components/Tag';
 import {Line} from '../../../../components/Line';
-import {IMatchDetail} from '../../types/detail';
-import {
-  getFieldType,
-  getGoal,
-  getPeriod,
-  getSkillLevel,
-  getStrength,
-} from '../../hooks';
+import {Tag, Tags} from '../../../../components/Tag';
+import {Text} from '../../../../components/Text';
+import {FieldTypes, Goals, Periods, SkillLevels, Strengths} from '../../const';
+import {type IMatchDetail} from '../../types/detail';
 
 interface IMatchDetailProfileSectionProps {
   detailInfo: IMatchDetail;
@@ -23,7 +19,7 @@ interface IStausTagProps {
   text: string;
 }
 
-const StatusTag = ({text}: IStausTagProps) => {
+const StatusTag = ({text}: IStausTagProps): React.JSX.Element => {
   return (
     <Tag type="sm" color="gray-0" backgroundColor="main-300" text={text} />
   );
@@ -32,9 +28,9 @@ const StatusTag = ({text}: IStausTagProps) => {
 export const MatchDetailProfileSection = ({
   detailInfo,
   isMember,
-}: IMatchDetailProfileSectionProps) => {
+}: IMatchDetailProfileSectionProps): React.JSX.Element => {
   const {
-    profileImg,
+    // profileImg,
     name,
     description,
     rule,
@@ -44,6 +40,12 @@ export const MatchDetailProfileSection = ({
     skillLevel,
     strength,
   } = detailInfo;
+
+  const filedTypeLabel = FieldTypes[fieldType];
+  const periodLabel = `${Periods[period]}동안`;
+  const goalLabel = Goals[goal];
+  const skillLevelLabel = `운동 레벨 ${SkillLevels[skillLevel]}`;
+  const strengthLabel = `운동 강도 ${Strengths[strength]}`;
 
   return (
     <StyledMatchDetailProfileSectionWrapper>
@@ -85,11 +87,7 @@ export const MatchDetailProfileSection = ({
         color="gray-700"
         backgroundColor="gray-50"
         fontWeight="400"
-        texts={[
-          getFieldType(fieldType),
-          `${getPeriod(period)}동안`,
-          getGoal(goal),
-        ]}
+        texts={[filedTypeLabel, periodLabel, goalLabel]}
       />
       <Gap size="8px" />
       <Tags
@@ -97,10 +95,7 @@ export const MatchDetailProfileSection = ({
         color="gray-700"
         backgroundColor="gray-50"
         fontWeight="400"
-        texts={[
-          `운동 레벨 ${getSkillLevel(skillLevel)}`,
-          `운동 강도 ${getStrength(strength)}`,
-        ]}
+        texts={[skillLevelLabel, strengthLabel]}
       />
     </StyledMatchDetailProfileSectionWrapper>
   );
