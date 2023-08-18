@@ -1,4 +1,10 @@
-import {TFieldType, TGoal, TPeriod, TSkillLevel, TStrength} from '.';
+import {
+  type TPeriod,
+  type TFieldType,
+  type TGoal,
+  type TSkillLevel,
+  type TStrength,
+} from '.';
 
 export interface IMatchDetail {
   id: number;

@@ -1,13 +1,21 @@
+import {
+  type TGoal,
+  type TFieldType,
+  type TPeriod,
+  type TSkillLevel,
+  type TStrength,
+} from '.';
+
 export interface IField {
   currentSize: number;
-  fieldType: string;
-  goal: string;
+  fieldType: TFieldType;
+  goal: TGoal;
   id: number;
   maxSize: number;
   name: string;
-  period: string;
+  period: TPeriod;
   profileImg: string;
-  skillLevel: string;
+  skillLevel: TSkillLevel;
 }
 
 export type TAutoFieldInfo = Omit<IField, 'fieldType'> & {
@@ -20,7 +28,7 @@ export interface IFieldDetailInfo {
     description: string;
     endDate: string;
     rule: string;
-    strength: string;
+    strength: TStrength;
   };
 }
 

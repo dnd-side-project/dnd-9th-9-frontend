@@ -1,4 +1,4 @@
-import {TSkillLevel} from '.';
+import {type TSkillLevel} from '.';
 
 export interface IMatchMember {
   id: number;
