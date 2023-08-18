@@ -1,17 +1,21 @@
 import React from 'react';
+
 import styled from '@emotion/native';
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView, View} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Text} from '../../../components/Text';
+
 import {Button} from '../../../components/Button';
-import {MatchStackParamList} from '../../../navigators';
+import {Text} from '../../../components/Text';
+import {type MatchStackParamList} from '../../../navigators';
 
 type TCreateMatchScreenProps = NativeStackScreenProps<
   MatchStackParamList,
   'TeamInformation'
 >;
 
-export const CreateTeamScreen = ({navigation}: TCreateMatchScreenProps) => {
+export const CreateTeamScreen = ({
+  navigation,
+}: TCreateMatchScreenProps): React.JSX.Element => {
   const matchingRadio = ['1vs1', '팀vs팀', '매칭안함'];
   const periodRadio = ['1주', '2주', '3주'];
   const categoryRadio = ['카테고리', '체중증량', '유지어터', '바디프로필'];
@@ -104,7 +108,9 @@ export const CreateTeamScreen = ({navigation}: TCreateMatchScreenProps) => {
         <View style={{position: 'absolute', bottom: 0, width: '100%'}}>
           <Button
             text="다음"
-            onPress={() => navigation.navigate('TeamProfile')}
+            onPress={() => {
+              navigation.navigate('TeamProfile');
+            }}
           />
         </View>
       </View>

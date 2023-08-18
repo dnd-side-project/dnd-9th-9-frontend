@@ -10,3 +10,6 @@ export type TStrength = 'HIGH' | 'LOW' | 'MODERATE';
 
 export * from './detail';
 export * from './member';
+
+export * from './field';
+export * from './userField';

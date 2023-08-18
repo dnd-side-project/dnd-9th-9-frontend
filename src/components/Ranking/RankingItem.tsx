@@ -1,5 +1,7 @@
 import React from 'react';
+
 import styled from '@emotion/native';
+
 import {Text} from '../Text';
 
 export interface IRankingItemProps {
@@ -22,7 +24,11 @@ const StyledProfile = styled.View`
   background-color: ${props => props.theme.palette['gray-400']};
 `;
 
-export const RankingItem = ({image, ranking, info}: IRankingItemProps) => {
+export const RankingItem = ({
+  image,
+  ranking,
+  info,
+}: IRankingItemProps): React.JSX.Element => {
   return (
     <StyledRankingItem>
       <Text

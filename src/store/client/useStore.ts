@@ -1,6 +1,7 @@
 import {create} from 'zustand';
-import {IAuthSlice, createAuthSlice} from './createAuthSlice';
-import {ICounterSlice, createCounterSlice} from './createCounterSlice';
+
+import {type IAuthSlice, createAuthSlice} from './createAuthSlice';
+import {type ICounterSlice, createCounterSlice} from './createCounterSlice';
 
 type TStore = IAuthSlice & ICounterSlice;
 

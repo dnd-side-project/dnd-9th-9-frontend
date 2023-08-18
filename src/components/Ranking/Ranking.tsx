@@ -1,5 +1,7 @@
 import React from 'react';
+
 import styled from '@emotion/native';
+
 import {RankingItem} from './RankingItem';
 
 interface IRankingProps {
@@ -8,7 +10,7 @@ interface IRankingProps {
 
 const StyledRanking = styled.View``;
 
-export const Ranking = ({infos}: IRankingProps) => {
+export const Ranking = ({infos}: IRankingProps): React.JSX.Element => {
   return (
     <StyledRanking>
       {infos.map((info, index) => (

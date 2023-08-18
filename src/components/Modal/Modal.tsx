@@ -1,9 +1,11 @@
 import React from 'react';
+
 import styled from '@emotion/native';
 import {Modal as RNModal} from 'react-native';
-import {IConfirmModalProps} from './ConfirmModal';
-import {Text} from '../Text';
+
+import {type IConfirmModalProps} from './ConfirmModal';
 import {Gap} from '../Gap';
+import {Text} from '../Text';
 
 export interface IModalProps extends IConfirmModalProps {
   handleCancel: () => void;
@@ -48,7 +50,7 @@ export const Modal = ({
   subTitle,
   handleCancel,
   handleConfirm,
-}: IModalProps) => {
+}: IModalProps): React.JSX.Element => {
   return (
     <RNModal animationType="fade" transparent={true} visible={visible}>
       <StyledModalWrapper>

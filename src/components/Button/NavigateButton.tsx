@@ -1,9 +1,11 @@
 import React from 'react';
+
 import styled from '@emotion/native';
-import {Text} from '../Text';
-import {Icon} from '../Icon';
+
+import {type Tpalette} from '../../assets/styles/emotion';
 import {arrowRightXmlData} from '../../assets/svg';
-import {Tpalette} from '../../assets/styles/emotion';
+import {Icon} from '../Icon';
+import {Text} from '../Text';
 
 export interface INavigateButtonProps {
   text: string;
@@ -36,7 +38,7 @@ export const NavigateButton = ({
   color = 'black',
   backgroundColor = 'gray-50',
   onPress,
-}: INavigateButtonProps) => {
+}: INavigateButtonProps): React.JSX.Element => {
   return (
     <StyledNavigateButton
       width={width}

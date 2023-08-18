@@ -1,22 +1,24 @@
 import React, {useEffect, useState} from 'react';
+
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView, ScrollView, View} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import useStore from '../../store/client/useStore';
-import {Gap} from '../../components/Gap';
-import {Text} from '../../components/Text';
-import {ListItem} from '../../components/List';
+
 import {theme} from '../../assets/styles/theme';
 import {AlarmItem} from '../../components/Alarm';
-import {Ranking} from '../../components/Ranking';
-import {RootStackParamList} from '../../navigators';
-import {Searching} from '../../components/Searching';
-import {ConfirmModal, Modal} from '../../components/Modal';
 import {Button, FilterButton, NavigateButton} from '../../components/Button';
+import {Gap} from '../../components/Gap';
+import {ListItem} from '../../components/List';
+import {Modal} from '../../components/Modal';
+import {Ranking} from '../../components/Ranking';
+import {Searching} from '../../components/Searching';
+import {Text} from '../../components/Text';
 import {WeeklyCalendar} from '../../components/WeeklyCalendar/WeeklyCalendar';
+import {type RootStackParamList} from '../../navigators';
+import useStore from '../../store/client/useStore';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Landing'>;
 
-export function LandingScreen({navigation}: Props) {
+export function LandingScreen({navigation}: Props): React.JSX.Element {
   const {counter, increase, decrease} = useStore();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [search, setSearch] = useState('');
@@ -35,13 +37,17 @@ export function LandingScreen({navigation}: Props) {
         <Button
           text="로그인"
           size="sm"
-          onPress={() => navigation.push('Login')}
+          onPress={() => {
+            navigation.push('Login');
+          }}
         />
         <Button
           disabled
           text="회원가입"
           size="md"
-          onPress={() => navigation.push('Signup')}
+          onPress={() => {
+            navigation.push('Signup');
+          }}
         />
 
         <Text text="Store TEST " type="head1" />
@@ -67,8 +73,12 @@ export function LandingScreen({navigation}: Props) {
           visible={isOpenModal}
           title={`애플 건강앱과\n연동을 진행하시겠어요?`}
           subTitle="연동하면 운동 데이터를 가져올 수 있어요"
-          handleCancel={() => setIsOpenModal(false)}
-          handleConfirm={() => setIsOpenModal(false)}
+          handleCancel={() => {
+            setIsOpenModal(false);
+          }}
+          handleConfirm={() => {
+            setIsOpenModal(false);
+          }}
         />
 
         {/* <ConfirmModal
@@ -78,7 +88,12 @@ export function LandingScreen({navigation}: Props) {
         handleConfirm={() => setIsOpenModal(false)}
       /> */}
 
-        <Button text="모달 열기" onPress={() => setIsOpenModal(true)} />
+        <Button
+          text="모달 열기"
+          onPress={() => {
+            setIsOpenModal(true);
+          }}
+        />
 
         <Gap size="10px" />
 
@@ -91,11 +106,15 @@ export function LandingScreen({navigation}: Props) {
 
         <FilterButton
           isActive={false}
-          onPress={() => console.log('필터 선택 screen으로 이동')}
+          onPress={() => {
+            console.log('필터 선택 screen으로 이동');
+          }}
         />
         <FilterButton
           isActive={true}
-          onPress={() => console.log('필터 선택 screen으로 이동')}
+          onPress={() => {
+            console.log('필터 선택 screen으로 이동');
+          }}
         />
 
         <Ranking infos={['XXX kcal', 'XXX kcal', 'XXX kcal']} />

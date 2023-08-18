@@ -1,15 +1,19 @@
 import React from 'react';
+
 import styled from '@emotion/native';
 import {TouchableOpacity} from 'react-native';
-import {Icon} from '../../../../components/Icon';
+
 import {addXmlData} from '../../../../assets/svg';
+import {Icon} from '../../../../components/Icon';
 import {Text} from '../../../../components/Text';
 
 interface IAddMatchingButtonProps {
   createMatch: () => void;
 }
 
-export const AddMatchingButton = ({createMatch}: IAddMatchingButtonProps) => {
+export const AddMatchingButton = ({
+  createMatch,
+}: IAddMatchingButtonProps): React.JSX.Element => {
   return (
     <TouchableOpacity onPress={createMatch}>
       <StyledTextView>

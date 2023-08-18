@@ -1,6 +1,10 @@
 import React from 'react';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {MaterialTopTabNavigationOptions} from '@react-navigation/material-top-tabs';
+
+import {
+  createMaterialTopTabNavigator,
+  type MaterialTopTabNavigationOptions,
+} from '@react-navigation/material-top-tabs';
+
 import {theme} from '../../assets/styles/theme';
 import {Text} from '../Text';
 
@@ -17,7 +21,10 @@ interface ITopTabNavigatorProps {
   size?: 'sm' | 'md';
 }
 
-export function TopTabNavigator({screens, size = 'md'}: ITopTabNavigatorProps) {
+export function TopTabNavigator({
+  screens,
+  size = 'md',
+}: ITopTabNavigatorProps): React.JSX.Element {
   const screenOptions: MaterialTopTabNavigationOptions = {
     tabBarStyle: {
       width: size === 'sm' ? undefined : 'auto',

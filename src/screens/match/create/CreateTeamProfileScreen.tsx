@@ -1,8 +1,10 @@
 import React from 'react';
+
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+
 import {Text} from '../../../components/Text';
-import {MatchStackParamList} from '../../../navigators/MatchNavigator';
+import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
 type TCreateTeamProfileScreenProps = NativeStackScreenProps<
   MatchStackParamList,
@@ -11,7 +13,7 @@ type TCreateTeamProfileScreenProps = NativeStackScreenProps<
 
 export const CreateTeamProfileScreen = ({
   navigation,
-}: TCreateTeamProfileScreenProps) => {
+}: TCreateTeamProfileScreenProps): React.JSX.Element => {
   return (
     <SafeAreaView style={{backgroundColor: '#ffffff'}}>
       <Text text="프로필 생성" />

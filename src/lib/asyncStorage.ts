@@ -1,8 +1,9 @@
 import AsyncStorage, {
   useAsyncStorage as _useAsyncStorage,
 } from '@react-native-async-storage/async-storage';
-import {ValueOf} from '../utils/types';
-import {AsyncStorageHook} from '@react-native-async-storage/async-storage/lib/typescript/types';
+import {type AsyncStorageHook} from '@react-native-async-storage/async-storage/lib/typescript/types';
+
+import {type ValueOf} from '../utils/types';
 
 const PREFIX = 'matchup' as const;
 
@@ -24,7 +25,7 @@ export const asyncStorage = {
   ): Promise<T | null> => {
     try {
       const data = await AsyncStorage.getItem(`${PREFIX}-${key}`);
-      return data ? (JSON.parse(data) as T) : null;
+      return data != null ? (JSON.parse(data) as T) : null;
     } catch (error) {
       if (error instanceof Error) {
         errorHandler(error, key);

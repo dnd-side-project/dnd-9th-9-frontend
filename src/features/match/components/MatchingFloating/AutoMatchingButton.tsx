@@ -1,15 +1,19 @@
 import React from 'react';
+
 import styled from '@emotion/native';
 import {TouchableOpacity} from 'react-native';
-import {Text} from '../../../../components/Text';
-import {Icon} from '../../../../components/Icon';
+
 import {fireXmlData} from '../../../../assets/svg';
+import {Icon} from '../../../../components/Icon';
+import {Text} from '../../../../components/Text';
 
 interface IAutoMatchingButtonProps {
   autoMatch: () => void;
 }
 
-export const AutoMatchingButton = ({autoMatch}: IAutoMatchingButtonProps) => {
+export const AutoMatchingButton = ({
+  autoMatch,
+}: IAutoMatchingButtonProps): React.JSX.Element => {
   return (
     <TouchableOpacity onPress={autoMatch}>
       <StyledTextView>

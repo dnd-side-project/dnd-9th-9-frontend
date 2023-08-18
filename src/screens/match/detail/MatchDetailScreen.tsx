@@ -1,18 +1,20 @@
 import React from 'react';
+
 import styled from '@emotion/native';
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {MatchStackParamList} from '../../../navigators/MatchNavigator';
-import {Text} from '../../../components/Text';
-import {theme} from '../../../assets/styles/theme';
-import {MatchDetailProfileScreen} from './MatchDetailProfileScreen';
-import {MatchDetailRecordScreen} from './MatchDetailRecordScreen';
+
 import {MatchDetailMatchingScreen} from './MatchDetailMatchingScreen';
 import {MatchDetailMemberScreen} from './MatchDetailMemberScreen';
+import {MatchDetailProfileScreen} from './MatchDetailProfileScreen';
+import {MatchDetailRecordScreen} from './MatchDetailRecordScreen';
+import {theme} from '../../../assets/styles/theme';
+import {Text} from '../../../components/Text';
 import {
-  ITopTabScreen,
+  type ITopTabScreen,
   TopTabNavigator,
 } from '../../../components/TopTabNavigator';
+import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
 type TMatchDetailScreenProps = NativeStackScreenProps<
   MatchStackParamList,
@@ -42,7 +44,9 @@ const screens: ITopTabScreen[] = [
   },
 ];
 
-export const MatchDetailScreen = ({navigation}: TMatchDetailScreenProps) => {
+export const MatchDetailScreen = ({
+  navigation,
+}: TMatchDetailScreenProps): React.JSX.Element => {
   return (
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}}>

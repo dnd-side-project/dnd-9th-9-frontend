@@ -1,15 +1,13 @@
+import React from 'react';
+
+import {type BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {SafeAreaView, Text} from 'react-native';
-import {BottomTabStackParamList, RootStackParamList} from '../../navigators';
-import {CompositeScreenProps} from '@react-navigation/native';
-import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-type Props = CompositeScreenProps<
-  BottomTabScreenProps<BottomTabStackParamList, 'My'>,
-  NativeStackScreenProps<RootStackParamList>
->;
+import {type BottomTabStackParamList} from '../../navigators';
 
-export function MyScreen({navigation}: Props) {
+type Props = BottomTabScreenProps<BottomTabStackParamList, 'My'>;
+
+export function MyScreen({navigation}: Props): React.JSX.Element {
   return (
     <SafeAreaView>
       <Text>MyScreen</Text>

@@ -1,14 +1,13 @@
+import {NativeEventEmitter, NativeModules} from 'react-native';
 import AppleHealthKit, {
-  HealthInputOptions,
-  HealthKitPermissions,
+  type HealthInputOptions,
+  type HealthKitPermissions,
   HealthObserver,
 } from 'react-native-health';
 
-import {NativeEventEmitter, NativeModules} from 'react-native';
-
 // https://github.com/agencyenterprise/react-native-health
 
-export const initHealthKit = () => {
+export const initHealthKit = (): void => {
   const permissions: HealthKitPermissions = {
     permissions: {
       read: [
@@ -22,7 +21,7 @@ export const initHealthKit = () => {
   };
 
   AppleHealthKit.initHealthKit(permissions, (error: string) => {
-    if (error) {
+    if (error !== '') {
       // TODO: error screen 추가 필요
       console.log('[ERROR] Cannot grant permissions!');
     }
@@ -37,8 +36,8 @@ const nativeEventEmitter = new NativeEventEmitter(NativeModules.AppleHealthKit);
 /**
  * 백그라운드 환경에서 사용자의 운동 새 데이터 샘플 수신에 대해 관찰합니다.
  */
-export const observeNewWorkout = (callback: TObserverCallback) => {
-  nativeEventEmitter.addListener('healthKit:Workout:new', async () => {
+export const observeNewWorkout = (callback: TObserverCallback): void => {
+  nativeEventEmitter.addListener('healthKit:Workout:new', () => {
     callback();
   });
 };
@@ -47,13 +46,12 @@ export const observeNewWorkout = (callback: TObserverCallback) => {
  * 백그라운드 환경에서 사용자가 소모한 활동에너지 새 데이터 샘플 수신에 대해 관찰합니다.
  * @see {@link https://developer.apple.com/documentation/healthkit/hkquantitytypeidentifier/1615771-activeenergyburned}
  */
-export const observeNewActiveEnergyBurned = (callback: TObserverCallback) => {
-  nativeEventEmitter.addListener(
-    'healthKit:ActiveEnergyBurned:new',
-    async () => {
-      callback();
-    },
-  );
+export const observeNewActiveEnergyBurned = (
+  callback: TObserverCallback,
+): void => {
+  nativeEventEmitter.addListener('healthKit:ActiveEnergyBurned:new', () => {
+    callback();
+  });
 };
 
 export {AppleHealthKit, HealthObserver, type HealthInputOptions};

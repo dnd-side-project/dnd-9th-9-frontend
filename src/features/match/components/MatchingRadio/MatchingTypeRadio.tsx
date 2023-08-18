@@ -1,6 +1,8 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {type Dispatch, type SetStateAction} from 'react';
+
 import styled from '@emotion/native';
 import {TouchableOpacity} from 'react-native';
+
 import {Tag} from '../../../../components/Tag';
 
 interface IMatchingTypeRadioProps {
@@ -11,7 +13,7 @@ interface IMatchingTypeRadioProps {
 export const MatchingTypeRadio = ({
   pick,
   handlePick,
-}: IMatchingTypeRadioProps) => {
+}: IMatchingTypeRadioProps): React.JSX.Element => {
   const radioData = ['1vs1', '팀vs팀', '모집중', '매칭안함'];
 
   return (
@@ -20,7 +22,9 @@ export const MatchingTypeRadio = ({
         <TouchableOpacity
           key={`matching-${idx}`}
           activeOpacity={0.8}
-          onPress={() => handlePick(value)}>
+          onPress={() => {
+            handlePick(value);
+          }}>
           <Tag
             type="sm"
             hasBorder={pick !== value}

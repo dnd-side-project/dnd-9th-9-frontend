@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
+
 import styled from '@emotion/native';
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {ScrollView} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Gap} from '../../../components/Gap';
-import {Text} from '../../../components/Text';
-import {Searching} from '../../../components/Searching';
-import {IMatchListItem} from '../../../components/List';
+
 import {FilterButton} from '../../../components/Button/FilterButton';
-import {MatchStackParamList} from '../../../navigators/MatchNavigator';
+import {Gap} from '../../../components/Gap';
+import {type IMatchListItem} from '../../../components/List';
+import {Searching} from '../../../components/Searching';
+import {Text} from '../../../components/Text';
 import {MatchingFloating} from '../../../features/match/components/MatchingFloating';
-import {MatchingList} from '../../../features/match/components/MatchList/MatchingList';
 import {MatchingTypeRadio} from '../../../features/match/components/MatchingRadio/MatchingTypeRadio';
+import {MatchingList} from '../../../features/match/components/MatchList/MatchingList';
+import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
 type TMatchListScreenProps = NativeStackScreenProps<
   MatchStackParamList,
@@ -70,11 +72,13 @@ const DUMMY_DATA: IMatchListItem[] = [
   },
 ];
 
-export const MatchListScreen = ({navigation}: TMatchListScreenProps) => {
+export const MatchListScreen = ({
+  navigation,
+}: TMatchListScreenProps): React.JSX.Element => {
   const [matchingTypeFilter, setMatchingTypeFilter] = useState('1vs1');
   const [activeFloating, setActiveFloating] = useState(false);
 
-  const handleTeamDetail = (teamId: string) => {
+  const handleTeamDetail = (teamId: string): void => {
     navigation.navigate('MatchDetail');
   };
 
@@ -100,23 +104,35 @@ export const MatchListScreen = ({navigation}: TMatchListScreenProps) => {
           />
           <FilterButton
             isActive={false}
-            onPress={() => navigation.navigate('MatchFilter')}
+            onPress={() => {
+              navigation.navigate('MatchFilter');
+            }}
           />
         </StyledFlexView>
 
         {/* TODO: 매칭 리스트 없는 경우 화면 추가 */}
         <MatchingList
           data={DUMMY_DATA}
-          onPress={(value: string) => handleTeamDetail(value)}
+          onPress={(value: string) => {
+            handleTeamDetail(value);
+          }}
         />
       </ScrollView>
 
       <MatchingFloating
         isActive={activeFloating}
-        openMenu={() => setActiveFloating(true)}
-        closeMenu={() => setActiveFloating(false)}
-        createMatch={() => navigation.navigate('TeamInformation')}
-        autoMatch={() => navigation.navigate('AutoMatch')}
+        openMenu={() => {
+          setActiveFloating(true);
+        }}
+        closeMenu={() => {
+          setActiveFloating(false);
+        }}
+        createMatch={() => {
+          navigation.navigate('TeamInformation');
+        }}
+        autoMatch={() => {
+          navigation.navigate('AutoMatch');
+        }}
       />
     </StyledScreen>
   );
