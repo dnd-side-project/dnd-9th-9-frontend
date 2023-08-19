@@ -6,7 +6,7 @@ import {Gap} from '../../../../components/Gap';
 import {Line} from '../../../../components/Line';
 import {Text} from '../../../../components/Text';
 import {FieldTypes, Goals, Periods, SkillLevels, Strengths} from '../../const';
-import {MatchingCreateRadio} from '../MatchingRadio';
+import {MatchCreateRadio} from '../MatchRadio';
 
 interface ICreateMatchInformationItemProps {
   label: string;
@@ -32,7 +32,7 @@ export const CreateMatchInformationItem = ({
   return (
     <StyledInformationItemWrapper>
       <Text type="body1" text={label} />
-      <MatchingCreateRadio
+      <MatchCreateRadio
         field={field}
         radioData={radioData[field]}
         pick={pick}

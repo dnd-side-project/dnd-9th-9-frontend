@@ -10,8 +10,8 @@ import {type IMatchListItem} from '../../../components/List';
 import {Searching} from '../../../components/Searching';
 import {Text} from '../../../components/Text';
 import {MatchingFloating} from '../../../features/match/components/MatchingFloating';
-import {MatchingTypeRadio} from '../../../features/match/components/MatchingRadio/MatchingTypeRadio';
 import {MatchingList} from '../../../features/match/components/MatchList/MatchingList';
+import {MatchTypeRadio} from '../../../features/match/components/MatchRadio';
 import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
 type TMatchListScreenProps = NativeStackScreenProps<
@@ -91,7 +91,7 @@ export const MatchListScreen = ({
           handleSearch={() => {}}
         />
 
-        <MatchingTypeRadio
+        <MatchTypeRadio
           pick={matchingTypeFilter}
           handlePick={setMatchingTypeFilter}
         />
