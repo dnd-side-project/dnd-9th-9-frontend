@@ -18,4 +18,15 @@ export const KEYS = {
   detail: (id: number) => [...KEYS.all, 'detail', id] as const,
   detailTerminate: (id: number) => [...KEYS.detail(id), 'terminate'],
   auto: (type: string) => [...KEYS.all, 'auto', {type}],
+  detailEntryBattle: (
+    id: number,
+    fieldDirection: 'RECEIVED' | 'SENT',
+    page: number,
+    size: number,
+  ) =>
+    [
+      ...KEYS.detailTerminate(id),
+      'entry-battle',
+      {fieldDirection, page, size},
+    ] as const,
 };
