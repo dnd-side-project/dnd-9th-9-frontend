@@ -8,6 +8,7 @@ import {
   CreateTeamScreen,
 } from '../screens/match/create';
 import {
+  MatchDetailMatchingMoreScreen,
   MatchDetailMatchingScreen,
   MatchDetailMemberScreen,
   MatchDetailProfileScreen,
@@ -30,6 +31,7 @@ export type MatchStackParamList = {
   MatchDetailProfile: undefined;
   MatchDetailRecord: undefined;
   MatchDetailMatching: undefined;
+  MatchDetailMatchingMore: undefined;
   MatchDetailMember: undefined;
 };
 
@@ -79,6 +81,11 @@ export function MatchNavigator(): React.JSX.Element {
       <Stack.Screen
         name="MatchDetailMatching"
         component={MatchDetailMatchingScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailMatchingMore"
+        component={MatchDetailMatchingMoreScreen}
         options={{headerTitle: ''}}
       />
       <Stack.Screen
