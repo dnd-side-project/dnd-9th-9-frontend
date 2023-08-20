@@ -7,12 +7,15 @@ import {
   crateMatchDetailMatchingSlice,
 } from './createMatchDetailSlice';
 
-type TStore = IAuthSlice & ICounterSlice & IMatchDetailMatchingSlice;
+import {type IRecordSlice, createRecordSlice} from './createRecordSlice';
+
+type TStore = IAuthSlice & ICounterSlice & IRecordSlice & IMatchDetailMatchingSlice;
 
 const useStore = create<TStore>()((...a) => ({
   ...createAuthSlice(...a),
   ...createCounterSlice(...a),
   ...crateMatchDetailMatchingSlice(...a),
+  ...createRecordSlice(...a),
 }));
 
 export default useStore;
