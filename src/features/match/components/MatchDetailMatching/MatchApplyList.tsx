@@ -17,6 +17,7 @@ interface IMatchApplyListProps {
   isSummary?: boolean;
   onPressMore?: () => void;
   handleSettingConfirmButton?: () => void;
+  handleTeamDetail: (matchId: number) => void;
 }
 
 export const MatchApplyList = ({
@@ -26,6 +27,7 @@ export const MatchApplyList = ({
   isSummary = true,
   onPressMore,
   handleSettingConfirmButton = () => {},
+  handleTeamDetail,
 }: IMatchApplyListProps): React.JSX.Element => {
   const [isSettingMode, setIsSettingMode] = useState(false);
   const [checkedApply, setCheckedApply] = useState<number[]>([]);
@@ -79,6 +81,7 @@ export const MatchApplyList = ({
               isSettingMode={isSettingMode}
               apply={apply}
               checked={checkedApply.includes(apply.entryId)}
+              handleTeamDetail={handleTeamDetail}
               handleCheck={() => {
                 checkedApply.includes(apply.entryId)
                   ? setCheckedApply(value => [

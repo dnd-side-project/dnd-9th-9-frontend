@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/native';
-import {TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 
 import {CheckBox} from '../../../../components/CheckBox';
 import {Gap} from '../../../../components/Gap';
@@ -15,6 +15,7 @@ interface IMatchApplyListItemProps {
   checked?: boolean;
   apply: IMatchApply;
   handleCheck?: () => void;
+  handleTeamDetail: (matchId: number) => void;
 }
 
 interface IStyledMatchApplyListItem {
@@ -27,9 +28,11 @@ export const MatchApplyListItem = ({
   checked = false,
   apply,
   handleCheck,
+  handleTeamDetail,
 }: IMatchApplyListItemProps): React.JSX.Element => {
   const {
     entryId,
+    matchId,
     name,
     memberCount,
     memberMaxCount,
@@ -49,7 +52,11 @@ export const MatchApplyListItem = ({
         </TouchableOpacity>
       )}
 
-      <View>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => {
+          if (!isSettingMode) handleTeamDetail(matchId);
+        }}>
         <Text type="body1" color="gray-700" fontWeight="600" text={name} />
         <Gap size="12px" />
         <Text
@@ -70,7 +77,7 @@ export const MatchApplyListItem = ({
             `운동레벨 ${SkillLevels[skillLevel]}`,
           ]}
         />
-      </View>
+      </TouchableOpacity>
     </StyledMatchApplyListItem>
   );
 };

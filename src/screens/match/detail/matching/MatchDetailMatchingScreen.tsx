@@ -39,6 +39,12 @@ export const MatchDetailMatchingScreen = ({
     handleMoreMatchingType(type);
     navigation.navigate('MatchDetailMatchingMore');
   };
+
+  const handleTeamDetail = (matchId: number): void => {
+    // TODO: 특정 matchId의 상세 화면으로 이동시키기
+    navigation.navigate('MatchDetailProfile');
+  };
+
   return (
     <SafeAreaView
       style={{backgroundColor: theme.palette['gray-0'], height: '100%'}}>
@@ -50,6 +56,7 @@ export const MatchDetailMatchingScreen = ({
           onPressMore={() => {
             handleMoreMatch('SENT');
           }}
+          handleTeamDetail={handleTeamDetail}
         />
         <Line size="lg" />
         <MatchApplyList
@@ -59,6 +66,7 @@ export const MatchDetailMatchingScreen = ({
           onPressMore={() => {
             handleMoreMatch('RECEIVED');
           }}
+          handleTeamDetail={handleTeamDetail}
         />
       </ScrollView>
     </SafeAreaView>

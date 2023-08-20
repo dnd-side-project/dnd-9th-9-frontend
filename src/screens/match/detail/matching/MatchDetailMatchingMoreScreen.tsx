@@ -64,6 +64,11 @@ export const MatchDetailMatchingMoreScreen = ({
     });
   };
 
+  const handleTeamDetail = (matchId: number): void => {
+    // TODO: 특정 matchId의 상세 화면으로 이동시키기
+    navigation.navigate('MatchDetailProfile');
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.palette['gray-0']}}>
       <MatchApplyList
@@ -72,6 +77,7 @@ export const MatchDetailMatchingMoreScreen = ({
         applies={data.fieldEntriesInfos}
         type={moreMatchingType}
         handleSettingConfirmButton={handleSettingConfirmButton}
+        handleTeamDetail={handleTeamDetail}
       />
 
       <Modal
