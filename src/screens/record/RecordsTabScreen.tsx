@@ -5,10 +5,10 @@ import styled from '@emotion/native';
 import {Gap} from '../../components/Gap';
 import {WeeklyCalendar} from '../../components/WeeklyCalendar';
 import {WorkoutCardGroup} from '../../features/record/components';
-import {useSelectedDateStore} from '../../features/record/store';
+import useStore from '../../store/client/useStore';
 
 export const RecordsTabScreen = (): React.JSX.Element => {
-  const {selectedDate, setSelectedDate} = useSelectedDateStore();
+  const {selectedDate, setSelectedDate} = useStore();
 
   return (
     <StyledRecordsTabScreen>

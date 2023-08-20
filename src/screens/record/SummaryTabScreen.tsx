@@ -5,10 +5,10 @@ import styled from '@emotion/native';
 import {Gap} from '../../components/Gap';
 import {WeeklyCalendar} from '../../components/WeeklyCalendar';
 import {SummaryCardGroup} from '../../features/record/components/SummaryCard/SummaryCardGroup';
-import {useSelectedDateStore} from '../../features/record/store';
+import useStore from '../../store/client/useStore';
 
 export function SummaryTabScreen(): React.JSX.Element {
-  const {selectedDate, setSelectedDate} = useSelectedDateStore();
+  const {selectedDate, setSelectedDate} = useStore();
 
   return (
     <StyledRecordsTabScreen>
