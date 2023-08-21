@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {View} from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -8,27 +8,22 @@ import {dayjs} from '../../lib/dayjs';
 import {Text} from '../Text';
 
 interface IWeeklyCalendarProps {
-  defaultSelectedDate?: dayjs.Dayjs;
+  selectedDate?: dayjs.Dayjs;
   onChangeSelectedDate?: (date: dayjs.Dayjs) => void;
 }
 
 export function WeeklyCalendar({
-  defaultSelectedDate,
+  selectedDate = dayjs(),
   onChangeSelectedDate,
 }: IWeeklyCalendarProps): React.JSX.Element {
   const today = dayjs();
-  const [selectedDate, setSelectedDate] = useState(
-    defaultSelectedDate ?? today,
-  );
 
   const handleDateSelected = (selectedDate: dayjs.Dayjs): void => {
     onChangeSelectedDate?.(selectedDate);
-    setSelectedDate(selectedDate);
   };
 
   const goToToday = (): void => {
     onChangeSelectedDate?.(today);
-    setSelectedDate(today);
   };
 
   return (
