@@ -18,6 +18,12 @@ export interface IField {
   skillLevel: TSkillLevel;
 }
 
+export interface ICreateField extends Omit<IField, 'currentSize' | 'id'> {
+  description: string;
+  rule: string;
+  strength: TStrength;
+}
+
 export type TAutoFieldInfo = Omit<IField, 'fieldType'> & {
   strength: string;
 };

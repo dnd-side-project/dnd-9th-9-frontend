@@ -4,8 +4,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {MatchScreen} from '../screens/match';
 import {
-  CreateTeamProfileScreen,
-  CreateTeamScreen,
+  CreateMatchInformationScreen,
+  CreateMatchProfileScreen,
 } from '../screens/match/create';
 import {
   MatchDetailMatchingScreen,
@@ -48,12 +48,12 @@ export function MatchNavigator(): React.JSX.Element {
       <Stack.Screen name="MatchFilter" component={MatchFilterScreen} />
       <Stack.Screen
         name="TeamInformation"
-        component={CreateTeamScreen}
+        component={CreateMatchInformationScreen}
         options={{headerTitle: '팀 정보 입력'}}
       />
       <Stack.Screen
         name="TeamProfile"
-        component={CreateTeamProfileScreen}
+        component={CreateMatchProfileScreen}
         options={{headerTitle: '팀 프로필', headerBackTitleVisible: false}}
       />
       <Stack.Screen

@@ -5,15 +5,15 @@ import {TouchableOpacity} from 'react-native';
 
 import {Tag} from '../../../../components/Tag';
 
-interface IMatchingTypeRadioProps {
+interface IMatchTypeRadioProps {
   pick: string;
   handlePick: Dispatch<SetStateAction<string>>;
 }
 
-export const MatchingTypeRadio = ({
+export const MatchTypeRadio = ({
   pick,
   handlePick,
-}: IMatchingTypeRadioProps): React.JSX.Element => {
+}: IMatchTypeRadioProps): React.JSX.Element => {
   const radioData = ['1vs1', '팀vs팀', '모집중', '매칭안함'];
 
   return (
