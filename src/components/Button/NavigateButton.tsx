@@ -21,17 +21,6 @@ interface IStyledNavigateButton {
   backgroundColor: Tpalette;
 }
 
-const StyledNavigateButton = styled.TouchableOpacity<IStyledNavigateButton>`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  color: ${props => props.theme.palette[props.color]};
-  background-color: ${props => props.theme.palette[props.backgroundColor]};
-  border-radius: ${props => props.theme.borderRadius.md};
-  width: ${props => props.width};
-  padding: 17px 24px;
-`;
-
 export const NavigateButton = ({
   text,
   width = '300px',
@@ -51,3 +40,15 @@ export const NavigateButton = ({
     </StyledNavigateButton>
   );
 };
+
+const StyledNavigateButton = styled.TouchableOpacity<IStyledNavigateButton>`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: ${props => props.theme.palette[props.color]};
+  background-color: ${props => props.theme.palette[props.backgroundColor]};
+  border-radius: ${props => props.theme.borderRadius.md};
+  width: ${props => props.width};
+  padding: 17px 24px;
+  margin-right: 16px;
+`;
