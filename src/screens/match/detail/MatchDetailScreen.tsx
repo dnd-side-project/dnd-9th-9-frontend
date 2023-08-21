@@ -7,7 +7,7 @@ import {SafeAreaView} from 'react-native';
 import {MatchDetailMatchingScreen} from './MatchDetailMatchingScreen';
 import {MatchDetailMemberScreen} from './MatchDetailMemberScreen';
 import {MatchDetailProfileScreen} from './MatchDetailProfileScreen';
-import {MatchDetailRecordScreen} from './MatchDetailRecordScreen';
+import {MatchDetailRecordScreen} from './record';
 import {theme} from '../../../assets/styles/theme';
 import {Text} from '../../../components/Text';
 import {
