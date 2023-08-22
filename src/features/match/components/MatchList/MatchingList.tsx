@@ -4,7 +4,7 @@ import {type IMatchListItem, ListItem} from '../../../../components/List';
 
 interface IMatchingListProps {
   data: IMatchListItem[];
-  onPress: (matchId: string) => void;
+  onPress: (matchId: number) => void;
 }
 
 export const MatchingList = ({
@@ -25,7 +25,7 @@ export const MatchingList = ({
           maximumMember={item.maximumMember}
           period={item.period}
           onPress={() => {
-            onPress(idx.toString());
+            onPress(idx);
           }}
         />
       ))}
