@@ -64,9 +64,9 @@ export function TopTabNavigator({
                 fontWeight="bold"
               />
             ),
-          }}
-          component={screen.component}
-        />
+          }}>
+          {screen.component}
+        </Tab.Screen>
       ))}
     </Tab.Navigator>
   );
