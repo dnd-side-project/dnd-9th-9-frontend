@@ -21,3 +21,18 @@ export interface IMatchDetail {
   maxSize: number;
   endDate: string;
 }
+
+export interface IMatchDetailRecord {
+  burnedCalorie: number;
+  durationMinute: number;
+  exerciseDateTime: string; // yyyy-MM-dd HH:mm:ss
+  id: number;
+  isLeader: boolean;
+  isMemoPublic: boolean;
+  memoContent: string;
+  memoImg: string;
+  name: string;
+  profileImg: string;
+  sports: string; // TODO: 추후 TSports enum 으로 변경
+  userId: number;
+}

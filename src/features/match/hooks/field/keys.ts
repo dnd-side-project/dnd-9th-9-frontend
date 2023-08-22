@@ -1,3 +1,5 @@
+import {type TFieldType} from '../../types';
+
 export const KEYS = {
   all: ['field'] as const,
   list: (
@@ -17,5 +19,12 @@ export const KEYS = {
     ] as const,
   detail: (id: number) => [...KEYS.all, 'detail', id] as const,
   detailTerminate: (id: number) => [...KEYS.detail(id), 'terminate'],
+  detailRecord: (
+    id: number,
+    date: string,
+    fieldType: TFieldType,
+    page: number,
+    size: number,
+  ) => [...KEYS.detailTerminate(id), 'record', {date, fieldType, page, size}],
   auto: (type: string) => [...KEYS.all, 'auto', {type}],
 };
