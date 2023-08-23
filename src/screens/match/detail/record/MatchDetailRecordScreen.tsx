@@ -9,6 +9,7 @@ import {Gap} from '../../../../components/Gap';
 import {Line} from '../../../../components/Line';
 import {WeeklyCalendar} from '../../../../components/WeeklyCalendar';
 import {MatchDetailRecordCard} from '../../../../features/match/components/MatchDetailRecord';
+import {MatchDetailRecordCarousel} from '../../../../features/match/components/MatchDetailRecord/MatchDetailRecordCarousel';
 import {
   useGetFieldRecord,
   DUMMY_DATA,
@@ -33,6 +34,13 @@ export const MatchDetailRecordScreen = ({
     fieldType: 'DUEL',
   });
 
+  // TODO: 추후 수정
+  const carouselData = [
+    '🔥 현재 우리팀이 [name]보다 앞서나가는 중!',
+    '🔥 목표 D-10 일 조금만 더 힘내 보아요!',
+    '🔥 팀 규칙 : 하루에 1인당 500kcal 태우기!',
+  ];
+
   return (
     <SafeAreaView style={{backgroundColor: theme.palette['gray-0'], flex: 1}}>
       <ScrollView>
@@ -48,6 +56,10 @@ export const MatchDetailRecordScreen = ({
           selectedDate={selectedDate}
           onChangeSelectedDate={setSelectedDate}
         />
+
+        <Gap size="15px" />
+        <MatchDetailRecordCarousel data={carouselData} />
+        <Gap size="24px" />
 
         <MatchDetailRecordCard records={data} />
       </ScrollView>
