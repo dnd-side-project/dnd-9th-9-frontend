@@ -17,18 +17,20 @@ import {
 import {BottomSheetContext} from './BottomSheetContext';
 
 interface IBottomSheetProps extends PropsWithChildren {
-  modalVisible: boolean;
-  defaultSelectedId?: string;
-  setModalVisible: (visible: boolean) => void;
+  isVisible: boolean;
+  defaultSelectedTabId?: string;
+  onChangeIsVisible?: (visible: boolean) => void;
+  onClose?: () => void;
 }
 
 export const BottomSheet = ({
-  modalVisible,
-  defaultSelectedId = '',
-  setModalVisible,
+  isVisible,
+  defaultSelectedTabId = '',
+  onChangeIsVisible,
+  onClose,
   children,
 }: IBottomSheetProps): React.JSX.Element => {
-  const [currentTabId, setCurrentTabId] = useState(defaultSelectedId);
+  const [currentTabId, setCurrentTabId] = useState(defaultSelectedTabId);
 
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -67,21 +69,22 @@ export const BottomSheet = ({
   ).current;
 
   useEffect(() => {
-    if (modalVisible) {
+    if (isVisible) {
       resetBottomSheet.start();
     }
-  }, [modalVisible]);
+  }, [isVisible]);
 
   const closeModal = (): void => {
     closeBottomSheet.start(() => {
-      setModalVisible(false);
+      onChangeIsVisible?.(false);
+      onClose?.();
+      setCurrentTabId(defaultSelectedTabId);
     });
-    setCurrentTabId(defaultSelectedId);
   };
 
   return (
     <Modal
-      visible={modalVisible}
+      visible={isVisible}
       animationType="fade"
       transparent
       statusBarTranslucent>
