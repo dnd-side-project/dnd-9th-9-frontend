@@ -57,7 +57,6 @@ export const MatchDetailRecordScreen = ({
           onChangeSelectedDate={setSelectedDate}
         />
 
-        <Gap size="15px" />
         <MatchDetailRecordCarousel data={carouselData} />
         <Gap size="24px" />
 
