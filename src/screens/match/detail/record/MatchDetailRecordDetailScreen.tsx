@@ -9,6 +9,7 @@ import {Gap} from '../../../../components/Gap';
 import {Line} from '../../../../components/Line';
 import {Text} from '../../../../components/Text';
 import {RecordDetailInformationItem} from '../../../../features/match/components/MatchDetailRecord';
+import {WORKOUT_ACTIVITIES} from '../../../../lib/AppleHealthKit';
 import {dayjs} from '../../../../lib/dayjs';
 import {type MatchStackParamList} from '../../../../navigators';
 
@@ -76,7 +77,10 @@ export const MatchDetailRecordDetailScreen = (): React.JSX.Element => {
 
       <StyledSectionWrapper>
         {/* TODO: 상수로 변경 */}
-        <RecordDetailInformationItem label="운동 종류" value={sports} />
+        <RecordDetailInformationItem
+          label="운동 종류"
+          value={WORKOUT_ACTIVITIES[sports].label}
+        />
         <Gap size="42px" />
         <RecordDetailInformationItem
           label="운동 시간"

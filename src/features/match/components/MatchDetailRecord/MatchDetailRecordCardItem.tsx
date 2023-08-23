@@ -9,6 +9,7 @@ import {Gap} from '../../../../components/Gap';
 import {Icon} from '../../../../components/Icon';
 import {Tags} from '../../../../components/Tag';
 import {Text} from '../../../../components/Text';
+import {WORKOUT_ACTIVITIES} from '../../../../lib/AppleHealthKit';
 import {dayjs} from '../../../../lib/dayjs';
 import {type IMatchDetailRecord} from '../../types';
 
@@ -101,9 +102,18 @@ export const MatchDetailRecordCardItem = ({
           <View style={{padding: 12}}>
             <StyledFlexSection style={{justifyContent: 'space-between'}}>
               <StyledFlexSection style={{gap: 6}}>
-                {/* TODO: sports에 대한 상수값 적용 */}
-                <StyledCardItemProfile />
-                <Text type="body1" fontWeight="600" text={`${sports}`} />
+                <StyledCardItemProfile>
+                  <Text
+                    type="body3"
+                    textAlign="center"
+                    text={`${WORKOUT_ACTIVITIES[sports].emoji}`}
+                  />
+                </StyledCardItemProfile>
+                <Text
+                  type="body1"
+                  fontWeight="600"
+                  text={`${WORKOUT_ACTIVITIES[sports].label}`}
+                />
               </StyledFlexSection>
               <Text
                 type="body3"
@@ -128,7 +138,12 @@ export const MatchDetailRecordCardItem = ({
             {isMemoPublic && (
               <>
                 <Gap size="15px" />
-                <Text type="body3" fontWeight="400" text={memoContent} />
+                <Text
+                  type="body3"
+                  fontWeight="400"
+                  numberOfLines={2}
+                  text={memoContent}
+                />
               </>
             )}
           </View>

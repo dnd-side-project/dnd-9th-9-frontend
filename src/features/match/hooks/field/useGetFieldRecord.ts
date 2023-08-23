@@ -12,7 +12,7 @@ interface IProps {
   size?: number;
 }
 
-export const DUMMY_DATA = [
+export const DUMMY_DATA: IMatchDetailRecord[] = [
   {
     burnedCalorie: 100,
     durationMinute: 300,
@@ -21,7 +21,7 @@ export const DUMMY_DATA = [
     isLeader: true,
     isMemoPublic: true,
     memoContent:
-      '오운완 인증합니다!!! 오늘도 빠이팅이에요. 몸짱 되는 그날까지 계속',
+      '오운완 인증합니다!!! 오늘도 빠이팅이에요. 몸짱 되는 그 날까지 계속입니다!!! 저번에 못 이룬 바디 프로필을 꼬옥 찍겠어요 이번에는~',
     memoImg: '',
     name: '주주',
     profileImg: '',
@@ -34,13 +34,12 @@ export const DUMMY_DATA = [
     exerciseDateTime: '2023-08-23 12:59:00',
     id: 2,
     isLeader: false,
-    isMemoPublic: true,
-    memoContent:
-      '오늘은 운동을 매우매우 열심히 하였어요...!! 퇴근하고 정말 운동하기 싫었는데 해냈다',
+    isMemoPublic: false,
+    memoContent: '야구는 재밌어!',
     memoImg: '',
     name: '치치',
     profileImg: '',
-    sports: 'AMERICAN_FOOTBALL',
+    sports: 'BASEBALL',
     userId: 2,
   },
   {
@@ -50,11 +49,12 @@ export const DUMMY_DATA = [
     id: 3,
     isLeader: false,
     isMemoPublic: true,
-    memoContent: '오늘도 해냈다!! 오운완!',
+    memoContent:
+      '오클완! 등산 입문했는데 재밌네용. 클라이밍 영역도 있었어요...! 팔 근력을 키워야겠어요.',
     memoImg: '',
     name: '차차',
     profileImg: '',
-    sports: 'AMERICAN_FOOTBALL',
+    sports: 'CLIMBING',
     userId: 3,
   },
 ];
