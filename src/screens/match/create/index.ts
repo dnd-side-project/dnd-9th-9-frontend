@@ -1,2 +1,2 @@
-export * from './CreateTeamScreen';
-export * from './CreateTeamProfileScreen';
+export * from './CreateMatchInformationScreen';
+export * from './CreateMatchProfileScreen';
