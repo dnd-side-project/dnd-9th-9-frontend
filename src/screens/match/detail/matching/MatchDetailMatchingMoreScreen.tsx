@@ -1,6 +1,11 @@
 import React, {useState} from 'react';
 
-import {type NativeStackScreenProps} from '@react-navigation/native-stack';
+import {
+  type RouteProp,
+  useRoute,
+  useNavigation,
+} from '@react-navigation/native';
+import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
 
 import {theme} from '../../../../assets/styles/theme';
@@ -12,41 +17,46 @@ import {
   useGetFieldDetailEntryBattle,
 } from '../../../../features/match/hooks/field/useGetFieldDetailEntryBattle';
 import {type MatchStackParamList} from '../../../../navigators';
-import useStore from '../../../../store/client/useStore';
 
-type TMatchDetailMatchingMoreScreenProps = NativeStackScreenProps<
+type TMatchDetailMatchingMoreRouteProps = RouteProp<
   MatchStackParamList,
   'MatchDetailMatchingMore'
 >;
 
-export const MatchDetailMatchingMoreScreen = ({
-  navigation,
-}: TMatchDetailMatchingMoreScreenProps): React.JSX.Element => {
+type TMatchDetailMatchingMoreNavigationProps = NativeStackNavigationProp<
+  MatchStackParamList,
+  'MatchDetailMatchingMore'
+>;
+
+export const MatchDetailMatchingMoreScreen = (): React.JSX.Element => {
   const selectMatchId = 1;
+
+  const route = useRoute<TMatchDetailMatchingMoreRouteProps>();
+  const navigation = useNavigation<TMatchDetailMatchingMoreNavigationProps>();
+
+  const {type} = route.params;
 
   const [settingModalInfo, setSettingModalInfo] = useState({
     visible: false,
     title: '',
     subTitle: '',
   });
-  const {moreMatchingType} = useStore();
 
-  const DUMMY_DATA =
-    moreMatchingType === 'SENT' ? SENT_DUMMY_DATA : APPLY_DUMMY_DATA;
+  const DUMMY_DATA = type === 'SENT' ? SENT_DUMMY_DATA : APPLY_DUMMY_DATA;
 
   const {data = DUMMY_DATA} = useGetFieldDetailEntryBattle({
     id: selectMatchId,
-    fieldDirection: moreMatchingType,
+    fieldDirection: type,
   });
 
   const handleSettingConfirmButton = (): void => {
-    if (moreMatchingType === 'SENT') {
+    if (type === 'SENT') {
       setSettingModalInfo({
         visible: true,
         title: '선택한 매칭을 삭제할까요?',
         subTitle: '선택한 매칭은 목록에서 제거됩니다.',
       });
-    } else if (moreMatchingType === 'RECEIVED') {
+    } else if (type === 'RECEIVED') {
       // TODO: 제거/수락 모드에 따라 모달 내용 변경
       setSettingModalInfo({
         visible: true,
@@ -75,7 +85,7 @@ export const MatchDetailMatchingMoreScreen = ({
         isSummary={false}
         totalCount={data.totalCount}
         applies={data.fieldEntriesInfos}
-        type={moreMatchingType}
+        type={type}
         handleSettingConfirmButton={handleSettingConfirmButton}
         handleTeamDetail={handleTeamDetail}
       />

@@ -31,7 +31,9 @@ export type MatchStackParamList = {
   MatchDetailProfile: undefined;
   MatchDetailRecord: undefined;
   MatchDetailMatching: undefined;
-  MatchDetailMatchingMore: undefined;
+  MatchDetailMatchingMore: {
+    type: 'RECEIVED' | 'SENT';
+  };
   MatchDetailMember: undefined;
 };
 

@@ -12,7 +12,6 @@ import {
   useGetFieldDetailEntryBattle,
 } from '../../../../features/match/hooks/field/useGetFieldDetailEntryBattle';
 import {type MatchStackParamList} from '../../../../navigators/MatchNavigator';
-import useStore from '../../../../store/client/useStore';
 
 type TMatchDetailMatchingScreenProps = NativeStackScreenProps<
   MatchStackParamList,
@@ -23,7 +22,6 @@ export const MatchDetailMatchingScreen = ({
   navigation,
 }: TMatchDetailMatchingScreenProps): React.JSX.Element => {
   const selectMatchId = 1;
-  const {handleMoreMatchingType} = useStore();
 
   const {data: sentData = SENT_DUMMY_DATA} = useGetFieldDetailEntryBattle({
     id: selectMatchId,
@@ -36,8 +34,7 @@ export const MatchDetailMatchingScreen = ({
   });
 
   const handleMoreMatch = (type: 'SENT' | 'RECEIVED'): void => {
-    handleMoreMatchingType(type);
-    navigation.navigate('MatchDetailMatchingMore');
+    navigation.navigate('MatchDetailMatchingMore', {type});
   };
 
   const handleTeamDetail = (matchId: number): void => {
