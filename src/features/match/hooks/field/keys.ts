@@ -25,7 +25,7 @@ export const KEYS = {
     size: number,
   ) =>
     [
-      ...KEYS.detailTerminate(id),
+      ...KEYS.detail(id),
       'entry-battle',
       {fieldDirection, page, size},
     ] as const,
