@@ -25,6 +25,6 @@ export const KEYS = {
     fieldType: TFieldType,
     page: number,
     size: number,
-  ) => [...KEYS.detailTerminate(id), 'record', {date, fieldType, page, size}],
+  ) => [...KEYS.detail(id), 'record', {date, fieldType, page, size}],
   auto: (type: string) => [...KEYS.all, 'auto', {type}],
 };
