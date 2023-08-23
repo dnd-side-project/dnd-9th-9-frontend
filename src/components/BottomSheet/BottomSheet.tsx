@@ -24,11 +24,11 @@ interface IBottomSheetProps extends PropsWithChildren {
 
 export const BottomSheet = ({
   modalVisible,
-  defaultSelectedId,
+  defaultSelectedId = '',
   setModalVisible,
   children,
 }: IBottomSheetProps): React.JSX.Element => {
-  const [currentTabId, setCurrentTabId] = useState(defaultSelectedId ?? '');
+  const [currentTabId, setCurrentTabId] = useState(defaultSelectedId);
 
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -76,6 +76,7 @@ export const BottomSheet = ({
     closeBottomSheet.start(() => {
       setModalVisible(false);
     });
+    setCurrentTabId(defaultSelectedId);
   };
 
   return (
