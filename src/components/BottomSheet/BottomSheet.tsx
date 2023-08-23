@@ -5,14 +5,13 @@ import React, {
   useState,
 } from 'react';
 
+import styled from '@emotion/native';
 import {
-  View,
   Modal,
   Animated,
   TouchableWithoutFeedback,
   Dimensions,
   PanResponder,
-  StyleSheet,
 } from 'react-native';
 
 import {BottomSheetContext} from './BottomSheetContext';
@@ -86,39 +85,39 @@ export const BottomSheet = ({
       transparent
       statusBarTranslucent>
       <BottomSheetContext.Provider value={{currentTabId, setCurrentTabId}}>
-        <View style={styles.overlay}>
+        <StyledOverlay>
           <TouchableWithoutFeedback onPress={closeModal}>
-            <View style={styles.background} />
+            <StyledBackground />
           </TouchableWithoutFeedback>
-          <Animated.View
-            style={{...styles.bottomSheetContainer, transform: [{translateY}]}}
+          <StyledAnimatedView
+            style={{transform: [{translateY}]}}
             {...panResponders.panHandlers}>
             {children}
-          </Animated.View>
-        </View>
+          </StyledAnimatedView>
+        </StyledOverlay>
       </BottomSheetContext.Provider>
     </Modal>
   );
 };
 
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-  },
-  background: {
-    flex: 1,
-  },
-  bottomSheetContainer: {
-    height: 'auto',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    paddingTop: 29,
-    paddingHorizontal: 16,
-    paddingBottom: 32,
-  },
-});
+const StyledOverlay = styled.View`
+  flex: 1;
+  justify-content: 'flex-end';
+  background-color: 'rgba(0, 0, 0, 0.4)';
+`;
+
+const StyledBackground = styled.View`
+  flex: 1;
+`;
+
+const StyledAnimatedView = styled(Animated.View)(() => ({
+  height: 'auto',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'white',
+  borderTopLeftRadius: 16,
+  borderTopRightRadius: 16,
+  paddingTop: 29,
+  paddingHorizontal: 16,
+  paddingBottom: 32,
+}));
