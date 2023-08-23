@@ -5,6 +5,7 @@ import {
   type TSkillLevel,
   type TStrength,
 } from '.';
+import {type TWorkoutActivitiesType} from '../../../lib/AppleHealthKit';
 
 export interface IMatchDetail {
   id: number;
@@ -33,6 +34,6 @@ export interface IMatchDetailRecord {
   memoImg: string;
   name: string;
   profileImg: string;
-  sports: string; // TODO: 추후 TSports enum 으로 변경
+  sports: TWorkoutActivitiesType;
   userId: number;
 }
