@@ -23,15 +23,6 @@ interface IStyledText {
   textAlign?: string;
 }
 
-const StyledText = styled.Text<IStyledText>`
-  font-family: ${props => props.theme.typography[props.type].fontFamily};
-  font-weight: ${props => props.fontWeight};
-  font-size: ${props => props.theme.typography[props.type].fontSize};
-  color: ${props => props.theme.palette[props.color]};
-  line-height: ${props => props.lineHeight};
-  text-align: ${props => props.textAlign};
-`;
-
 export const Text = ({
   text,
   color = 'black',
@@ -39,6 +30,7 @@ export const Text = ({
   fontWeight,
   lineHeight,
   textAlign,
+  numberOfLines,
   style,
   ...props
 }: ITextProps): React.JSX.Element => {
@@ -50,8 +42,19 @@ export const Text = ({
       fontWeight={fontWeight}
       lineHeight={lineHeight}
       style={style}
-      textAlign={textAlign}>
+      textAlign={textAlign}
+      numberOfLines={numberOfLines}
+      ellipsizeMode="tail">
       {text}
     </StyledText>
   );
 };
+
+const StyledText = styled.Text<IStyledText>`
+  font-family: ${props => props.theme.typography[props.type].fontFamily};
+  font-weight: ${props => props.fontWeight};
+  font-size: ${props => props.theme.typography[props.type].fontSize};
+  color: ${props => props.theme.palette[props.color]};
+  line-height: ${props => props.lineHeight};
+  text-align: ${props => props.textAlign};
+`;
