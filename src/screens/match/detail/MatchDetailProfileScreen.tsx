@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {type RouteProp, useRoute} from '@react-navigation/native';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 
 import {theme} from '../../../assets/styles/theme';
@@ -13,6 +14,7 @@ import {
   type IMatchDetail,
   type IMatchMember,
 } from '../../../features/match/types';
+import {type MatchStackParamList} from '../../../navigators';
 
 interface IMatchDetailProfileScreenProps {
   id?: number;
@@ -49,13 +51,23 @@ const MEMBER_DUMMY_DATA: IMatchMember[] = [
   },
 ];
 
+type TMatchDetailProfileScreenRouteProps = RouteProp<
+  MatchStackParamList,
+  'MatchDetailProfile'
+>;
+
 export const MatchDetailProfileScreen = ({
   id,
 }: IMatchDetailProfileScreenProps): React.JSX.Element => {
-  // TODO: 오류 화면 (서버, 404 등... 앱에서도 필요한가?) 디자인 시스템 요청드리기
-  if (id === undefined) return <View></View>;
+  const route = useRoute<TMatchDetailProfileScreenRouteProps>();
+  const paramId = route?.params?.id ?? undefined;
 
-  const {data = {fieldDto: DUMMY_DATA}} = useGetFieldDetail({id});
+  // TODO: 오류 화면 (서버, 404 등... 앱에서도 필요한가?) 디자인 시스템 요청드리기
+  if (id === undefined && paramId === undefined) return <View></View>;
+
+  const {data = {fieldDto: DUMMY_DATA}} = useGetFieldDetail({
+    id: id ?? paramId,
+  });
   const {fieldDto} = data;
 
   return (
