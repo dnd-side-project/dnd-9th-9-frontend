@@ -5,6 +5,7 @@ import {SafeAreaView, ScrollView, View} from 'react-native';
 
 import {theme} from '../../assets/styles/theme';
 import {AlarmItem} from '../../components/Alarm';
+import {BottomSheet} from '../../components/BottomSheet';
 import {Button, FilterButton, NavigateButton} from '../../components/Button';
 import {Gap} from '../../components/Gap';
 import {ListItem} from '../../components/List';
@@ -22,6 +23,9 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
   const {counter, increase, decrease} = useStore();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [search, setSearch] = useState('');
+
+  const [tabModalVisible, setTabModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     console.log('search api logic', search);
@@ -150,6 +154,49 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
             />
           </View>
         </ScrollView>
+
+        <Button
+          text="바텀 모달 열기"
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        />
+
+        <BottomSheet
+          isVisible={modalVisible}
+          onChangeIsVisible={setModalVisible}>
+          <View style={{height: 100}}>
+            <Text text="기본 컨텐츠" />
+          </View>
+        </BottomSheet>
+
+        <Button
+          text="바텀 탭 모달 열기"
+          onPress={() => {
+            setTabModalVisible(true);
+          }}
+        />
+
+        <BottomSheet
+          isVisible={tabModalVisible}
+          onChangeIsVisible={setTabModalVisible}
+          defaultSelectedTabId="name">
+          <BottomSheet.TabList>
+            <BottomSheet.Tab id="name" title="이름" />
+            <BottomSheet.Tab id="age" title="나이" />
+          </BottomSheet.TabList>
+
+          <BottomSheet.Content id="name">
+            <View style={{height: 100}}>
+              <Text text="이름 컨텐츠" />
+            </View>
+          </BottomSheet.Content>
+          <BottomSheet.Content id="age">
+            <View style={{height: 100}}>
+              <Text text="나이 컨텐츠" />
+            </View>
+          </BottomSheet.Content>
+        </BottomSheet>
       </ScrollView>
     </SafeAreaView>
   );

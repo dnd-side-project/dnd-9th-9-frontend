@@ -7,6 +7,7 @@ import {
 } from '.';
 import {type TWorkoutActivitiesType} from '../../../lib/AppleHealthKit';
 
+// 프로필 탭
 export interface IMatchDetail {
   id: number;
   profileImg: string;
@@ -36,4 +37,21 @@ export interface IMatchDetailRecord {
   profileImg: string;
   sports: TWorkoutActivitiesType;
   userId: number;
+}
+
+// 매칭 탭
+export interface IMatchApply {
+  entryId: number;
+  matchId: number;
+  name: string;
+  memberCount: number;
+  memberMaxCount: number;
+  fieldType: TFieldType;
+  period: TPeriod;
+  skillLevel: TSkillLevel;
+}
+
+export interface IMatchDetailApply {
+  fieldEntriesInfos: IMatchApply[];
+  totalCount: number;
 }

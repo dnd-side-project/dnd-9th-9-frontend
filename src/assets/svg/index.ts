@@ -148,6 +148,15 @@ const heartXmlData = `
   </defs>
 </svg>`;
 
+const nonCheckXmlData = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">
+  <circle cx="22" cy="22" r="10" stroke="#CDCED6" stroke-width="2"/>
+  </svg>`;
+
+const checkXmlData = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">
+  <ellipse cx="22" cy="22.489" rx="11" ry="10.7556" fill="#525463"/>
+  <path d="M17 21.5112L20.6512 25.5276C20.8418 25.7372 21.1682 25.7468 21.3707 25.5487L27.5 19.5557" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+</svg>`;
+
 export {
   lockXmlData,
   filterXmlData,
@@ -164,5 +173,7 @@ export {
   myXmlData,
   minusXmlData,
   plusXmlData,
+  nonCheckXmlData,
+  checkXmlData,
   heartXmlData,
 };

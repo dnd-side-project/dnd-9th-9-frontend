@@ -27,4 +27,11 @@ export const KEYS = {
     size: number,
   ) => [...KEYS.detail(id), 'record', {date, fieldType, page, size}],
   auto: (type: string) => [...KEYS.all, 'auto', {type}],
+  detailEntryBattle: (
+    id: number,
+    fieldDirection: 'RECEIVED' | 'SENT',
+    page: number,
+    size: number,
+  ) =>
+    [...KEYS.detail(id), 'entry-battle', {fieldDirection, page, size}] as const,
 };

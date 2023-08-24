@@ -5,9 +5,9 @@ import {type RouteProp, useRoute} from '@react-navigation/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
 
-import {MatchDetailMatchingScreen} from './MatchDetailMatchingScreen';
 import {MatchDetailMemberScreen} from './MatchDetailMemberScreen';
 import {MatchDetailProfileScreen} from './MatchDetailProfileScreen';
+import {MatchDetailMatchingScreen} from './matching/MatchDetailMatchingScreen';
 import {MatchDetailRecordScreen} from './record';
 import {theme} from '../../../assets/styles/theme';
 import {Text} from '../../../components/Text';
