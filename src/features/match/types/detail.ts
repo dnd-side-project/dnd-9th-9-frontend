@@ -6,6 +6,7 @@ import {
   type TStrength,
 } from '.';
 
+// 프로필 탭
 export interface IMatchDetail {
   id: number;
   profileImg: string;
@@ -20,4 +21,21 @@ export interface IMatchDetail {
   currentSize: number;
   maxSize: number;
   endDate: string;
+}
+
+// 매칭 탭
+export interface IMatchApply {
+  entryId: number;
+  matchId: number;
+  name: string;
+  memberCount: number;
+  memberMaxCount: number;
+  fieldType: TFieldType;
+  period: TPeriod;
+  skillLevel: TSkillLevel;
+}
+
+export interface IMatchDetailApply {
+  fieldEntriesInfos: IMatchApply[];
+  totalCount: number;
 }
