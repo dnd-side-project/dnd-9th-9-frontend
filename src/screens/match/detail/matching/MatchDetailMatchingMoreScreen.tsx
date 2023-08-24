@@ -86,8 +86,8 @@ export const MatchDetailMatchingMoreScreen = (): React.JSX.Element => {
         totalCount={data.totalCount}
         applies={data.fieldEntriesInfos}
         type={type}
-        handleSettingConfirmButton={handleSettingConfirmButton}
-        handleTeamDetail={handleTeamDetail}
+        onPressSettingConfirmButton={handleSettingConfirmButton}
+        onPressTeamDetail={handleTeamDetail}
       />
 
       <Modal

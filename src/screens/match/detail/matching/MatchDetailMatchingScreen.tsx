@@ -53,7 +53,7 @@ export const MatchDetailMatchingScreen = ({
           onPressMore={() => {
             handleMoreMatch('SENT');
           }}
-          handleTeamDetail={handleTeamDetail}
+          onPressTeamDetail={handleTeamDetail}
         />
         <Line size="lg" />
         <MatchApplyList
@@ -63,7 +63,7 @@ export const MatchDetailMatchingScreen = ({
           onPressMore={() => {
             handleMoreMatch('RECEIVED');
           }}
-          handleTeamDetail={handleTeamDetail}
+          onPressTeamDetail={handleTeamDetail}
         />
       </ScrollView>
     </SafeAreaView>

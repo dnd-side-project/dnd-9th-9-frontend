@@ -16,8 +16,8 @@ interface IMatchApplyListProps {
   applies: IMatchApply[];
   isSummary?: boolean;
   onPressMore?: () => void;
-  handleSettingConfirmButton?: () => void;
-  handleTeamDetail: (matchId: number) => void;
+  onPressSettingConfirmButton?: () => void;
+  onPressTeamDetail: (matchId: number) => void;
 }
 
 export const MatchApplyList = ({
@@ -26,8 +26,8 @@ export const MatchApplyList = ({
   applies,
   isSummary = true,
   onPressMore,
-  handleSettingConfirmButton = () => {},
-  handleTeamDetail,
+  onPressSettingConfirmButton = () => {},
+  onPressTeamDetail,
 }: IMatchApplyListProps): React.JSX.Element => {
   const [isSettingMode, setIsSettingMode] = useState(false);
   const [checkedApply, setCheckedApply] = useState<number[]>([]);
@@ -80,9 +80,9 @@ export const MatchApplyList = ({
               key={`${type}-${idx}`}
               isSettingMode={isSettingMode}
               apply={apply}
-              checked={checkedApply.includes(apply.entryId)}
-              handleTeamDetail={handleTeamDetail}
-              handleCheck={() => {
+              isCheck={checkedApply.includes(apply.entryId)}
+              onPressTeamDetail={onPressTeamDetail}
+              onPressCheckBox={() => {
                 checkedApply.includes(apply.entryId)
                   ? setCheckedApply(value => [
                       ...value.filter(id => id !== apply.entryId),
@@ -114,7 +114,7 @@ export const MatchApplyList = ({
           <Button
             text={settingButtonText}
             disabled={checkedApply.length === 0}
-            onPress={handleSettingConfirmButton}
+            onPress={onPressSettingConfirmButton}
           />
         </View>
       )}

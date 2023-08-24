@@ -4,13 +4,13 @@ import {checkXmlData, nonCheckXmlData} from '../../assets/svg';
 import {Icon} from '../Icon';
 
 export interface ICheckBoxProps {
-  checked: boolean;
+  isCheck: boolean;
 }
 
-export const CheckBox = ({checked}: ICheckBoxProps): React.JSX.Element => {
+export const CheckBox = ({isCheck}: ICheckBoxProps): React.JSX.Element => {
   return (
     <Icon
-      svgXml={checked ? checkXmlData : nonCheckXmlData}
+      svgXml={isCheck ? checkXmlData : nonCheckXmlData}
       width={44}
       height={44}
     />

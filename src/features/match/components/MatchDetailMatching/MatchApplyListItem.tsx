@@ -12,23 +12,23 @@ import {type IMatchApply} from '../../types';
 
 interface IMatchApplyListItemProps {
   isSettingMode?: boolean;
-  checked?: boolean;
+  isCheck?: boolean;
   apply: IMatchApply;
-  handleCheck?: () => void;
-  handleTeamDetail: (matchId: number) => void;
+  onPressCheckBox?: () => void;
+  onPressTeamDetail: (matchId: number) => void;
 }
 
 interface IStyledMatchApplyListItem {
   isSettingMode: boolean;
-  checked: boolean;
+  isCheck: boolean;
 }
 
 export const MatchApplyListItem = ({
   isSettingMode = false,
-  checked = false,
+  isCheck = false,
   apply,
-  handleCheck,
-  handleTeamDetail,
+  onPressCheckBox,
+  onPressTeamDetail,
 }: IMatchApplyListItemProps): React.JSX.Element => {
   const {
     entryId,
@@ -45,17 +45,17 @@ export const MatchApplyListItem = ({
     <StyledMatchApplyListItem
       key={entryId}
       isSettingMode={isSettingMode}
-      checked={checked}>
+      isCheck={isCheck}>
       {isSettingMode && (
-        <TouchableOpacity activeOpacity={0.8} onPress={handleCheck}>
-          <CheckBox checked={checked} />
+        <TouchableOpacity activeOpacity={0.8} onPress={onPressCheckBox}>
+          <CheckBox isCheck={isCheck} />
         </TouchableOpacity>
       )}
 
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => {
-          if (!isSettingMode) handleTeamDetail(matchId);
+          if (!isSettingMode) onPressTeamDetail(matchId);
         }}>
         <Text type="body1" color="gray-700" fontWeight="600" text={name} />
         <Gap size="12px" />
@@ -67,6 +67,8 @@ export const MatchApplyListItem = ({
         />
         <Gap size="10px" />
         <Tags
+          hasBorder={false}
+          borderColor="gray-0"
           type="sm"
           color="gray-700"
           backgroundColor="gray-200"
@@ -87,7 +89,7 @@ const StyledMatchApplyListItem = styled.View<IStyledMatchApplyListItem>`
   gap: 10px;
   border-top-width: 1px;
   border-top-color: ${props => props.theme.palette['gray-50']};
-  background: ${props => props.checked && props.theme.palette['gray-50']};
+  background: ${props => props.isCheck && props.theme.palette['gray-50']};
   align-items: center;
   padding: ${props => (props.isSettingMode ? '17px 6px' : '17px 16px')};
 `;
