@@ -5,6 +5,7 @@ import {
   type TSkillLevel,
   type TStrength,
 } from '.';
+import {type TWorkoutActivitiesType} from '../../../lib/AppleHealthKit';
 
 // 프로필 탭
 export interface IMatchDetail {
@@ -21,6 +22,21 @@ export interface IMatchDetail {
   currentSize: number;
   maxSize: number;
   endDate: string;
+}
+
+export interface IMatchDetailRecord {
+  burnedCalorie: number;
+  durationMinute: number;
+  exerciseDateTime: string; // yyyy-MM-dd HH:mm:ss
+  id: number;
+  isLeader: boolean;
+  isMemoPublic: boolean;
+  memoContent: string;
+  memoImg: string;
+  name: string;
+  profileImg: string;
+  sports: TWorkoutActivitiesType;
+  userId: number;
 }
 
 // 매칭 탭

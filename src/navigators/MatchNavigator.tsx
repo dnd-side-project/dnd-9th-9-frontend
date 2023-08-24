@@ -2,6 +2,7 @@ import React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import {type IMatchDetailRecord} from '../features/match/types';
 import {MatchScreen} from '../screens/match';
 import {
   CreateMatchInformationScreen,
@@ -12,6 +13,7 @@ import {
   MatchDetailMatchingScreen,
   MatchDetailMemberScreen,
   MatchDetailProfileScreen,
+  MatchDetailRecordDetailScreen,
   MatchDetailRecordScreen,
   MatchDetailScreen,
 } from '../screens/match/detail';
@@ -27,9 +29,12 @@ export type MatchStackParamList = {
   // 자동 매칭 화면
   AutoMatch: undefined;
   // 팀 상세 화면
-  MatchDetail: undefined;
+  MatchDetail: {
+    id: number;
+  };
   MatchDetailProfile: undefined;
   MatchDetailRecord: undefined;
+  MatchDetailRecordDetail: IMatchDetailRecord;
   MatchDetailMatching: undefined;
   MatchDetailMatchingMore: {
     type: 'RECEIVED' | 'SENT';
@@ -78,6 +83,11 @@ export function MatchNavigator(): React.JSX.Element {
       <Stack.Screen
         name="MatchDetailRecord"
         component={MatchDetailRecordScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailRecordDetail"
+        component={MatchDetailRecordDetailScreen}
         options={{headerTitle: ''}}
       />
       <Stack.Screen

@@ -1,13 +1,14 @@
 import React from 'react';
 
 import styled from '@emotion/native';
+import {type RouteProp, useRoute} from '@react-navigation/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
 
 import {MatchDetailMemberScreen} from './MatchDetailMemberScreen';
 import {MatchDetailProfileScreen} from './MatchDetailProfileScreen';
-import {MatchDetailRecordScreen} from './MatchDetailRecordScreen';
 import {MatchDetailMatchingScreen} from './matching/MatchDetailMatchingScreen';
+import {MatchDetailRecordScreen} from './record';
 import {theme} from '../../../assets/styles/theme';
 import {Text} from '../../../components/Text';
 import {
@@ -21,32 +22,40 @@ type TMatchDetailScreenProps = NativeStackScreenProps<
   'MatchDetail'
 >;
 
-const screens: ITopTabScreen[] = [
-  {
-    name: 'TeamProfile',
-    label: '프로필',
-    component: MatchDetailProfileScreen,
-  },
-  {
-    name: 'TeamRecord',
-    label: '기록',
-    component: MatchDetailRecordScreen,
-  },
-  {
-    name: 'TeamMatching',
-    label: '매칭',
-    component: MatchDetailMatchingScreen,
-  },
-  {
-    name: 'TeamMember',
-    label: '팀원',
-    component: MatchDetailMemberScreen,
-  },
-];
+type TMatchDetailScreenRouteProps = RouteProp<
+  MatchStackParamList,
+  'MatchDetail'
+>;
 
 export const MatchDetailScreen = ({
   navigation,
 }: TMatchDetailScreenProps): React.JSX.Element => {
+  const route = useRoute<TMatchDetailScreenRouteProps>();
+  const {id} = route.params;
+
+  const screens: ITopTabScreen[] = [
+    {
+      name: 'TeamProfile',
+      label: '프로필',
+      component: () => <MatchDetailProfileScreen id={id} />,
+    },
+    {
+      name: 'TeamRecord',
+      label: '기록',
+      component: () => <MatchDetailRecordScreen id={id} />,
+    },
+    {
+      name: 'TeamMatching',
+      label: '매칭',
+      component: MatchDetailMatchingScreen,
+    },
+    {
+      name: 'TeamMember',
+      label: '팀원',
+      component: MatchDetailMemberScreen,
+    },
+  ];
+
   return (
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}}>

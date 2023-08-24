@@ -78,8 +78,8 @@ export const MatchListScreen = ({
   const [matchingTypeFilter, setMatchingTypeFilter] = useState('1vs1');
   const [activeFloating, setActiveFloating] = useState(false);
 
-  const handleTeamDetail = (teamId: string): void => {
-    navigation.navigate('MatchDetail');
+  const handleTeamDetail = (id: number): void => {
+    navigation.navigate('MatchDetail', {id});
   };
 
   return (
@@ -113,7 +113,7 @@ export const MatchListScreen = ({
         {/* TODO: 매칭 리스트 없는 경우 화면 추가 */}
         <MatchingList
           data={DUMMY_DATA}
-          onPress={(value: string) => {
+          onPress={(value: number) => {
             handleTeamDetail(value);
           }}
         />

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import {type NativeStackScreenProps} from '@react-navigation/native-stack';
-import {SafeAreaView, ScrollView} from 'react-native';
+import {SafeAreaView, ScrollView, View} from 'react-native';
 
 import {theme} from '../../../assets/styles/theme';
 import {Line} from '../../../components/Line';
@@ -14,12 +13,10 @@ import {
   type IMatchDetail,
   type IMatchMember,
 } from '../../../features/match/types';
-import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
-type TMatchDetailProfileScreenProps = NativeStackScreenProps<
-  MatchStackParamList,
-  'MatchDetailProfile'
->;
+interface IMatchDetailProfileScreenProps {
+  id?: number;
+}
 
 const DUMMY_DATA: IMatchDetail = {
   id: 0,
@@ -53,13 +50,12 @@ const MEMBER_DUMMY_DATA: IMatchMember[] = [
 ];
 
 export const MatchDetailProfileScreen = ({
-  navigation,
-}: TMatchDetailProfileScreenProps): React.JSX.Element => {
-  // TODO: 사용자가 선택한 매칭의 Id 가져오기
-  const DUMMY_ID = 1;
+  id,
+}: IMatchDetailProfileScreenProps): React.JSX.Element => {
+  // TODO: 오류 화면 (서버, 404 등... 앱에서도 필요한가?) 디자인 시스템 요청드리기
+  if (id === undefined) return <View></View>;
 
-  // TODO: placeholder data 사용법 검토
-  const {data = {fieldDto: DUMMY_DATA}} = useGetFieldDetail({id: DUMMY_ID});
+  const {data = {fieldDto: DUMMY_DATA}} = useGetFieldDetail({id});
   const {fieldDto} = data;
 
   return (
