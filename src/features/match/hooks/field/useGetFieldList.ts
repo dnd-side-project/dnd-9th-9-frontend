@@ -73,7 +73,7 @@ export const useGetFieldList = ({
         skillLevel,
         strength,
       }),
-    placeholderData: {
+    initialData: {
       fieldsInfos: [],
       totalCount: 0,
     },

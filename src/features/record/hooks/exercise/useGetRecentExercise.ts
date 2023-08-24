@@ -23,7 +23,7 @@ export const useGetRecentExercise = ({
   useQuery({
     queryKey: KEYS.recent(date),
     queryFn: async () => await fetcher({date}),
-    placeholderData: {
+    initialData: {
       recentSports: [],
       totalBurnedCalorie: 0,
       totalExerciseMinute: 0,

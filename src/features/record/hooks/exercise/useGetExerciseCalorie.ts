@@ -23,7 +23,7 @@ export const useGetExerciseCalorie = ({
   useQuery({
     queryKey: KEYS.calorie(date),
     queryFn: async () => await fetcher({date}),
-    placeholderData: {
+    initialData: {
       burnedCalorie: 0,
       goalCalorie: 0,
     },
