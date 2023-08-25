@@ -23,7 +23,7 @@ export const useGetAutoField = ({
   useQuery({
     queryKey: KEYS.auto(fieldType),
     queryFn: async () => await fetcher({fieldType}),
-    placeholderData: {
+    initialData: {
       currentSize: 0,
       goal: '',
       id: 0,

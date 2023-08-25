@@ -18,15 +18,15 @@ export const KEYS = {
       {page, size, fieldType, goal, memberCount, period, skillLevel, strength},
     ] as const,
   detail: (id: number) => [...KEYS.all, 'detail', id] as const,
-  detailTerminate: (id: number) => [...KEYS.detail(id), 'terminate'],
+  detailTerminate: (id: number) => [...KEYS.detail(id), 'terminate'] as const,
   detailRecord: (
     id: number,
     date: string,
     fieldType: TFieldType,
     page: number,
     size: number,
-  ) => [...KEYS.detail(id), 'record', {date, fieldType, page, size}],
-  auto: (type: string) => [...KEYS.all, 'auto', {type}],
+  ) => [...KEYS.detail(id), 'record', {date, fieldType, page, size}] as const,
+  auto: (type: string) => [...KEYS.all, 'auto', {type}] as const,
   detailEntryBattle: (
     id: number,
     fieldDirection: 'RECEIVED' | 'SENT',

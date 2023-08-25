@@ -23,7 +23,7 @@ export const useGetExerciseSummary = ({
   useQuery({
     queryKey: KEYS.summary(date),
     queryFn: async () => await fetcher({date}),
-    placeholderData: {
+    initialData: {
       totalBurnedCalorie: 0,
       totalExerciseCalorie: 0,
       totalExerciseTimeMinute: 0,
