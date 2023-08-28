@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 
 import {BottomSheetContext} from './BottomSheetContext';
-import {usePrevious} from '../../hooks';
 
 interface IBottomSheetProps extends PropsWithChildren {
   isOpened: boolean;
@@ -32,7 +31,6 @@ export const BottomSheet = ({
   children,
 }: IBottomSheetProps): React.JSX.Element => {
   const [currentTabId, setCurrentTabId] = useState(defaultSelectedTabId);
-  const previousIsOpened = usePrevious(isOpened);
 
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -84,7 +82,7 @@ export const BottomSheet = ({
 
   useEffect(() => {
     isOpened && openModal();
-    previousIsOpened === true && !isOpened && closeModal();
+    !isOpened && closeModal();
   }, [isOpened]);
 
   return (
