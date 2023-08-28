@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 
 import styled from '@emotion/native';
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {Text} from '../../../components/Text';
 import {
@@ -8,7 +9,13 @@ import {
   WorkoutActivityTypeModal,
 } from '../../../features/record/components/CreateWorkoutInformation/Modal';
 import {WORKOUT_ACTIVITY} from '../../../lib/AppleHealthKit';
+import {type RecordStackParamList} from '../../../navigators/RecordNavigator';
 import useStore from '../../../store/client/useStore';
+
+type Props = NativeStackScreenProps<
+  RecordStackParamList,
+  'CreateWorkoutInformation'
+>;
 
 const workoutInformationSteps = [
   {
@@ -23,7 +30,9 @@ const workoutInformationSteps = [
   },
 ] as const;
 
-export const CreateWorkoutInformationScreen = (): React.JSX.Element => {
+export const CreateWorkoutInformationScreen = ({
+  navigation,
+}: Props): React.JSX.Element => {
   const [stepIndex, setStepIndex] = useState(0);
   const currentStep = workoutInformationSteps[stepIndex];
 
@@ -40,6 +49,34 @@ export const CreateWorkoutInformationScreen = (): React.JSX.Element => {
       ? `${workoutForm.hour}시 ${workoutForm.minute}분`
       : '';
 
+  const handlePressTypeText = (): void => {
+    setStepIndex(0);
+    setIsTypeModalOpened(true);
+  };
+
+  const handlePressTimeText = (): void => {
+    setStepIndex(1);
+    setIsTimeModalOpened(true);
+  };
+
+  const handleCloseTypeModal = (): void => {
+    setIsTypeModalOpened(false);
+  };
+
+  const handleCloseTimeModal = (): void => {
+    setIsTimeModalOpened(false);
+  };
+
+  const handleFinishTypeModal = (): void => {
+    setStepIndex(index => index + 1);
+    setIsTypeModalOpened(false);
+    setIsTimeModalOpened(true);
+  };
+
+  const handleFinishTimeModal = (): void => {
+    navigation.push('CreateWorkoutMemo');
+  };
+
   return (
     <StyledWorkoutInformationScreen>
       <StyledTitle>
@@ -54,11 +91,7 @@ export const CreateWorkoutInformationScreen = (): React.JSX.Element => {
               type="caption"
               color="gray-0"
             />
-            <StyledTouchable
-              onPress={() => {
-                setStepIndex(1);
-                setIsTimeModalOpened(true);
-              }}>
+            <StyledTouchable onPress={handlePressTimeText}>
               <Text
                 text={
                   workoutTimeLabel === ''
@@ -79,11 +112,7 @@ export const CreateWorkoutInformationScreen = (): React.JSX.Element => {
             type="caption"
             color="gray-600"
           />
-          <StyledTouchable
-            onPress={() => {
-              setStepIndex(0);
-              setIsTypeModalOpened(true);
-            }}>
+          <StyledTouchable onPress={handlePressTypeText}>
             <Text
               text={
                 workoutTypeLabel === ''
@@ -100,21 +129,14 @@ export const CreateWorkoutInformationScreen = (): React.JSX.Element => {
 
       <WorkoutActivityTypeModal
         isOpened={isTypeModalOpened}
-        onClose={() => {
-          setIsTypeModalOpened(false);
-        }}
-        onFinish={() => {
-          setStepIndex(index => index + 1);
-          setIsTypeModalOpened(false);
-          setIsTimeModalOpened(true);
-        }}
+        onClose={handleCloseTypeModal}
+        onFinish={handleFinishTypeModal}
       />
 
       <WorkoutActivityTimeModal
         isOpened={isTimeModalOpened}
-        onClose={() => {
-          setIsTimeModalOpened(false);
-        }}
+        onClose={handleCloseTimeModal}
+        onFinish={handleFinishTimeModal}
       />
     </StyledWorkoutInformationScreen>
   );
