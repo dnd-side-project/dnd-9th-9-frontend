@@ -102,6 +102,7 @@ export const WorkoutActivityTypeModal = ({
           </StyledCustomButton>
         </StyledBottomButtonContainer>
       </BottomSheet.Content>
+
       <BottomSheet.Content id="bookmark">
         {/* TODO: bookmark 추가 */}
         <Text text="time" />
