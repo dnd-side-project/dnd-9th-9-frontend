@@ -6,6 +6,20 @@ import {
   type TStrength,
 } from '.';
 
+export interface IFieldListPaginationParams extends IFieldListParams {
+  pageSize: number;
+  pageNumber: number;
+}
+
+export interface IFieldListParams {
+  fieldType: TFieldType;
+  goal: TGoal[] | [];
+  memberCount: number | null;
+  period: TPeriod | '';
+  skillLevel: TSkillLevel[] | [];
+  strength: TStrength[] | [];
+}
+
 export interface IField {
   currentSize: number;
   fieldType: TFieldType;
@@ -39,6 +53,7 @@ export interface IFieldDetailInfo {
 }
 
 export interface IFieldListInfo {
+  length: number;
   fieldsInfos: IField[];
   totalCount: number;
 }

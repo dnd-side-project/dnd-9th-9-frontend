@@ -2,7 +2,11 @@ import React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {type IMatchDetailRecord} from '../features/match/types';
+import {
+  type IFieldListPaginationParams,
+  type IFieldListParams,
+  type IMatchDetailRecord,
+} from '../features/match/types';
 import {MatchScreen} from '../screens/match';
 import {
   CreateMatchInformationScreen,
@@ -20,9 +24,9 @@ import {
 import {AutoMatchScreen, MatchFilterScreen} from '../screens/match/list';
 
 export type MatchStackParamList = {
-  MatchList: undefined;
+  MatchList: IFieldListPaginationParams;
   // 필터 화면
-  MatchFilter: undefined;
+  MatchFilter: IFieldListParams;
   // 팀 생성 화면
   TeamInformation: undefined;
   TeamProfile: undefined;
@@ -54,6 +58,16 @@ export function MatchNavigator(): React.JSX.Element {
         component={MatchScreen}
         options={{
           headerShown: false,
+        }}
+        initialParams={{
+          pageSize: 10,
+          pageNumber: 0,
+          fieldType: 'DUEL',
+          goal: [],
+          memberCount: null,
+          period: '',
+          skillLevel: [],
+          strength: [],
         }}
       />
       <Stack.Screen name="MatchFilter" component={MatchFilterScreen} />

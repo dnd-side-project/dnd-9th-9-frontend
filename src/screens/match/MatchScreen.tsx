@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {type MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
+import {type RouteProp, useRoute} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native';
 
 import {MatchListScreen} from './list/MatchListScreen';
@@ -12,26 +12,50 @@ import {
 } from '../../components/TopTabNavigator';
 import {type MatchStackParamList} from '../../navigators';
 
-type Props = MaterialTopTabScreenProps<MatchStackParamList, 'MatchList'>;
+type TMatchListScreenRouteProps = RouteProp<MatchStackParamList, 'MatchList'>;
 
-const screens: ITopTabScreen[] = [
-  {
-    name: 'TotalMatchListTab',
-    label: '매칭',
-    component: MatchListScreen,
-  },
-  {
-    name: 'MyMatchListTab',
-    label: 'MY매칭',
-    component: MyMatchListTabScreen,
-  },
-];
+export const MatchScreen = (): React.JSX.Element => {
+  const route = useRoute<TMatchListScreenRouteProps>();
 
-export function MatchScreen({navigation}: Props): React.JSX.Element {
+  const {
+    pageSize,
+    pageNumber,
+    fieldType,
+    goal,
+    memberCount,
+    period,
+    skillLevel,
+    strength,
+  } = route.params;
+
+  const screens: ITopTabScreen[] = [
+    {
+      name: 'TotalMatchListTab',
+      label: '매칭',
+      component: () => (
+        <MatchListScreen
+          pageSize={pageSize}
+          pageNumber={pageNumber}
+          fieldType={fieldType}
+          goal={goal}
+          memberCount={memberCount}
+          period={period}
+          skillLevel={skillLevel}
+          strength={strength}
+        />
+      ),
+    },
+    {
+      name: 'MyMatchListTab',
+      label: 'MY매칭',
+      component: MyMatchListTabScreen,
+    },
+  ];
+
   return (
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
       <TopTabNavigator screens={screens} />
     </>
   );
-}
+};
