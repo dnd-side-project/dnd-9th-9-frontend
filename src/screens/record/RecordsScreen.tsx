@@ -1,18 +1,19 @@
 import React from 'react';
 
-import {type BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
 
 import {RecordsTabScreen} from './RecordsTabScreen';
 import {SummaryTabScreen} from './SummaryTabScreen';
 import {theme} from '../../assets/styles/theme';
+import {Button} from '../../components/Button';
 import {
   type ITopTabScreen,
   TopTabNavigator,
 } from '../../components/TopTabNavigator';
-import {type BottomTabStackParamList} from '../../navigators';
+import {type RecordStackParamList} from '../../navigators/RecordNavigator';
 
-type Props = BottomTabScreenProps<BottomTabStackParamList, 'Records'>;
+type Props = NativeStackScreenProps<RecordStackParamList, 'RecordMain'>;
 
 const screens: ITopTabScreen[] = [
   {
@@ -32,6 +33,13 @@ export function RecordsScreen({navigation}: Props): React.JSX.Element {
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
       <TopTabNavigator screens={screens} />
+      {/* TODO: 연동되지 않은 유저 case */}
+      <Button
+        text="운동 기록하기"
+        onPress={() => {
+          navigation.navigate('CreateWorkoutInformation');
+        }}
+      />
     </>
   );
 }

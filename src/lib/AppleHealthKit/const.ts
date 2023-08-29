@@ -1,5 +1,10 @@
+import {type HealthActivity} from './AppleHealthKit';
+
 // TODO: backend에게 해당 데이터 공유 필요. API로 만들어질 시 제거 가능
-export const WORKOUT_ACTIVITY = {
+export const WORKOUT_ACTIVITY: Record<
+  HealthActivity,
+  {label: string; emoji: string}
+> = {
   AmericanFootball: {
     label: '미식축구',
     emoji: '⚽️',
@@ -40,6 +45,10 @@ export const WORKOUT_ACTIVITY = {
     label: '등산',
     emoji: '🧗‍♂️',
   },
+  Cooldown: {
+    label: '쿨다운',
+    emoji: '🧊',
+  },
   Cricket: {
     label: '크리켓',
     emoji: '🏏',
@@ -60,6 +69,10 @@ export const WORKOUT_ACTIVITY = {
     label: '댄스',
     emoji: '💃',
   },
+  DiscSports: {
+    label: '디스크 스포츠',
+    emoji: '🥏',
+  },
   Elliptical: {
     label: '일립티컬',
     emoji: '🚶‍♀️',
@@ -75,6 +88,10 @@ export const WORKOUT_ACTIVITY = {
   Fishing: {
     label: '낚시',
     emoji: '🎣',
+  },
+  FitnessGaming: {
+    label: '피트니스 게임',
+    emoji: '🎮',
   },
   FunctionalStrengthTraining: {
     label: '기능성 강도 훈련',
@@ -120,6 +137,10 @@ export const WORKOUT_ACTIVITY = {
     label: '패들 스포츠',
     emoji: '🚣',
   },
+  Pickleball: {
+    label: '피클볼',
+    emoji: '🏓',
+  },
   Play: {
     label: '놀이',
     emoji: '🤹‍♂️',
@@ -159,6 +180,10 @@ export const WORKOUT_ACTIVITY = {
   Soccer: {
     label: '축구',
     emoji: '⚽️',
+  },
+  SocialDance: {
+    label: '소셜 댄스',
+    emoji: '💃',
   },
   Softball: {
     label: '소프트볼',
