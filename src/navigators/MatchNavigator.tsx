@@ -32,7 +32,9 @@ export type MatchStackParamList = {
   MatchDetail: {
     id: number;
   };
-  MatchDetailProfile: undefined;
+  MatchDetailProfile: {
+    id: number;
+  };
   MatchDetailRecord: undefined;
   MatchDetailRecordDetail: IMatchDetailRecord;
   MatchDetailMatching: undefined;

@@ -75,8 +75,7 @@ export const MatchDetailMatchingMoreScreen = (): React.JSX.Element => {
   };
 
   const handleTeamDetail = (matchId: number): void => {
-    // TODO: 특정 matchId의 상세 화면으로 이동시키기
-    navigation.navigate('MatchDetailProfile');
+    navigation.navigate('MatchDetailProfile', {id: matchId});
   };
 
   return (
