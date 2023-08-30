@@ -163,8 +163,13 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
         />
 
         <BottomSheet
-          isVisible={modalVisible}
-          onChangeIsVisible={setModalVisible}>
+          isOpened={modalVisible}
+          onOpen={() => {
+            setModalVisible(true);
+          }}
+          onClose={() => {
+            setModalVisible(false);
+          }}>
           <View style={{height: 100}}>
             <Text text="기본 컨텐츠" />
           </View>
@@ -178,8 +183,13 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
         />
 
         <BottomSheet
-          isVisible={tabModalVisible}
-          onChangeIsVisible={setTabModalVisible}
+          isOpened={tabModalVisible}
+          onOpen={() => {
+            setModalVisible(true);
+          }}
+          onClose={() => {
+            setModalVisible(false);
+          }}
           defaultSelectedTabId="name">
           <BottomSheet.TabList>
             <BottomSheet.Tab id="name" title="이름" />

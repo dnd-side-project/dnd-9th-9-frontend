@@ -1,9 +1,5 @@
 import {NativeEventEmitter, NativeModules} from 'react-native';
-import AppleHealthKit, {
-  type HealthInputOptions,
-  type HealthKitPermissions,
-  HealthObserver,
-} from 'react-native-health';
+import AppleHealthKit, {type HealthKitPermissions} from 'react-native-health';
 
 // https://github.com/agencyenterprise/react-native-health
 
@@ -54,4 +50,5 @@ export const observeNewActiveEnergyBurned = (
   });
 };
 
-export {AppleHealthKit, HealthObserver, type HealthInputOptions};
+export * from 'react-native-health';
+export {AppleHealthKit};

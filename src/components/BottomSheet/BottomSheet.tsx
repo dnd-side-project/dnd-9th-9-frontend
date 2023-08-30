@@ -17,16 +17,16 @@ import {
 import {BottomSheetContext} from './BottomSheetContext';
 
 interface IBottomSheetProps extends PropsWithChildren {
-  isVisible: boolean;
+  isOpened: boolean;
   defaultSelectedTabId?: string;
-  onChangeIsVisible?: (visible: boolean) => void;
+  onOpen?: () => void;
   onClose?: () => void;
 }
 
 export const BottomSheet = ({
-  isVisible,
+  isOpened,
   defaultSelectedTabId = '',
-  onChangeIsVisible,
+  onOpen,
   onClose,
   children,
 }: IBottomSheetProps): React.JSX.Element => {
@@ -68,39 +68,44 @@ export const BottomSheet = ({
     }),
   ).current;
 
-  useEffect(() => {
-    if (isVisible) {
-      resetBottomSheet.start();
-    }
-  }, [isVisible]);
+  const openModal = (): void => {
+    onOpen?.();
+    resetBottomSheet.start();
+  };
 
   const closeModal = (): void => {
     closeBottomSheet.start(() => {
-      onChangeIsVisible?.(false);
       onClose?.();
       setCurrentTabId(defaultSelectedTabId);
     });
   };
 
+  useEffect(() => {
+    isOpened && openModal();
+    !isOpened && closeModal();
+  }, [isOpened]);
+
   return (
-    <Modal
-      visible={isVisible}
-      animationType="fade"
-      transparent
-      statusBarTranslucent>
-      <BottomSheetContext.Provider value={{currentTabId, setCurrentTabId}}>
-        <StyledOverlay>
-          <TouchableWithoutFeedback onPress={closeModal}>
-            <StyledBackground />
-          </TouchableWithoutFeedback>
-          <StyledAnimatedView
-            style={{transform: [{translateY}]}}
-            {...panResponders.panHandlers}>
-            {children}
-          </StyledAnimatedView>
-        </StyledOverlay>
-      </BottomSheetContext.Provider>
-    </Modal>
+    <>
+      <Modal
+        visible={isOpened}
+        animationType="fade"
+        transparent
+        statusBarTranslucent>
+        <BottomSheetContext.Provider value={{currentTabId, setCurrentTabId}}>
+          <StyledOverlay>
+            <TouchableWithoutFeedback onPress={closeModal}>
+              <StyledBackground />
+            </TouchableWithoutFeedback>
+            <StyledAnimatedView
+              style={{transform: [{translateY}]}}
+              {...panResponders.panHandlers}>
+              {children}
+            </StyledAnimatedView>
+          </StyledOverlay>
+        </BottomSheetContext.Provider>
+      </Modal>
+    </>
   );
 };
 
@@ -115,13 +120,12 @@ const StyledBackground = styled.View`
 `;
 
 const StyledAnimatedView = styled(Animated.View)(() => ({
-  height: 'auto',
-  justifyContent: 'center',
-  alignItems: 'center',
   backgroundColor: 'white',
   borderTopLeftRadius: 16,
   borderTopRightRadius: 16,
   paddingTop: 29,
   paddingHorizontal: 16,
   paddingBottom: 32,
+  height: 'auto',
+  width: 'auto',
 }));
