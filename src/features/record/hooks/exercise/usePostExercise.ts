@@ -1,6 +1,7 @@
 import {type UseMutationResult, useMutation} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
+import {type HealthActivity} from '../../../../lib/AppleHealthKit';
 import {axios} from '../../../../lib/axios';
 import {queryClient} from '../../../../lib/react-query';
 
@@ -10,9 +11,9 @@ interface IProps {
     durationMinute: number;
     exerciseDate: string;
     isMemoPublic: boolean;
-    memoContent: string;
-    memoImg: string;
-    sports: string;
+    memoContent?: string;
+    memoImgFile?: string;
+    sports: HealthActivity;
   };
 }
 
