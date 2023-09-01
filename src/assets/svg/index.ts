@@ -157,6 +157,10 @@ const checkXmlData = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height=
   <path d="M17 21.5112L20.6512 25.5276C20.8418 25.7372 21.1682 25.7468 21.3707 25.5487L27.5 19.5557" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
 </svg>`;
 
+const plusFilledXmlData = `<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46" fill="none">
+<path d="M23 0C10.304 0 0 10.304 0 23C0 35.696 10.304 46 23 46C35.696 46 46 35.696 46 23C46 10.304 35.696 0 23 0ZM32.2 25.3H25.3V32.2C25.3 33.465 24.265 34.5 23 34.5C21.735 34.5 20.7 33.465 20.7 32.2V25.3H13.8C12.535 25.3 11.5 24.265 11.5 23C11.5 21.735 12.535 20.7 13.8 20.7H20.7V13.8C20.7 12.535 21.735 11.5 23 11.5C24.265 11.5 25.3 12.535 25.3 13.8V20.7H32.2C33.465 20.7 34.5 21.735 34.5 23C34.5 24.265 33.465 25.3 32.2 25.3Z" fill="#E8E8EE"/>
+</svg>`;
+
 export {
   lockXmlData,
   filterXmlData,
@@ -173,6 +177,7 @@ export {
   myXmlData,
   minusXmlData,
   plusXmlData,
+  plusFilledXmlData,
   nonCheckXmlData,
   checkXmlData,
   heartXmlData,
