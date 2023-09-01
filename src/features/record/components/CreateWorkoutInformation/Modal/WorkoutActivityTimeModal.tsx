@@ -5,6 +5,7 @@ import styled from '@emotion/native';
 import {BottomSheet} from '../../../../../components/BottomSheet';
 import {Text} from '../../../../../components/Text';
 import useStore from '../../../../../store/client/useStore';
+import {ExpectedBurnedCaloriesSection} from '../ExpectedBurnedCaloriesSection';
 
 interface IWorkoutActivityTimeModalProps {
   isOpened: boolean;
@@ -17,11 +18,16 @@ export const WorkoutActivityTimeModal = ({
   onClose,
   onFinish,
 }: IWorkoutActivityTimeModalProps): React.JSX.Element => {
-  const {setWorkoutForm, workoutForm} = useStore();
+  const {workoutForm, setWorkoutForm} = useStore();
 
   // TODO: form validate 추가
   const [hour, setHour] = useState<number | null>(workoutForm.hour);
   const [minute, setMinute] = useState<number | null>(workoutForm.minute);
+
+  const durationMinute = ((): number | null => {
+    if (hour !== null && minute !== null) return hour * 60 + minute;
+    return null;
+  })();
 
   const resetTime = (): void => {
     setHour(null);
@@ -61,36 +67,45 @@ export const WorkoutActivityTimeModal = ({
 
       <BottomSheet.Content id="time">
         <StyledModalContent>
-          <StyledInputContainer>
-            <StyledTimeInput
-              keyboardType="numeric"
-              value={hour?.toString() ?? ''}
-              onChangeText={value => {
-                setHour(+value);
-              }}
-              labelLength={2}
-            />
-            <StyledTextWrapper>
-              <Text text="시간" type="body1" fontWeight="700" />
-            </StyledTextWrapper>
-          </StyledInputContainer>
+          <StyledInputGroup>
+            <StyledInputContainer>
+              <StyledTimeInput
+                keyboardType="numeric"
+                value={hour?.toString() ?? ''}
+                onChangeText={value => {
+                  setHour(+value);
+                }}
+                labelLength={2}
+              />
+              <StyledTextWrapper>
+                <Text text="시간" type="body1" fontWeight="700" />
+              </StyledTextWrapper>
+            </StyledInputContainer>
 
-          <StyledColonWrapper>
-            <Text text=":" type="body1" fontWeight="700" color="gray-500" />
-          </StyledColonWrapper>
+            <StyledColonWrapper>
+              <Text text=":" type="body1" fontWeight="700" color="gray-500" />
+            </StyledColonWrapper>
 
-          <StyledInputContainer>
-            <StyledTimeInput
-              keyboardType="numeric"
-              value={minute?.toString() ?? ''}
-              onChangeText={value => {
-                setMinute(+value);
-              }}
+            <StyledInputContainer>
+              <StyledTimeInput
+                keyboardType="numeric"
+                value={minute?.toString() ?? ''}
+                onChangeText={value => {
+                  setMinute(+value);
+                }}
+              />
+              <StyledTextWrapper>
+                <Text text="분" type="body1" fontWeight="700" />
+              </StyledTextWrapper>
+            </StyledInputContainer>
+          </StyledInputGroup>
+
+          {durationMinute != null && workoutForm.type != null && (
+            <ExpectedBurnedCaloriesSection
+              durationMinute={durationMinute}
+              workoutType={workoutForm.type}
             />
-            <StyledTextWrapper>
-              <Text text="분" type="body1" fontWeight="700" />
-            </StyledTextWrapper>
-          </StyledInputContainer>
+          )}
         </StyledModalContent>
 
         <StyledBottomButtonContainer>
@@ -123,6 +138,9 @@ const StyledTouchable = styled.TouchableOpacity`
 
 const StyledModalContent = styled.View`
   height: 350px;
+`;
+
+const StyledInputGroup = styled.View`
   flex-direction: row;
   margin-top: 46px;
 `;
