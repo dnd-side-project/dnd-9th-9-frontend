@@ -19,8 +19,6 @@ export const ImagePreviewer = ({
   placeholder,
   onChangeImageUri,
 }: IProps): React.JSX.Element => {
-  // const [image, setImage] = useState<string | null>(defaultImageUri ?? null);
-
   const handlePressImage = (): void => {
     void launchImageLibrary(
       {
