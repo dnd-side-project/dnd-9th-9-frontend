@@ -16,7 +16,7 @@ export const ExpectedBurnedCaloriesSection = ({
   workoutType,
   durationMinute,
 }: IExpectedBurnedCaloriesSectionProps): React.JSX.Element => {
-  const {data: burnedKcal} = useGetExpectedBurnedCalorie({
+  const {data: burnedCalorie} = useGetExpectedBurnedCalorie({
     sports: workoutType,
     durationMinute,
   });
@@ -24,16 +24,20 @@ export const ExpectedBurnedCaloriesSection = ({
   const {setWorkoutForm} = useStore();
 
   useEffect(() => {
-    if (burnedKcal === undefined) return;
-    setWorkoutForm('energyBurned', burnedKcal);
+    if (burnedCalorie === undefined) return;
+    setWorkoutForm('energyBurned', burnedCalorie);
   }, [workoutType, durationMinute]);
 
   return (
     <StyledExpectedBurnedCaloriesSection>
-      {burnedKcal != null && (
+      {burnedCalorie != null && (
         <>
           <Text text="예상 소비 칼로리는" />
-          <Text color="main-300" text={` ${burnedKcal}kcal`} fontWeight="700" />
+          <Text
+            color="main-300"
+            text={` ${burnedCalorie}kcal`}
+            fontWeight="700"
+          />
           <Text text="예요." />
         </>
       )}
