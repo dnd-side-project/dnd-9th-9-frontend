@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import styled from '@emotion/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -14,6 +14,8 @@ import {
 } from '../../../features/record/components/CreateWorkoutMemo';
 import {usePostExercise} from '../../../features/record/hooks/exercise';
 import {useSaveHealthKitExercise} from '../../../features/record/hooks/healthKit';
+import {useGetHealthKitAuthStatus} from '../../../features/record/hooks/healthKit/useGetHealthKitAuthStatus';
+import {AppleHealthKit, HealthStatusCode} from '../../../lib/AppleHealthKit';
 import {type RecordStackParamList} from '../../../navigators/RecordNavigator';
 import useStore from '../../../store/client/useStore';
 
@@ -32,6 +34,19 @@ export const CreateWorkoutMemoScreen = ({
 
   const {mutateAsync: postExercise} = usePostExercise();
   const {mutateAsync: saveHealthKitExercise} = useSaveHealthKitExercise();
+  const {data: healthKitAuthStatus} = useGetHealthKitAuthStatus({
+    permissions: {
+      read: [],
+      write: [AppleHealthKit.Constants.Permissions.Workout],
+    },
+  });
+
+  const isWriteWorkoutAuthorized = useMemo(() => {
+    return (
+      healthKitAuthStatus?.permissions.write[0] ===
+      HealthStatusCode.SharingAuthorized
+    );
+  }, [healthKitAuthStatus]);
 
   const handlePressSubmit = (): void => {
     if (
@@ -59,15 +74,16 @@ export const CreateWorkoutMemoScreen = ({
       body,
     });
 
-    // TODO: 연동된 유저인지 확인 필요
-    void saveHealthKitExercise({
-      type: workoutForm.type,
-      startDate: dayjs()
-        .add(workoutForm.hour * -1, 'hour')
-        .add(workoutForm.minute * -1, 'minute')
-        .toISOString(),
-      endDate: dayjs().toISOString(),
-    });
+    if (isWriteWorkoutAuthorized) {
+      void saveHealthKitExercise({
+        type: workoutForm.type,
+        startDate: dayjs()
+          .add(workoutForm.hour * -1, 'hour')
+          .add(workoutForm.minute * -1, 'minute')
+          .toISOString(),
+        endDate: dayjs().toISOString(),
+      });
+    }
 
     setIsOpenModal(true);
   };
