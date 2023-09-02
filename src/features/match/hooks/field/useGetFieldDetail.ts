@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const fetcher = async ({id}: IProps): Promise<IFieldDetailInfo> =>
-  await axios.post(`/field/${id}`).then(({data}) => data);
+  await axios.get(`/field/${id}`).then(({data}) => data);
 
 export const useGetFieldDetail = ({
   id,
