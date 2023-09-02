@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 
 import styled from '@emotion/native';
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import dayjs from 'dayjs';
 
 import {Button} from '../../../components/Button';
 import {CheckBox} from '../../../components/CheckBox';
+import {ConfirmModal} from '../../../components/Modal';
 import {Text} from '../../../components/Text';
 import {
   ImagePreviewer,
@@ -12,14 +14,21 @@ import {
 } from '../../../features/record/components/CreateWorkoutMemo';
 import {usePostExercise} from '../../../features/record/hooks/exercise';
 import {useSaveHealthKitExercise} from '../../../features/record/hooks/healthKit';
+import {type RecordStackParamList} from '../../../navigators/RecordNavigator';
 import useStore from '../../../store/client/useStore';
 
-export const CreateWorkoutMemoScreen = (): React.JSX.Element => {
+type Props = NativeStackScreenProps<RecordStackParamList, 'CreateWorkoutMemo'>;
+
+export const CreateWorkoutMemoScreen = ({
+  navigation,
+}: Props): React.JSX.Element => {
   const [memoContent, setMemoContent] = useState('');
   const [isMemoPublic, setIsMemoPublic] = useState<boolean>(true);
   const [memoImgFile, setMemoImgFile] = useState<string | null>(null);
 
-  const {workoutForm} = useStore();
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const {workoutForm, resetWorkoutForm} = useStore();
 
   const {mutateAsync: postExercise} = usePostExercise();
   const {mutateAsync: saveHealthKitExercise} = useSaveHealthKitExercise();
@@ -34,7 +43,7 @@ export const CreateWorkoutMemoScreen = (): React.JSX.Element => {
 
     const body = {
       isMemoPublic,
-      burnedCalorie: 0, // TODO: 계산 추가
+      burnedCalorie: workoutForm.energyBurned,
       durationMinute: workoutForm.hour * 60 + workoutForm.minute,
       exerciseDate: dayjs().format('YYYY-MM-DD'),
       sports: workoutForm.type,
@@ -59,6 +68,14 @@ export const CreateWorkoutMemoScreen = (): React.JSX.Element => {
         .toISOString(),
       endDate: dayjs().toISOString(),
     });
+
+    setIsOpenModal(true);
+  };
+
+  const handlePressConfirm = (): void => {
+    setIsOpenModal(false);
+    navigation.push('RecordMain');
+    resetWorkoutForm();
   };
 
   return (
@@ -131,6 +148,13 @@ export const CreateWorkoutMemoScreen = (): React.JSX.Element => {
           onPress={handlePressSubmit}
         />
       </StyledButtonWrapper>
+
+      <ConfirmModal
+        visible={isOpenModal}
+        title="운동기록이 저장되었어요."
+        subTitle="내 기록은 매칭된 팀에도 자동으로 등록돼요."
+        handleConfirm={handlePressConfirm}
+      />
     </StyledView>
   );
 };
