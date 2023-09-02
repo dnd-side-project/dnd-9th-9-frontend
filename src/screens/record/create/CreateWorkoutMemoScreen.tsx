@@ -41,7 +41,7 @@ export const CreateWorkoutMemoScreen = ({
     },
   });
 
-  const isWriteWorkoutAuthorized = useMemo(() => {
+  const isWritingWorkoutAuthorized = useMemo(() => {
     return (
       healthKitAuthStatus?.permissions.write[0] ===
       HealthStatusCode.SharingAuthorized
@@ -74,7 +74,7 @@ export const CreateWorkoutMemoScreen = ({
       body,
     });
 
-    if (isWriteWorkoutAuthorized) {
+    if (isWritingWorkoutAuthorized) {
       void saveHealthKitExercise({
         type: workoutForm.type,
         startDate: dayjs()
