@@ -7,41 +7,18 @@ import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
 import {type IField, type IFieldListPaginationParams} from '../../types';
 
-export const FIELD_INFINITE_DUMMY_DATA: IField[] = [
-  {
-    currentSize: 3,
-    fieldType: 'DUEL',
-    goal: 'LOSS',
-    id: 1,
-    maxSize: 10,
-    name: '테스트1',
-    period: 'ONE_WEEK',
-    profileImg: 'string',
-    skillLevel: 'ADVANCED_INTERMEDIATE',
-  },
-  {
-    currentSize: 6,
-    fieldType: 'DUEL',
-    goal: 'LOSS',
-    id: 2,
-    maxSize: 10,
-    name: '테스트2',
-    period: 'ONE_WEEK',
-    profileImg: 'string',
-    skillLevel: 'ADVANCED_INTERMEDIATE',
-  },
-  {
-    currentSize: 4,
-    fieldType: 'DUEL',
-    goal: 'LOSS',
-    id: 3,
-    maxSize: 10,
-    name: '테스트3',
-    period: 'ONE_WEEK',
-    profileImg: 'string',
-    skillLevel: 'ADVANCED_INTERMEDIATE',
-  },
-];
+const initialData: {
+  pageParams: any;
+  pages: Array<{fieldsInfos: IField[]; totalCount: number}>;
+} = {
+  pageParams: [],
+  pages: [
+    {
+      fieldsInfos: [],
+      totalCount: 0,
+    },
+  ],
+};
 
 const fetcher = async ({
   pageSize,
@@ -52,7 +29,10 @@ const fetcher = async ({
   period,
   skillLevel,
   strength,
-}: IFieldListPaginationParams): Promise<IField[]> =>
+}: IFieldListPaginationParams): Promise<{
+  fieldsInfos: IField[];
+  totalCount: number;
+}> =>
   await axios
     .get(`/field`, {
       params: {
@@ -66,7 +46,7 @@ const fetcher = async ({
         strength,
       },
     })
-    .then(({data}) => data.fieldsInfos);
+    .then(({data}) => data);
 
 export const useGetInfiniteFieldList = ({
   pageSize,
@@ -77,7 +57,13 @@ export const useGetInfiniteFieldList = ({
   period,
   skillLevel,
   strength,
-}: IFieldListPaginationParams): UseInfiniteQueryResult<IField[], Error> =>
+}: IFieldListPaginationParams): UseInfiniteQueryResult<
+  {
+    fieldsInfos: IField[];
+    totalCount: number;
+  },
+  Error
+> =>
   useInfiniteQuery({
     queryKey: KEYS.list({
       pageSize,
@@ -101,9 +87,8 @@ export const useGetInfiniteFieldList = ({
         strength,
       }),
     getNextPageParam: lastPage => {
-      if (lastPage.length === pageSize) {
-        return pageNumber + 1;
-      }
-      return [];
+      if (lastPage.fieldsInfos.length === pageSize) return pageNumber + 1;
+      return {fieldsInfos: [], totalCount: lastPage.totalCount};
     },
+    initialData,
   });
