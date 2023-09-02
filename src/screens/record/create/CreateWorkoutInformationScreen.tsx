@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styled from '@emotion/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -7,7 +7,7 @@ import {Text} from '../../../components/Text';
 import {
   WorkoutActivityTimeModal,
   WorkoutActivityTypeModal,
-} from '../../../features/record/components/CreateWorkoutInformation/Modal';
+} from '../../../features/record/components/CreateWorkoutInformation';
 import {WORKOUT_ACTIVITY} from '../../../lib/AppleHealthKit';
 import {type RecordStackParamList} from '../../../navigators/RecordNavigator';
 import useStore from '../../../store/client/useStore';
@@ -39,7 +39,7 @@ export const CreateWorkoutInformationScreen = ({
   const [isTypeModalOpened, setIsTypeModalOpened] = useState(false);
   const [isTimeModalOpened, setIsTimeModalOpened] = useState(false);
 
-  const {workoutForm} = useStore();
+  const {workoutForm, resetWorkoutForm} = useStore();
 
   const workoutTypeLabel =
     workoutForm.type === null ? '' : WORKOUT_ACTIVITY[workoutForm.type].label;
@@ -76,6 +76,16 @@ export const CreateWorkoutInformationScreen = ({
   const handleFinishTimeModal = (): void => {
     navigation.push('CreateWorkoutMemo');
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', () => {
+      resetWorkoutForm();
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <StyledWorkoutInformationScreen>
