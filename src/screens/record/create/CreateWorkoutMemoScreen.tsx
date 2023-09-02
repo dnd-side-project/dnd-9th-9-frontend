@@ -74,8 +74,8 @@ export const CreateWorkoutMemoScreen = ({
 
   const handlePressConfirm = (): void => {
     setIsOpenModal(false);
-    navigation.push('RecordMain');
     resetWorkoutForm();
+    navigation.popToTop();
   };
 
   return (
