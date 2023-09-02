@@ -15,7 +15,7 @@ export interface IFieldListParams {
   fieldType: TFieldType;
   goal: TGoal[] | [];
   memberCount: number | null;
-  period: TPeriod | '';
+  period: TPeriod[] | [];
   skillLevel: TSkillLevel[] | [];
   strength: TStrength[] | [];
 }

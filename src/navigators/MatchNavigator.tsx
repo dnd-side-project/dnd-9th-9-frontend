@@ -65,7 +65,7 @@ export function MatchNavigator(): React.JSX.Element {
           fieldType: 'DUEL',
           goal: [],
           memberCount: null,
-          period: '',
+          period: [],
           skillLevel: [],
           strength: [],
         }}
