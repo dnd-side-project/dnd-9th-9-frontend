@@ -13,8 +13,10 @@ import {
   InformationSection,
 } from '../../../features/record/components/CreateWorkoutMemo';
 import {usePostExercise} from '../../../features/record/hooks/exercise';
-import {useSaveHealthKitExercise} from '../../../features/record/hooks/healthKit';
-import {useGetHealthKitAuthStatus} from '../../../features/record/hooks/healthKit/useGetHealthKitAuthStatus';
+import {
+  useSaveHealthKitExercise,
+  useGetHealthKitAuthStatus,
+} from '../../../hooks/healthKit';
 import {AppleHealthKit, HealthStatusCode} from '../../../lib/AppleHealthKit';
 import {type RecordStackParamList} from '../../../navigators/RecordNavigator';
 import useStore from '../../../store/client/useStore';

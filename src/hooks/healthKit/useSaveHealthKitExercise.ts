@@ -4,7 +4,7 @@ import {
   AppleHealthKit,
   type HealthValue,
   type HealthActivityOptions,
-} from '../../../../lib/AppleHealthKit';
+} from '../../lib/AppleHealthKit';
 
 // TODO: 문서 수정 요청
 const fetcher = async (

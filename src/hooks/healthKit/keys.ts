@@ -1,4 +1,4 @@
-import {type HealthKitPermissions} from '../../../../lib/AppleHealthKit';
+import {type HealthKitPermissions} from '../../lib/AppleHealthKit';
 
 export const KEYS = {
   all: ['health-kit'] as const,

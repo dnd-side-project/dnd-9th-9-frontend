@@ -5,7 +5,7 @@ import {
   AppleHealthKit,
   type HealthStatusResult,
   type HealthKitPermissions,
-} from '../../../../lib/AppleHealthKit';
+} from '../../lib/AppleHealthKit';
 
 interface IProps extends HealthKitPermissions {}
 
