@@ -20,7 +20,6 @@ export const WorkoutActivityTimeModal = ({
 }: IWorkoutActivityTimeModalProps): React.JSX.Element => {
   const {workoutForm, setWorkoutForm} = useStore();
 
-  // TODO: form validate 추가
   const [hour, setHour] = useState<number | null>(workoutForm.hour);
   const [minute, setMinute] = useState<number | null>(workoutForm.minute);
 
@@ -70,9 +69,11 @@ export const WorkoutActivityTimeModal = ({
           <StyledInputGroup>
             <StyledInputContainer>
               <StyledTimeInput
-                keyboardType="numeric"
+                keyboardType="number-pad"
+                returnKeyType="done"
                 value={hour?.toString() ?? ''}
                 onChangeText={value => {
+                  // TODO(@minimalKim): 최대 입력 시간 시간 필요
                   setHour(+value);
                 }}
                 labelLength={2}
@@ -88,9 +89,11 @@ export const WorkoutActivityTimeModal = ({
 
             <StyledInputContainer>
               <StyledTimeInput
-                keyboardType="numeric"
+                keyboardType="number-pad"
+                returnKeyType="done"
                 value={minute?.toString() ?? ''}
                 onChangeText={value => {
+                  if (+value >= 60) return;
                   setMinute(+value);
                 }}
               />
