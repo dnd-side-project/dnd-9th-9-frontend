@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styled from '@emotion/native';
 import {useNavigation} from '@react-navigation/native';
@@ -30,6 +30,7 @@ export const MatchListScreen = ({
   const navigation =
     useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
 
+  const [keyword, setKeyword] = useState('');
   const [activeFloating, setActiveFloating] = useState(false);
 
   const {
@@ -37,6 +38,7 @@ export const MatchListScreen = ({
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
+    refetch,
   } = useGetInfiniteFieldList({
     pageSize,
     pageNumber,
@@ -46,6 +48,7 @@ export const MatchListScreen = ({
     period,
     skillLevel,
     strength,
+    keyword,
   });
 
   const totalListCount = fieldListData?.pages[0]?.totalCount ?? 0;
@@ -57,13 +60,19 @@ export const MatchListScreen = ({
     skillLevel.length > 0 ||
     strength.length > 0;
 
+  useEffect(() => {
+    void refetch();
+  }, [keyword]);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.palette['gray-0']}}>
       <ScrollView>
         <Gap size="20px" />
         <Searching
-          placeholder="닉네임, 매칭 제목을 검색해주세요."
-          handleSearch={() => {}}
+          placeholder="매칭 제목을 검색해주세요."
+          handleSearch={keyword => {
+            setKeyword(keyword);
+          }}
         />
 
         <MatchFieldTypeFilterRadio
@@ -75,6 +84,7 @@ export const MatchListScreen = ({
           period={period}
           skillLevel={skillLevel}
           strength={strength}
+          keyword={keyword}
         />
 
         <StyledFlexView>
@@ -93,6 +103,7 @@ export const MatchListScreen = ({
                 period,
                 skillLevel,
                 strength,
+                keyword: '',
               });
             }}
           />
@@ -113,7 +124,7 @@ export const MatchListScreen = ({
           <FlatList
             scrollEnabled={false}
             data={fieldListData?.pages.map(page => page.fieldsInfos).flat()}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={(item, idx) => `match-${item.id}-${idx}`}
             renderItem={({item}) => (
               <ListItem
                 key={`match-item-${item?.id}`}
@@ -130,10 +141,11 @@ export const MatchListScreen = ({
             )}
             onEndReached={() => {
               if ((hasNextPage ?? false) && !isFetchingNextPage) {
+                console.log('onEndReached 다음 패칭');
                 void fetchNextPage();
               }
             }}
-            onEndReachedThreshold={0.5}
+            onEndReachedThreshold={0.7}
           />
         )}
       </ScrollView>

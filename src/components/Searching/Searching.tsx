@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import styled from '@emotion/native';
 
@@ -10,6 +10,35 @@ export interface ISearchingProps {
   placeholder: string;
   handleSearch: (text: string) => void;
 }
+
+export const Searching = ({
+  placeholder,
+  handleSearch,
+}: ISearchingProps): React.JSX.Element => {
+  const delayTimerRef = useRef(null);
+
+  const handleSearchTextChange = (text: string): void => {
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
+
+    delayTimerRef.current = setTimeout(() => {
+      handleSearch(text);
+    }, 700);
+  };
+
+  return (
+    <StyledSearching>
+      <Icon svgXml={searchingXmlData} width={24} height={24} />
+      <StyledSearchingInput
+        placeholder={placeholder}
+        placeholderTextColor={theme.palette['gray-400']}
+        onChangeText={text => {
+          handleSearchTextChange(text);
+        }}
+      />
+    </StyledSearching>
+  );
+};
 
 const StyledSearching = styled.View`
   flex-direction: row;
@@ -25,21 +54,3 @@ const StyledSearchingInput = styled.TextInput`
   font-size: ${props => props.theme.typography.body3.fontSize};
   font-weight: 400;
 `;
-
-export const Searching = ({
-  placeholder,
-  handleSearch,
-}: ISearchingProps): React.JSX.Element => {
-  return (
-    <StyledSearching>
-      <Icon svgXml={searchingXmlData} width={24} height={24} />
-      <StyledSearchingInput
-        placeholder={placeholder}
-        placeholderTextColor={theme.palette['gray-400']}
-        onChangeText={text => {
-          handleSearch(text);
-        }}
-      />
-    </StyledSearching>
-  );
-};

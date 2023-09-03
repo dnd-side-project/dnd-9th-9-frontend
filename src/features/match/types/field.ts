@@ -18,6 +18,7 @@ export interface IFieldListParams {
   period: TPeriod[] | [];
   skillLevel: TSkillLevel[] | [];
   strength: TStrength[] | [];
+  keyword: string;
 }
 
 export interface IField {

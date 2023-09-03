@@ -45,6 +45,7 @@ export const MatchFilterScreen = ({
       period: period ?? [],
       skillLevel: skillLevel ?? [],
       strength: strength ?? [],
+      keyword: '',
     });
 
   const periodKeys = Object.keys(Periods) as Array<keyof typeof Periods>;
