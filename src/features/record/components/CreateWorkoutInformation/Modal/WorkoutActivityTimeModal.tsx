@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import styled from '@emotion/native';
 
@@ -24,10 +24,10 @@ export const WorkoutActivityTimeModal = ({
   const [hour, setHour] = useState<number | null>(workoutForm.hour);
   const [minute, setMinute] = useState<number | null>(workoutForm.minute);
 
-  const durationMinute = ((): number | null => {
+  const durationMinute = useMemo(() => {
     if (hour !== null && minute !== null) return hour * 60 + minute;
     return null;
-  })();
+  }, [hour, minute]);
 
   const resetTime = (): void => {
     setHour(null);
