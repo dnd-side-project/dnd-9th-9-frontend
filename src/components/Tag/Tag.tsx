@@ -2,16 +2,16 @@ import React from 'react';
 
 import styled from '@emotion/native';
 
-import {type Tpalette, type Ttypography} from '../../assets/styles/emotion';
+import {type TPalette, type TTypography} from '../../assets/styles/emotion';
 import {Text} from '../Text';
 
 interface ICommonTag {
   type: 'xs' | 'sm' | 'md' | 'lg';
   fontWeight?: string;
   hasBorder: boolean;
-  color?: Tpalette;
-  backgroundColor: Tpalette;
-  borderColor: Tpalette;
+  color?: TPalette;
+  backgroundColor: TPalette;
+  borderColor: TPalette;
 }
 
 export interface ITagProps extends ICommonTag {
@@ -23,7 +23,7 @@ export interface ITagsProps extends ICommonTag {
 }
 
 interface ITagTypeStyle {
-  textType: Ttypography;
+  textType: TTypography;
   padding: string;
 }
 

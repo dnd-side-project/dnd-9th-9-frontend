@@ -3,7 +3,7 @@ import React from 'react';
 import styled from '@emotion/native';
 import {View} from 'react-native';
 
-import {type Tpalette} from '../../assets/styles/emotion';
+import {type TPalette} from '../../assets/styles/emotion';
 import {dayjs} from '../../lib/dayjs';
 import {checkValidDateTimeFormat} from '../../utils/regex';
 import {Gap} from '../Gap';
@@ -16,13 +16,13 @@ export interface IAlarmItemProps {
 }
 
 interface IStyledAlarmIcon {
-  color: Tpalette;
+  color: TPalette;
 }
 
 interface IAlarmTypeData {
-  matching: {text: string; color: Tpalette};
-  member: {text: string; color: Tpalette};
-  team: {text: string; color: Tpalette};
+  matching: {text: string; color: TPalette};
+  member: {text: string; color: TPalette};
+  team: {text: string; color: TPalette};
 }
 
 export const AlarmItem = ({
