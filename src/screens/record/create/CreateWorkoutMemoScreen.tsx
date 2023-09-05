@@ -57,22 +57,25 @@ export const CreateWorkoutMemoScreen = ({
     )
       return;
 
-    const body = {
-      isMemoPublic,
-      burnedCalorie: workoutForm.energyBurned,
-      durationMinute: workoutForm.hour * 60 + workoutForm.minute,
-      exerciseDate: dayjs().format('YYYY-MM-DD'),
-      sports: workoutForm.type,
-    };
+    const formData = new FormData();
 
-    const optionalData = [memoContent, isMemoPublic, memoImgFile];
-    optionalData.forEach(value => {
-      const key = Object.keys({value})[0];
-      Object.assign(body, {key, value});
+    formData.append('burnedCalorie', workoutForm.energyBurned);
+    formData.append(
+      'durationMinute',
+      workoutForm.hour * 60 + workoutForm.minute,
+    );
+    formData.append('exerciseDate', dayjs().format('YYYY-MM-DD'));
+    formData.append('sports', workoutForm.type);
+    formData.append('isMemoPublic', isMemoPublic);
+    formData.append('memoContent', memoContent);
+    formData.append('memoImgFile', {
+      uri: memoImgFile,
+      type: 'multipart/form-data',
+      name: `memo-${new Date().valueOf()}.jpg`,
     });
 
     void postExercise({
-      body,
+      formData,
     });
 
     if (isWritingWorkoutAuthorized) {

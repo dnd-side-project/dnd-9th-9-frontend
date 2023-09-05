@@ -1,26 +1,19 @@
 import {type UseMutationResult, useMutation} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
-import {type HealthActivity} from '../../../../lib/AppleHealthKit';
 import {axios} from '../../../../lib/axios';
 import {queryClient} from '../../../../lib/react-query';
 
 interface IProps {
-  body: {
-    burnedCalorie: number;
-    durationMinute: number;
-    exerciseDate: string;
-    isMemoPublic: boolean;
-    memoContent?: string;
-    memoImgFile?: string;
-    sports: HealthActivity;
-  };
+  formData: FormData;
 }
 
-const fetcher = async ({body}: IProps): Promise<string> =>
+const fetcher = async ({formData}: IProps): Promise<string> =>
   await axios
-    .post(`/exercise`, {
-      body,
+    .post(`/exercise`, formData, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
     })
     .then(({data}) => data);
 
