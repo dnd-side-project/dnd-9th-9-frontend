@@ -17,7 +17,7 @@ import {
   useSaveHealthKitExercise,
   useGetHealthKitAuthStatus,
 } from '../../../hooks/healthKit';
-import {AppleHealthKit, HealthStatusCode} from '../../../lib/AppleHealthKit';
+import {AppleHealthKit} from '../../../lib/AppleHealthKit';
 import {type RecordStackParamList} from '../../../navigators/RecordNavigator';
 import useStore from '../../../store/client/useStore';
 
@@ -45,8 +45,7 @@ export const CreateWorkoutMemoScreen = ({
 
   const isWritingWorkoutAuthorized = useMemo(() => {
     return (
-      healthKitAuthStatus?.permissions.write[0] ===
-      HealthStatusCode.SharingAuthorized
+      healthKitAuthStatus?.permissions.write[0] === 2 //  HealthStatusCode.SharingAuthorized
     );
   }, [healthKitAuthStatus]);
 
