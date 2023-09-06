@@ -121,10 +121,11 @@ export const CreateWorkoutMemoScreen = ({
             multiline
             numberOfLines={7}
             maxLength={200}
+            placeholder="오늘 남길 메모를 작성해주세요"
+            value={memoContent}
             onChangeText={text => {
               setMemoContent(text);
             }}
-            value={memoContent}
           />
 
           <Text
