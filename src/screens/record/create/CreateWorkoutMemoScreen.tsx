@@ -197,6 +197,7 @@ const StyledTitleContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-top: 30px;
 `;
 
 const StyledPhotosContainer = styled.View`
