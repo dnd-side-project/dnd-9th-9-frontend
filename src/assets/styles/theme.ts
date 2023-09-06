@@ -19,7 +19,7 @@ const palette = {
   'gray-900': '#2B2D36',
   'gray-950': '#252730',
   black: '#000000',
-};
+} as const;
 
 const typography = {
   head1: {
@@ -54,13 +54,13 @@ const typography = {
     fontFamily: 'Pretendard-Regular',
     fontSize: '12px',
   },
-};
+} as const;
 
 const borderRadius = {
   sm: '8px',
   md: '12px',
   lg: '22px',
-};
+} as const;
 
 export const theme = {
   palette,
