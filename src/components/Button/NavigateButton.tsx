@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from '@emotion/native';
 
-import {type Tpalette} from '../../assets/styles/emotion';
+import {type TPalette} from '../../assets/styles/emotion';
 import {arrowRightXmlData} from '../../assets/svg';
 import {Icon} from '../Icon';
 import {Text} from '../Text';
@@ -10,15 +10,15 @@ import {Text} from '../Text';
 export interface INavigateButtonProps {
   text: string;
   width?: string;
-  color?: Tpalette;
-  backgroundColor?: Tpalette;
+  color?: TPalette;
+  backgroundColor?: TPalette;
   onPress: () => void;
 }
 
 interface IStyledNavigateButton {
   width: string;
-  color: Tpalette;
-  backgroundColor: Tpalette;
+  color: TPalette;
+  backgroundColor: TPalette;
 }
 
 export const NavigateButton = ({
