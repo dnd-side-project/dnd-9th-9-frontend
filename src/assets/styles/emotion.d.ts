@@ -7,17 +7,8 @@ export type TBorderRadius = keyof typeof theme.borderRadius;
 
 declare module '@emotion/react' {
   export interface Theme {
-    palette: {
-      [key in TPalette]: string;
-    };
-    typography: {
-      [key in TTypography]: {
-        fontFamily: string;
-        fontSize: string | number;
-      };
-    };
-    borderRadius: {
-      [key in TBorderRadius]: string;
-    };
+    palette: typeof theme.palette;
+    typography: typeof theme.typography;
+    borderRadius: typeof theme.borderRadius;
   }
 }
