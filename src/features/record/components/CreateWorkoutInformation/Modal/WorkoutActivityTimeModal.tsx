@@ -49,6 +49,20 @@ export const WorkoutActivityTimeModal = ({
     onFinish?.();
   };
 
+  const handleChangeHour = (value: string): void => {
+    // TODO(@minimalKim): 최대 입력 가능 시간 확인 필요
+    if (+value >= 24) return;
+    setHour(+value);
+  };
+
+  const handleChangeMinute = (value: string): void => {
+    if (hour === null) {
+      setHour(0);
+    }
+    if (+value >= 60) return;
+    setMinute(+value);
+  };
+
   return (
     <BottomSheet
       isOpened={isOpened}
@@ -72,10 +86,7 @@ export const WorkoutActivityTimeModal = ({
                 keyboardType="number-pad"
                 returnKeyType="done"
                 value={hour?.toString() ?? ''}
-                onChangeText={value => {
-                  // TODO(@minimalKim): 최대 입력 시간 시간 필요
-                  setHour(+value);
-                }}
+                onChangeText={handleChangeHour}
                 labelLength={2}
               />
               <StyledTextWrapper>
@@ -92,10 +103,7 @@ export const WorkoutActivityTimeModal = ({
                 keyboardType="number-pad"
                 returnKeyType="done"
                 value={minute?.toString() ?? ''}
-                onChangeText={value => {
-                  if (+value >= 60) return;
-                  setMinute(+value);
-                }}
+                onChangeText={handleChangeMinute}
               />
               <StyledTextWrapper>
                 <Text text="분" type="body1" fontWeight="700" />
