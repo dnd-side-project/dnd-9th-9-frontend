@@ -18,14 +18,15 @@ export const MatchScreen = (): React.JSX.Element => {
   const route = useRoute<TMatchListScreenRouteProps>();
 
   const {
-    pageSize,
-    pageNumber,
+    page,
+    size,
     fieldType,
     goal,
     memberCount,
     period,
     skillLevel,
     strength,
+    keyword,
   } = route.params;
 
   const screens: ITopTabScreen[] = [
@@ -34,14 +35,15 @@ export const MatchScreen = (): React.JSX.Element => {
       label: '매칭',
       component: () => (
         <MatchListScreen
-          pageSize={pageSize}
-          pageNumber={pageNumber}
+          page={page}
+          size={size}
           fieldType={fieldType}
           goal={goal}
           memberCount={memberCount}
           period={period}
           skillLevel={skillLevel}
           strength={strength}
+          keyword={keyword}
         />
       ),
     },

@@ -7,8 +7,8 @@ import {
 } from '.';
 
 export interface IFieldListPaginationParams extends IFieldListParams {
-  pageSize: number;
-  pageNumber: number;
+  page: number;
+  size: number;
 }
 
 export interface IFieldListParams {
@@ -42,16 +42,6 @@ export interface ICreateField extends Omit<IField, 'currentSize' | 'id'> {
 export type TAutoFieldInfo = Omit<IField, 'fieldType'> & {
   strength: string;
 };
-
-export interface IFieldDetailInfo {
-  assignedFieldDto: IField;
-  fieldDto: IField & {
-    description: string;
-    endDate: string;
-    rule: string;
-    strength: TStrength;
-  };
-}
 
 export interface IFieldListInfo {
   length: number;

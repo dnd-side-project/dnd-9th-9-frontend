@@ -60,8 +60,8 @@ export function MatchNavigator(): React.JSX.Element {
           headerShown: false,
         }}
         initialParams={{
-          pageSize: 10,
-          pageNumber: 0,
+          page: 0,
+          size: 10,
           fieldType: 'DUEL',
           goal: [],
           memberCount: null,

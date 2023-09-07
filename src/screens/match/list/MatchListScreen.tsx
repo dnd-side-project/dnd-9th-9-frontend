@@ -18,8 +18,8 @@ import {type IFieldListPaginationParams} from '../../../features/match/types';
 import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
 export const MatchListScreen = ({
-  pageSize,
-  pageNumber,
+  size,
+  page,
   fieldType,
   goal,
   memberCount,
@@ -35,13 +35,13 @@ export const MatchListScreen = ({
 
   const {
     data: fieldListData,
-    hasNextPage,
     isFetchingNextPage,
+    hasNextPage,
     fetchNextPage,
     refetch,
   } = useGetInfiniteFieldList({
-    pageSize,
-    pageNumber,
+    size,
+    page,
     fieldType,
     goal,
     memberCount,
@@ -76,8 +76,8 @@ export const MatchListScreen = ({
         />
 
         <MatchFieldTypeFilterRadio
-          pageSize={pageSize}
-          pageNumber={pageNumber}
+          size={size}
+          page={page}
           fieldType={fieldType}
           goal={goal}
           memberCount={memberCount}
@@ -139,13 +139,13 @@ export const MatchListScreen = ({
                 skillLevel={item?.skillLevel}
               />
             )}
+            // TODO: 해당 로직 검토
             onEndReached={() => {
               if ((hasNextPage ?? false) && !isFetchingNextPage) {
-                console.log('onEndReached 다음 패칭');
                 void fetchNextPage();
               }
             }}
-            onEndReachedThreshold={0.7}
+            onEndReachedThreshold={0.5}
           />
         )}
       </ScrollView>

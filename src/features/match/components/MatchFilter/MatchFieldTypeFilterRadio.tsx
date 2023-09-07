@@ -12,14 +12,15 @@ import {type TFieldType, type IFieldListPaginationParams} from '../../types';
 interface IMatchFieldTypeFilterRadioProps extends IFieldListPaginationParams {}
 
 export const MatchFieldTypeFilterRadio = ({
-  pageSize,
-  pageNumber,
+  page,
+  size,
   fieldType,
   goal,
   memberCount,
   period,
   skillLevel,
   strength,
+  keyword,
 }: IMatchFieldTypeFilterRadioProps): React.JSX.Element => {
   const navigation =
     useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
@@ -35,14 +36,15 @@ export const MatchFieldTypeFilterRadio = ({
           activeOpacity={0.8}
           onPress={() => {
             navigation.navigate('MatchList', {
-              pageSize,
-              pageNumber,
+              page,
+              size,
               fieldType: value,
               goal,
               memberCount: null,
               period,
               skillLevel,
               strength,
+              keyword,
             });
           }}>
           <Text
