@@ -1,4 +1,4 @@
 export * from './useGetAutoField';
 export * from './useGetFieldDetail';
-export * from './useGetFieldList';
+export * from './useGetInfiniteFieldList';
 export * from './usePostField';

@@ -157,6 +157,18 @@ const checkXmlData = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height=
   <path d="M17 21.5112L20.6512 25.5276C20.8418 25.7372 21.1682 25.7468 21.3707 25.5487L27.5 19.5557" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
 </svg>`;
 
+const informationXmlData = `
+<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">
+  <g clip-path="url(#clip0_951_24064)">
+    <path d="M21.2 18H22.8V19.6H21.2V18ZM22 26C22.44 26 22.8 25.64 22.8 25.2V22C22.8 21.56 22.44 21.2 22 21.2C21.56 21.2 21.2 21.56 21.2 22V25.2C21.2 25.64 21.56 26 22 26ZM22 14C17.584 14 14 17.584 14 22C14 26.416 17.584 30 22 30C26.416 30 30 26.416 30 22C30 17.584 26.416 14 22 14ZM22 28.4C18.472 28.4 15.6 25.528 15.6 22C15.6 18.472 18.472 15.6 22 15.6C25.528 15.6 28.4 18.472 28.4 22C28.4 25.528 25.528 28.4 22 28.4Z" fill="#CDCED6"/>
+  </g>
+  <defs>
+    <clipPath id="clip0_951_24064">
+      <rect width="44" height="44" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>`;
+
 export {
   lockXmlData,
   filterXmlData,
@@ -176,4 +188,5 @@ export {
   nonCheckXmlData,
   checkXmlData,
   heartXmlData,
+  informationXmlData,
 };
