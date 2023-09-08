@@ -5,12 +5,12 @@ import styled from '@emotion/native';
 import {arrowRightXmlData} from '../../../../assets/svg';
 import {Icon} from '../../../../components/Icon';
 import {Text} from '../../../../components/Text';
-import {type IMatchMember} from '../../types/member';
+import {type IUserFieldListInfo} from '../../types';
 
 interface IMatchDetailMembersProps {
   currentSize: number;
   maxSize: number;
-  members: IMatchMember[];
+  members: IUserFieldListInfo | undefined;
 }
 
 export const MatchDetailMembers = ({
@@ -29,7 +29,7 @@ export const MatchDetailMembers = ({
         <Icon svgXml={arrowRightXmlData} width={40} height={40} />
       </StyledHeaderWrapper>
       <StyledMemberWrapper>
-        {members.map(member => (
+        {members?.map(member => (
           <StyledMember key={`member-${member.id}`} />
         ))}
       </StyledMemberWrapper>

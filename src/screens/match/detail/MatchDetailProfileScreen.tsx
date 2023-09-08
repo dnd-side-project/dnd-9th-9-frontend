@@ -1,75 +1,100 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-import {type RouteProp, useRoute} from '@react-navigation/native';
-import {SafeAreaView, ScrollView, View} from 'react-native';
+import {SafeAreaView, ScrollView} from 'react-native';
 
 import {theme} from '../../../assets/styles/theme';
+import {Button} from '../../../components/Button';
 import {Line} from '../../../components/Line';
+import {ConfirmModal} from '../../../components/Modal';
 import {
   MatchDetailProfileSection,
   MatchDetailMembers,
 } from '../../../features/match/components/MatchDetailProfile';
-import {useGetFieldDetail} from '../../../features/match/hooks/field';
-import {type IMatchMember} from '../../../features/match/types';
-import {type MatchStackParamList} from '../../../navigators';
+// import {
+//   usePostFieldEntryBattle,
+//   usePostFieldEntryTeam,
+// } from '../../../features/match/hooks/fieldEntry';
+import {useGetUserFieldList} from '../../../features/match/hooks/uesrField';
+import {type IFieldDetailInfo} from '../../../features/match/types';
 
 interface IMatchDetailProfileScreenProps {
-  id?: number;
+  fieldDetailData: IFieldDetailInfo;
 }
 
-const MEMBER_DUMMY_DATA: IMatchMember[] = [
-  {
-    id: 0,
-    name: 'test1',
-    profileImg: '',
-    skillLevel: 'BEGINNER',
-  },
-  {
-    id: 1,
-    name: 'test2',
-    profileImg: '',
-    skillLevel: 'EXPERT',
-  },
-];
-
-type TMatchDetailProfileScreenRouteProps = RouteProp<
-  MatchStackParamList,
-  'MatchDetailProfile'
->;
-
 export const MatchDetailProfileScreen = ({
-  id,
+  fieldDetailData,
 }: IMatchDetailProfileScreenProps): React.JSX.Element => {
-  const route = useRoute<TMatchDetailProfileScreenRouteProps>();
-  const paramId = route?.params?.id ?? undefined;
-
-  const {data: fieldDetailData, isError} = useGetFieldDetail({
-    id: id ?? paramId,
+  const [modalInfo, setModalInfo] = useState({
+    isVisible: false,
+    title: '',
+    subTitle: '',
   });
 
-  // TODO: 오류 화면 (서버, 404 등... 앱에서도 필요한가?) 디자인 시스템 요청드리기
-  if (
-    (id === undefined && paramId === undefined) ||
-    fieldDetailData === undefined ||
-    isError
-  )
-    return <View></View>;
+  const {assignedFieldDto} = fieldDetailData;
+
+  const {id, fieldType, fieldStatus, fieldRole, maxSize, currentSize} =
+    fieldDetailData?.fieldDto;
+
+  const {data: userListData} = useGetUserFieldList({id});
+
+  // const {mutate: mutateFieldEntryTeam} = usePostFieldEntryTeam({
+  //   openModal: setModalInfo,
+  // });
+
+  // const {mutate: mutateFieldEntryBattle} = usePostFieldEntryBattle({
+  //   openModal: setModalInfo,
+  // });
+
+  const isAbleApplyMatchMember =
+    fieldStatus === 'RECRUITING' &&
+    maxSize !== currentSize &&
+    fieldRole === 'GUEST';
+
+  const isAbleApplyMatching =
+    fieldType !== 'TEAM' &&
+    fieldStatus === 'RECRUITING' &&
+    assignedFieldDto === null &&
+    maxSize === currentSize &&
+    fieldRole === 'GUEST';
+
+  const handleApplyMember = (): void => {
+    // const body = {targetFieldId: id, teamType: fieldType};
+    // mutateFieldEntryTeam({body});
+  };
+
+  const handleApplyMatching = (): void => {
+    // const body = {targetFieldId: id, battleType: fieldType};
+    // mutateFieldEntryBattle({body});
+  };
 
   return (
     <SafeAreaView
       style={{backgroundColor: theme.palette['gray-0'], height: '100%'}}>
       <ScrollView>
-        <MatchDetailProfileSection
-          detailInfo={fieldDetailData.fieldDto}
-          isMember={true}
-        />
+        <MatchDetailProfileSection detailInfo={fieldDetailData} />
         <Line size="lg" />
         <MatchDetailMembers
           currentSize={fieldDetailData?.fieldDto?.currentSize ?? 0}
           maxSize={fieldDetailData?.fieldDto?.maxSize ?? 0}
-          members={MEMBER_DUMMY_DATA}
+          members={userListData}
         />
       </ScrollView>
+
+      {isAbleApplyMatchMember && (
+        <Button text="팀원신청" onPress={handleApplyMember} />
+      )}
+      {isAbleApplyMatching && (
+        <Button text="매칭신청" onPress={handleApplyMatching} />
+      )}
+
+      <ConfirmModal
+        visible={modalInfo.isVisible}
+        title={modalInfo.title}
+        subTitle={modalInfo.subTitle}
+        handleConfirm={() => {
+          setModalInfo({isVisible: false, title: '', subTitle: ''});
+        }}
+      />
     </SafeAreaView>
   );
 };
