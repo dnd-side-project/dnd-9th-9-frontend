@@ -21,12 +21,20 @@ export const CreateMatchInformationItem = ({
   pick,
   handlePick,
 }: ICreateMatchInformationItemProps): React.JSX.Element => {
+  const fieldData = {
+    fieldType: FieldTypes,
+    period: Periods,
+    goal: Goals,
+    skillLevel: SkillLevels,
+    strength: Strengths,
+  };
+
   const radioData = {
-    fieldType: Object.values(FieldTypes),
-    period: Object.values(Periods),
-    goal: Object.values(Goals),
-    skillLevel: Object.values(SkillLevels),
-    strength: Object.values(Strengths),
+    fieldType: Object.keys(FieldTypes) as Array<keyof typeof FieldTypes>,
+    period: Object.keys(Periods) as Array<keyof typeof Periods>,
+    goal: Object.keys(Goals) as Array<keyof typeof Goals>,
+    skillLevel: Object.keys(SkillLevels) as Array<keyof typeof SkillLevels>,
+    strength: Object.keys(Strengths) as Array<keyof typeof Strengths>,
   };
 
   return (
@@ -34,6 +42,7 @@ export const CreateMatchInformationItem = ({
       <Text type="body1" text={label} />
       <MatchCreateRadio
         field={field}
+        fieldData={fieldData[field]}
         radioData={radioData[field]}
         pick={pick}
         handlePick={handlePick}

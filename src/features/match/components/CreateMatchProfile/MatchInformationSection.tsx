@@ -7,6 +7,7 @@ import {Gap} from '../../../../components/Gap';
 import {Line} from '../../../../components/Line';
 import {Text} from '../../../../components/Text';
 import useStore from '../../../../store/client/useStore';
+import {FieldTypes, Goals, Periods, SkillLevels, Strengths} from '../../const';
 
 interface IMatchInformationSectionProps {
   handleUpdateMatchInformation: () => void;
@@ -52,12 +53,12 @@ export const MatchInformationSection = ({
 
       <Gap size="20px" />
 
-      <MatchInformationItem label="매칭 유형" value={fieldType} />
+      <MatchInformationItem label="매칭 유형" value={FieldTypes[fieldType]} />
       <MatchInformationItem label="팀 인원" value={maxSize.toString()} />
-      <MatchInformationItem label="진행기간" value={period} />
-      <MatchInformationItem label="카테고리" value={goal} />
-      <MatchInformationItem label="운동 레벨" value={skillLevel} />
-      <MatchInformationItem label="운동 강도" value={strength} />
+      <MatchInformationItem label="진행기간" value={Periods[period]} />
+      <MatchInformationItem label="카테고리" value={Goals[goal]} />
+      <MatchInformationItem label="운동 레벨" value={SkillLevels[skillLevel]} />
+      <MatchInformationItem label="운동 강도" value={Strengths[strength]} />
     </StyledMatchInformationSectionWrapper>
   );
 };
