@@ -34,8 +34,8 @@ export const CreateWorkoutMemoScreen = ({
 
   const {workoutForm, resetWorkoutForm} = useStore();
 
-  const {mutateAsync: postExercise} = usePostExercise();
-  const {mutateAsync: saveHealthKitExercise} = useSaveHealthKitExercise();
+  const {mutate: postExercise} = usePostExercise();
+  const {mutate: saveHealthKitExercise} = useSaveHealthKitExercise();
   const {data: healthKitAuthStatus} = useGetHealthKitAuthStatus({
     permissions: {
       read: [],
@@ -74,12 +74,12 @@ export const CreateWorkoutMemoScreen = ({
       name: `memo-${new Date().valueOf()}.jpg`,
     });
 
-    void postExercise({
+    postExercise({
       formData,
     });
 
     if (isWritingWorkoutAuthorized) {
-      void saveHealthKitExercise({
+      saveHealthKitExercise({
         type: workoutForm.type,
         startDate: dayjs()
           .add(workoutForm.hour * -1, 'hour')
