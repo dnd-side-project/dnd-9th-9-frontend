@@ -8,7 +8,7 @@ import {Icon} from '../Icon';
 import {Text} from '../Text';
 
 interface ICountProps {
-  count: number;
+  count: number | null;
   disabled: boolean;
   minusDisabled: boolean;
   plusDisabled: boolean;
@@ -46,7 +46,7 @@ export const Count = ({
         type="head2"
         fontWeight="400"
         color={disabled ? 'gray-400' : 'gray-950'}
-        text={count.toString()}
+        text={count?.toString() ?? '-'}
       />
 
       <StyledCountButton disabled={plusDisabled} onPress={handlePlus}>

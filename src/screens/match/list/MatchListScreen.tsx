@@ -1,122 +1,153 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styled from '@emotion/native';
-import {type NativeStackScreenProps} from '@react-navigation/native-stack';
-import {ScrollView} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {FlatList, SafeAreaView, ScrollView, View} from 'react-native';
 
+import {theme} from '../../../assets/styles/theme';
 import {FilterButton} from '../../../components/Button/FilterButton';
 import {Gap} from '../../../components/Gap';
-import {type IMatchListItem} from '../../../components/List';
+import {ListItem} from '../../../components/List';
 import {Searching} from '../../../components/Searching';
 import {Text} from '../../../components/Text';
-import {MatchingFloating} from '../../../features/match/components/MatchingFloating';
-import {MatchingList} from '../../../features/match/components/MatchList/MatchingList';
-import {MatchTypeRadio} from '../../../features/match/components/MatchRadio';
+import {MatchingFloating} from '../../../features/match/components';
+import {MatchFieldTypeFilterRadio} from '../../../features/match/components/MatchFilter';
+import {useGetInfiniteFieldList} from '../../../features/match/hooks/field';
+import {type IFieldListPaginationParams} from '../../../features/match/types';
 import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
-type TMatchListScreenProps = NativeStackScreenProps<
-  MatchStackParamList,
-  'MatchList'
->;
-
-const DUMMY_DATA: IMatchListItem[] = [
-  {
-    image: '',
-    title: '2주만 빡세게',
-    level: '초보',
-    matchingType: '1vs1',
-    isFinish: false,
-    currentMember: 1,
-    maximumMember: 10,
-    period: 2,
-  },
-  {
-    image: '',
-    title: '대결할 사람',
-    level: '고수',
-    matchingType: '1vs1',
-    isFinish: false,
-    currentMember: 1,
-    maximumMember: 10,
-    period: 1,
-  },
-  {
-    image: '',
-    title: '개발자 운동 모임',
-    level: '전체',
-    matchingType: '팀vs팀',
-    isFinish: true,
-    currentMember: 3,
-    maximumMember: 10,
-    period: 3,
-  },
-  {
-    image: '',
-    title: '여름에 수영복 입어야지?',
-    level: '보통이상',
-    matchingType: '팀vs팀',
-    isFinish: false,
-    currentMember: 1,
-    maximumMember: 8,
-    period: 1,
-  },
-  {
-    image: '',
-    title: 'DND만 컴온',
-    level: '고수',
-    matchingType: '팀모집',
-    isFinish: false,
-    currentMember: 3,
-    maximumMember: 6,
-    period: 3,
-  },
-];
-
 export const MatchListScreen = ({
-  navigation,
-}: TMatchListScreenProps): React.JSX.Element => {
-  const [matchingTypeFilter, setMatchingTypeFilter] = useState('1vs1');
+  size,
+  page,
+  fieldType,
+  goal,
+  memberCount,
+  period,
+  skillLevel,
+  strength,
+}: IFieldListPaginationParams): React.JSX.Element => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
+
+  const [keyword, setKeyword] = useState('');
   const [activeFloating, setActiveFloating] = useState(false);
 
-  const handleTeamDetail = (id: number): void => {
-    navigation.navigate('MatchDetail', {id});
-  };
+  const {
+    data: fieldListData,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    refetch,
+  } = useGetInfiniteFieldList({
+    size,
+    page,
+    fieldType,
+    goal,
+    memberCount,
+    period,
+    skillLevel,
+    strength,
+    keyword,
+  });
+
+  const totalListCount = fieldListData?.pages[0]?.totalCount ?? 0;
+
+  const isFilterActive =
+    goal.length > 0 ||
+    (memberCount != null && memberCount > 0) ||
+    period.length > 0 ||
+    skillLevel.length > 0 ||
+    strength.length > 0;
+
+  useEffect(() => {
+    void refetch();
+  }, [keyword]);
 
   return (
-    <StyledScreen>
+    <SafeAreaView style={{flex: 1, backgroundColor: theme.palette['gray-0']}}>
       <ScrollView>
         <Gap size="20px" />
         <Searching
-          placeholder="닉네임, 매칭 제목을 검색해주세요."
-          handleSearch={() => {}}
+          placeholder="매칭 제목을 검색해주세요."
+          handleSearch={keyword => {
+            setKeyword(keyword);
+          }}
         />
 
-        <MatchTypeRadio
-          pick={matchingTypeFilter}
-          handlePick={setMatchingTypeFilter}
+        <MatchFieldTypeFilterRadio
+          size={size}
+          page={page}
+          fieldType={fieldType}
+          goal={goal}
+          memberCount={memberCount}
+          period={period}
+          skillLevel={skillLevel}
+          strength={strength}
+          keyword={keyword}
         />
 
         <StyledFlexView>
           <Text
             type="body3"
-            text={`총 ${DUMMY_DATA.length}개의 매칭`}
+            text={`총 ${totalListCount}개의 매칭`}
             color="gray-700"
           />
           <FilterButton
-            isActive={false}
+            isActive={isFilterActive}
             onPress={() => {
-              navigation.navigate('MatchFilter');
+              navigation.navigate('MatchFilter', {
+                fieldType,
+                goal,
+                memberCount,
+                period,
+                skillLevel,
+                strength,
+                keyword: '',
+              });
             }}
           />
         </StyledFlexView>
 
-        {/* TODO: 매칭 리스트 없는 경우 화면 추가 */}
-        <MatchingList
-          data={DUMMY_DATA}
-          onPress={(value: number) => {
-            handleTeamDetail(value);
-          }}
-        />
+        {totalListCount <= 0 ? (
+          <View>
+            <Gap size="140px" />
+            <Text
+              type="body2"
+              textAlign="center"
+              color="gray-600"
+              fontWeight="600"
+              text="조건에 맞는 매칭이 없습니다."
+            />
+          </View>
+        ) : (
+          <FlatList
+            scrollEnabled={false}
+            data={fieldListData?.pages.map(page => page.fieldsInfos).flat()}
+            keyExtractor={(item, idx) => `match-${item.id}-${idx}`}
+            renderItem={({item}) => (
+              <ListItem
+                key={`match-item-${item?.id}`}
+                id={item?.id}
+                currentSize={item?.currentSize}
+                fieldType={item?.fieldType}
+                goal={item?.goal}
+                maxSize={item?.maxSize}
+                name={item?.name}
+                period={item?.period}
+                profileImg={item?.profileImg}
+                skillLevel={item?.skillLevel}
+              />
+            )}
+            // TODO: 해당 로직 검토
+            onEndReached={() => {
+              if ((hasNextPage ?? false) && !isFetchingNextPage) {
+                void fetchNextPage();
+              }
+            }}
+            onEndReachedThreshold={0.5}
+          />
+        )}
       </ScrollView>
 
       <MatchingFloating
@@ -134,13 +165,9 @@ export const MatchListScreen = ({
           navigation.navigate('AutoMatch');
         }}
       />
-    </StyledScreen>
+    </SafeAreaView>
   );
 };
-
-const StyledScreen = styled.SafeAreaView`
-  background-color: ${props => props.theme.palette['gray-0']};
-`;
 
 const StyledFlexView = styled.View`
   flex-direction: row;
