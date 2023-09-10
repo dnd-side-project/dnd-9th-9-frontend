@@ -18,7 +18,18 @@ export interface IRecordSlice {
 
   workoutForm: IWorkoutForm;
   setWorkoutForm: (field: keyof IWorkoutForm, value: string | number) => void;
+  resetWorkoutForm: () => void;
 }
+
+const defaultWorkoutForm = {
+  type: null,
+  hour: null,
+  minute: null,
+  energyBurned: 0,
+  energyBurnedUnit: 'calorie',
+  distance: 0,
+  distanceUnit: 'meter',
+};
 
 export const createRecordSlice: StateCreator<IRecordSlice> = (set, get) => ({
   // TODO: params로 관리
@@ -27,23 +38,18 @@ export const createRecordSlice: StateCreator<IRecordSlice> = (set, get) => ({
     set(() => ({selectedDate: day}));
   },
 
-  workoutForm: {
-    type: null,
-    hour: null,
-    minute: null,
-    energyBurned: 0,
-    energyBurnedUnit: 'calorie',
-    distance: 0,
-    distanceUnit: 'meter',
-  },
+  workoutForm: defaultWorkoutForm,
   setWorkoutForm: (field, value) => {
-    set(state => {
-      return {
-        workoutForm: {
-          ...state.workoutForm,
-          [field]: value,
-        },
-      };
-    });
+    set(state => ({
+      workoutForm: {
+        ...state.workoutForm,
+        [field]: value,
+      },
+    }));
+  },
+  resetWorkoutForm: () => {
+    set(() => ({
+      workoutForm: defaultWorkoutForm,
+    }));
   },
 });

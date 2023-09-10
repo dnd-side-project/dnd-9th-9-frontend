@@ -47,9 +47,7 @@ export const MatchApplyListItem = ({
       isSettingMode={isSettingMode}
       isCheck={isCheck}>
       {isSettingMode && (
-        <TouchableOpacity activeOpacity={0.8} onPress={onPressCheckBox}>
-          <CheckBox isCheck={isCheck} />
-        </TouchableOpacity>
+        <CheckBox isCheck={isCheck} onPress={onPressCheckBox} />
       )}
 
       <TouchableOpacity

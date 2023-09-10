@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styled from '@emotion/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -7,7 +7,7 @@ import {Text} from '../../../components/Text';
 import {
   WorkoutActivityTimeModal,
   WorkoutActivityTypeModal,
-} from '../../../features/record/components/CreateWorkoutInformation/Modal';
+} from '../../../features/record/components/CreateWorkoutInformation';
 import {WORKOUT_ACTIVITY} from '../../../lib/AppleHealthKit';
 import {type RecordStackParamList} from '../../../navigators/RecordNavigator';
 import useStore from '../../../store/client/useStore';
@@ -17,7 +17,7 @@ type Props = NativeStackScreenProps<
   'CreateWorkoutInformation'
 >;
 
-const workoutInformationSteps = [
+const WORKOUT_INFORMATION_STEPS = [
   {
     title: '운동 종류를 선택해 주세요.',
     label: '운동종류',
@@ -34,12 +34,12 @@ export const CreateWorkoutInformationScreen = ({
   navigation,
 }: Props): React.JSX.Element => {
   const [stepIndex, setStepIndex] = useState(0);
-  const currentStep = workoutInformationSteps[stepIndex];
+  const currentStep = WORKOUT_INFORMATION_STEPS[stepIndex];
 
   const [isTypeModalOpened, setIsTypeModalOpened] = useState(false);
   const [isTimeModalOpened, setIsTimeModalOpened] = useState(false);
 
-  const {workoutForm} = useStore();
+  const {workoutForm, resetWorkoutForm} = useStore();
 
   const workoutTypeLabel =
     workoutForm.type === null ? '' : WORKOUT_ACTIVITY[workoutForm.type].label;
@@ -77,6 +77,16 @@ export const CreateWorkoutInformationScreen = ({
     navigation.push('CreateWorkoutMemo');
   };
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', () => {
+      resetWorkoutForm();
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <StyledWorkoutInformationScreen>
       <StyledTitle>
@@ -87,7 +97,7 @@ export const CreateWorkoutInformationScreen = ({
         {stepIndex === 1 && (
           <StyledInputContainer>
             <Text
-              text={workoutInformationSteps[1].label}
+              text={WORKOUT_INFORMATION_STEPS[1].label}
               type="caption"
               color="gray-0"
             />
@@ -95,7 +105,7 @@ export const CreateWorkoutInformationScreen = ({
               <Text
                 text={
                   workoutTimeLabel === ''
-                    ? workoutInformationSteps[1].placeholder
+                    ? WORKOUT_INFORMATION_STEPS[1].placeholder
                     : workoutTimeLabel
                 }
                 type="body2"
@@ -108,7 +118,7 @@ export const CreateWorkoutInformationScreen = ({
 
         <StyledInputContainer>
           <Text
-            text={workoutInformationSteps[0].label}
+            text={WORKOUT_INFORMATION_STEPS[0].label}
             type="caption"
             color="gray-600"
           />
@@ -116,7 +126,7 @@ export const CreateWorkoutInformationScreen = ({
             <Text
               text={
                 workoutTypeLabel === ''
-                  ? workoutInformationSteps[0].placeholder
+                  ? WORKOUT_INFORMATION_STEPS[0].placeholder
                   : workoutTypeLabel
               }
               type="body2"

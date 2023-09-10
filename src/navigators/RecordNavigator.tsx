@@ -37,7 +37,7 @@ export function RecordNavigator(): React.JSX.Element {
         name="CreateWorkoutMemo"
         component={CreateWorkoutMemoScreen}
         options={{
-          headerTitle: '팀 정보 입력',
+          headerTitle: '',
         }}
       />
     </Stack.Navigator>

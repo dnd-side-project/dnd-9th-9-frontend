@@ -5,21 +5,15 @@ import {axios} from '../../../../lib/axios';
 import {queryClient} from '../../../../lib/react-query';
 
 interface IProps {
-  body: {
-    burnedCalorie: number;
-    durationMinute: number;
-    exerciseDate: string;
-    isMemoPublic: boolean;
-    memoContent: string;
-    memoImg: string;
-    sports: string;
-  };
+  formData: FormData;
 }
 
-const fetcher = async ({body}: IProps): Promise<string> =>
+const fetcher = async ({formData}: IProps): Promise<string> =>
   await axios
-    .post(`/exercise`, {
-      body,
+    .post(`/exercise`, formData, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
     })
     .then(({data}) => data);
 
