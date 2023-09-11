@@ -9,6 +9,7 @@ import {
   CreateMatchProfileSection,
   MatchInformationSection,
 } from '../../../features/match/components/CreateMatchProfile';
+import {usePostField} from '../../../features/match/hooks/field';
 import {type ICreateField} from '../../../features/match/types';
 import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 import useStore from '../../../store/client/useStore';
@@ -23,6 +24,19 @@ export const CreateMatchProfileScreen = ({
 }: TCreateMatchProfileProps): React.JSX.Element => {
   const {matchPayload, handleMatchPayload, initializeMatchPayload} = useStore();
 
+  const {mutateAsync: postField} = usePostField({
+    onSuccessCallback: (id: string) => {
+      initializeMatchPayload();
+      navigation.reset({
+        index: 1,
+        routes: [
+          {name: 'MatchList'},
+          {name: 'MatchDetail', params: {id: Number(id)}},
+        ],
+      });
+    },
+  });
+
   const [createMatchProfilePayload, setCreateMatchProfilePayload] =
     useState(matchPayload);
 
@@ -33,7 +47,7 @@ export const CreateMatchProfileScreen = ({
 
   const onChangeMatchProfilePayload = (
     key: keyof ICreateField,
-    value: string,
+    value: any,
   ): void => {
     setCreateMatchProfilePayload(prev => {
       return {...prev, [key]: value};
@@ -49,13 +63,40 @@ export const CreateMatchProfileScreen = ({
   };
 
   const handleFinishCreateMatching = (): void => {
-    initializeMatchPayload();
+    const {
+      description,
+      fieldType,
+      goal,
+      maxSize,
+      name,
+      period,
+      profileImg,
+      rule,
+      skillLevel,
+      strength,
+    } = createMatchProfilePayload;
 
-    // TODO: 팀 생성 API 연동 및 팀 생성 페이지 이동
-    navigation.reset({
-      index: 1,
-      routes: [{name: 'MatchList'}, {name: 'MatchDetail'}],
-    });
+    const formData = new FormData();
+
+    formData.append('description', description);
+    formData.append('fieldType', fieldType);
+    formData.append('goal', goal);
+    formData.append('maxSize', maxSize);
+    formData.append('name', name);
+    formData.append('period', period);
+    formData.append('rule', rule);
+    formData.append('skillLevel', skillLevel);
+    formData.append('strength', strength);
+
+    if (profileImg !== '') {
+      formData.append('profileImg', {
+        uri: profileImg,
+        type: 'multipart/form-data',
+        name: `profile-${new Date().valueOf()}.jpeg`,
+      });
+    }
+
+    void postField({formData});
   };
 
   return (
@@ -73,7 +114,6 @@ export const CreateMatchProfileScreen = ({
         />
       </ScrollView>
 
-      {/* TODO: 팀 생성 완료시 -> 팀 상세 화면 이동 */}
       <View style={{position: 'absolute', bottom: 0, width: '100%'}}>
         <Button
           disabled={!isAblePayload}

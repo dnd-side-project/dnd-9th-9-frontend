@@ -44,17 +44,17 @@ export const CreateMatchInformationScreen = ({
     createMatchPayload;
 
   const isAbleMemberCountPayload =
-    fieldType === '1vs1' ? maxSize === 1 : maxSize >= 2 && maxSize <= 10;
+    fieldType === 'DUEL' ? maxSize === 1 : maxSize >= 2 && maxSize <= 10;
 
   const isAblePayload =
-    Object.values(FieldTypes).some(value => value === fieldType) &&
-    Object.values(Periods).some(value => value === period) &&
-    Object.values(Goals).some(value => value === goal) &&
-    Object.values(SkillLevels).some(value => value === skillLevel) &&
-    Object.values(Strengths).some(value => value === strength) &&
+    Object.keys(FieldTypes).some(value => value === fieldType) &&
+    Object.keys(Periods).some(value => value === period) &&
+    Object.keys(Goals).some(value => value === goal) &&
+    Object.keys(SkillLevels).some(value => value === skillLevel) &&
+    Object.keys(Strengths).some(value => value === strength) &&
     isAbleMemberCountPayload;
 
-  const isPersonalMatching = fieldType === '1vs1';
+  const isPersonalMatching = fieldType === 'DUEL';
   const isMinimumOfMemberCount = maxSize <= 2;
   const isMaximumOfMemberCount = maxSize >= 10;
 
@@ -69,7 +69,7 @@ export const CreateMatchInformationScreen = ({
 
   const handleMatchingPayload = (value: string | number): void => {
     handleCreateMatchPayload('fieldType', value);
-    if (value === '1vs1') {
+    if (value === 'DUEL') {
       handleCreateMatchPayload('maxSize', 1);
     } else {
       handleCreateMatchPayload('maxSize', 2);
@@ -99,7 +99,7 @@ export const CreateMatchInformationScreen = ({
           }}
         />
 
-        {Object.values(FieldTypes).some(value => value === fieldType) && (
+        {Object.keys(FieldTypes).some(value => value === fieldType) && (
           <StyledInputView>
             <Text type="body1" text="팀 인원수" />
             <Gap size="30px" />

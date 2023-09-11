@@ -8,11 +8,10 @@ import {Line} from '../../../../components/Line';
 import {Tag, Tags} from '../../../../components/Tag';
 import {Text} from '../../../../components/Text';
 import {FieldTypes, Goals, Periods, SkillLevels, Strengths} from '../../const';
-import {type IMatchDetail} from '../../types/detail';
+import {type IFieldDetailInfo} from '../../types/detail';
 
 interface IMatchDetailProfileSectionProps {
-  detailInfo: IMatchDetail;
-  isMember: boolean;
+  detailInfo: IFieldDetailInfo;
 }
 
 interface IStausTagProps {
@@ -21,13 +20,19 @@ interface IStausTagProps {
 
 const StatusTag = ({text}: IStausTagProps): React.JSX.Element => {
   return (
-    <Tag type="sm" color="gray-0" backgroundColor="main-300" text={text} />
+    <Tag
+      type="sm"
+      color="gray-0"
+      backgroundColor="main-300"
+      hasBorder={false}
+      borderColor="main-300"
+      text={text}
+    />
   );
 };
 
 export const MatchDetailProfileSection = ({
   detailInfo,
-  isMember,
 }: IMatchDetailProfileSectionProps): React.JSX.Element => {
   const {
     // profileImg,
@@ -39,9 +44,16 @@ export const MatchDetailProfileSection = ({
     period,
     skillLevel,
     strength,
-  } = detailInfo;
+    fieldRole,
+    currentSize,
+    maxSize,
+  } = detailInfo.fieldDto;
 
   const filedTypeLabel = FieldTypes[fieldType];
+  const fieldStatus =
+    currentSize === maxSize
+      ? `팀원 모집 완료 ${currentSize}/${maxSize}`
+      : `팀원 모집 중 ${currentSize}/${maxSize}`;
   const periodLabel = `${Periods[period]}동안`;
   const goalLabel = Goals[goal];
   const skillLevelLabel = `운동 레벨 ${SkillLevels[skillLevel]}`;
@@ -53,13 +65,13 @@ export const MatchDetailProfileSection = ({
         <StyledProfileInformation>
           <StyledProfile />
           <View>
-            <StatusTag text="팀 매칭" />
+            <StatusTag text={filedTypeLabel} />
             <Gap size="6px" />
-            <StatusTag text="팀원 모집 중" />
+            <StatusTag text={fieldStatus} />
           </View>
         </StyledProfileInformation>
 
-        {isMember && (
+        {fieldRole === 'LEADER' && (
           <TouchableOpacity activeOpacity={0.8}>
             <Text type="body2" color="gray-600" fontWeight="400" text="설정" />
           </TouchableOpacity>
@@ -84,16 +96,20 @@ export const MatchDetailProfileSection = ({
 
       <Tags
         type="sm"
+        hasBorder={false}
         color="gray-700"
         backgroundColor="gray-50"
+        borderColor="gray-50"
         fontWeight="400"
         texts={[filedTypeLabel, periodLabel, goalLabel]}
       />
       <Gap size="8px" />
       <Tags
         type="sm"
+        hasBorder={false}
         color="gray-700"
         backgroundColor="gray-50"
+        borderColor="gray-50"
         fontWeight="400"
         texts={[skillLevelLabel, strengthLabel]}
       />

@@ -7,6 +7,7 @@ import {type ICreateField} from '../../types';
 
 interface IMatchCreateRadioProps {
   field: keyof ICreateField;
+  fieldData: Record<string, string>;
   radioData: string[];
   pick: string;
   handlePick: (value: string | number) => void;
@@ -20,6 +21,7 @@ export const MatchCreateRadio = ({
   field,
   radioData,
   pick,
+  fieldData,
   handlePick,
 }: IMatchCreateRadioProps): React.JSX.Element => {
   return (
@@ -36,7 +38,7 @@ export const MatchCreateRadio = ({
             type="body2"
             fontWeight={pick === value ? '700' : '400'}
             color={pick === value ? 'gray-0' : 'gray-600'}
-            text={value}
+            text={fieldData[value] ?? '-'}
           />
         </StyledRadioItem>
       ))}

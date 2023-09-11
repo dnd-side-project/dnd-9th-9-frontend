@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import styled from '@emotion/native';
 import {Image} from 'react-native';
-import {launchImageLibrary, type Asset} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import {theme} from '../../../../assets/styles/theme';
 import {plusXmlData} from '../../../../assets/svg';
@@ -51,18 +51,25 @@ export const CreateMatchProfileSection = ({
   createMatchProfilePayload,
   onChange,
 }: ICreateMatchProfileSectionProps): React.JSX.Element => {
-  const {profileImg, name, description, rule} = createMatchProfilePayload;
+  const [profileImgPreview, setProfileImgPreview] = useState('');
+
+  const {name, description, rule} = createMatchProfilePayload;
 
   const handleImagePicker = (): void => {
     void launchImageLibrary(
       {
         mediaType: 'photo',
       },
-      response => {
+      async response => {
         if (response.assets != null) {
-          const selectedAsset: Asset = response.assets[0];
-          onChange('profileImg', selectedAsset.uri ?? '');
-          // TODO: 서버 이미지 업로드
+          const {uri, type, fileName} = response.assets[0];
+
+          // TODO: 에러처리
+          if (uri === undefined || type === undefined || fileName === undefined)
+            return;
+
+          onChange('profileImg', uri);
+          setProfileImgPreview(uri);
         } else {
           // TODO: 에러 처리
         }
@@ -73,9 +80,9 @@ export const CreateMatchProfileSection = ({
   return (
     <>
       <StyledProfileWrapper activeOpacity={0.8} onPress={handleImagePicker}>
-        {profileImg !== '' ? (
+        {profileImgPreview !== '' ? (
           <Image
-            source={{uri: profileImg}}
+            source={{uri: profileImgPreview}}
             style={{width: '100%', height: '100%', borderRadius: 142}}
           />
         ) : (
