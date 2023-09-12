@@ -42,14 +42,14 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
           text="로그인"
           size="sm"
           onPress={() => {
-            navigation.replace('Login');
+            navigation.push('Login');
           }}
         />
         <Button
           text="회원가입"
           size="md"
           onPress={() => {
-            navigation.replace('Signup');
+            navigation.push('Signup');
           }}
         />
 
