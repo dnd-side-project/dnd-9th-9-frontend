@@ -192,6 +192,29 @@ const errorXmlData = `
 </svg>
 `;
 
+const eyeClosedXmlData = `
+<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">
+  <path d="M13 19C14.35 20.3333 18.04 23 22 23C24.7 23 28.48 21.8 31 19" stroke="#CDCED6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24.7002 23L25.554 25.846" stroke="#CDCED6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M29.2002 21L30.9357 23.2981" stroke="#CDCED6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M19.2354 23L18.3815 25.846" stroke="#CDCED6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14.7354 21L12.9998 23.2981" stroke="#CDCED6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+const eyeOpenedXmlData = `
+<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">
+  <g clip-path="url(#clip0_2464_5520)">
+  <path d="M22 14C17 14 12.73 17.11 11 21.5C12.73 25.89 17 29 22 29C27 29 31.27 25.89 33 21.5C31.27 17.11 27 14 22 14ZM22 26.5C19.24 26.5 17 24.26 17 21.5C17 18.74 19.24 16.5 22 16.5C24.76 16.5 27 18.74 27 21.5C27 24.26 24.76 26.5 22 26.5ZM22 18.5C20.34 18.5 19 19.84 19 21.5C19 23.16 20.34 24.5 22 24.5C23.66 24.5 25 23.16 25 21.5C25 19.84 23.66 18.5 22 18.5Z" fill="#252730"/>
+  </g>
+  <defs>
+  <clipPath id="clip0_2464_5520">
+  <rect width="44" height="44" fill="white"/>
+  </clipPath>
+  </defs>
+</svg>
+`;
+
 export {
   lockXmlData,
   filterXmlData,
@@ -215,4 +238,6 @@ export {
   heartXmlData,
   informationXmlData,
   errorXmlData,
+  eyeClosedXmlData,
+  eyeOpenedXmlData,
 };
