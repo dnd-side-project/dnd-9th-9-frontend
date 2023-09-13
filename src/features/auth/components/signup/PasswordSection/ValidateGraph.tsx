@@ -5,7 +5,7 @@ import styled from '@emotion/native';
 import {type theme} from '../../../../../assets/styles/theme';
 import {Text} from '../../../../../components/Text';
 
-interface IValidateGraph {
+interface IValidateGraphProps {
   passwordLength: number;
 }
 
@@ -13,17 +13,7 @@ type TLevel = 'low' | 'medium' | 'high';
 
 export const ValidateGraph = ({
   passwordLength = 0,
-}: IValidateGraph): React.JSX.Element => {
-  const getLevel = useCallback((length: number): TLevel => {
-    if (length <= 7) {
-      return 'low';
-    } else if (length <= 11) {
-      return 'medium';
-    } else {
-      return 'high';
-    }
-  }, []);
-
+}: IValidateGraphProps): React.JSX.Element => {
   const levels: Record<
     TLevel,
     {label: string; color: keyof typeof theme.palette; ratio: number}
@@ -45,6 +35,16 @@ export const ValidateGraph = ({
     },
   };
 
+  const getLevel = useCallback((length: number): TLevel => {
+    if (length <= 7) {
+      return 'low';
+    } else if (length <= 11) {
+      return 'medium';
+    } else {
+      return 'high';
+    }
+  }, []);
+
   const {label, color, ratio} = levels[getLevel(passwordLength)];
 
   return (
@@ -52,7 +52,7 @@ export const ValidateGraph = ({
       <StyledGraphBackDrop>
         <StyledGraph color={color} ratio={ratio} />
       </StyledGraphBackDrop>
-      <Text text={label} color={color} type="caption" />
+      <Text type="caption" text={label} color={color} />
     </StyledGraphContainer>
   );
 };

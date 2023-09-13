@@ -31,6 +31,9 @@ export const PasswordSection = ({
   const [isConfirm, setIsConfirm] = useState(false);
   const [isConfirmSame, setIsConfirmSame] = useState(false);
 
+  const isErrorConfirmedPassword =
+    getFieldState('confirmedPassword').isDirty && !isConfirmSame;
+
   const handlePressNext = async (): Promise<void> => {
     const isValid = await trigger('password');
 
@@ -48,9 +51,6 @@ export const PasswordSection = ({
       setValue('confirmedPassword', '');
     }
   }, []);
-
-  const isErrorConfirmedPassword =
-    getFieldState('confirmedPassword').isDirty && !isConfirmSame;
 
   return (
     <StyledSection>
