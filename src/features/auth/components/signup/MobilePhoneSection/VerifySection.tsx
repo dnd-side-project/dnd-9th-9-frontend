@@ -28,7 +28,11 @@ export const VerifySection = ({
   const error = formState.errors.mobilePhoneVerifyCode;
 
   const {mutateAsync: postSendCode} = usePostSendCode();
-  const {mutate: postVerify, data: isVerify} = usePostVerify();
+  const {
+    mutate: postVerify,
+    data: isVerify,
+    isError: isErrorPostVerify,
+  } = usePostVerify();
 
   const [timer, setTimer] = useState<number | null>(null);
   const formattedTime = useMemo(() => {
@@ -119,13 +123,15 @@ export const VerifySection = ({
               label="인증번호"
               placeholder="숫자로 된 인증번호 6자리를 입력해 주세요"
               textContentType="telephoneNumber"
-              isError={error != null || timer === 0}
+              isError={error != null || timer === 0 || isErrorPostVerify}
               isValid={isVerify}
               value={value}
               onBlur={onBlur}
               onChangeText={onChange}
               errorMessage={
-                timer === 0
+                isErrorPostVerify
+                  ? '인증번호가 일치하지 않습니다.'
+                  : timer === 0
                   ? '인증번호 유효시간이 지났습니다. 하단의 버튼을 눌러 재전송해 주세요.'
                   : error?.message
               }
