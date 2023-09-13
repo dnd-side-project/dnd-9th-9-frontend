@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styled from '@emotion/native';
 import {Controller} from 'react-hook-form';
@@ -19,8 +19,8 @@ export const PasswordSection = ({
   trigger,
   getFieldState,
   getValues,
+  setValue,
   formState,
-  watch,
   onNext,
 }: IFormSectionProps): React.JSX.Element => {
   const error = formState.errors.password;
@@ -42,6 +42,12 @@ export const PasswordSection = ({
       onNext();
     }
   };
+
+  useEffect(() => {
+    if (getValues('confirmedPassword') != null) {
+      setValue('confirmedPassword', '');
+    }
+  }, []);
 
   const isErrorConfirmedPassword =
     getFieldState('confirmedPassword').isDirty && !isConfirmSame;
