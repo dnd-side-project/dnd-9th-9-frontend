@@ -17,43 +17,40 @@ import {
   WorkoutLevelSection,
 } from '../../features/auth/components/signup';
 
-const validationSchema = z
-  .object({
-    name: z.string().min(1, {message: '이름을 입력해주세요'}),
-    uid: z
-      .string()
-      .min(6, {message: '6자 이상으로 입력해주세요'})
-      .refine(value => /^(?=.*[a-zA-Z])(?=.*\d).+$/.test(value), {
-        message: '최소 1자 이상의 영문과 숫자를 포함해주세요',
-      }),
-    password: z
-      .string()
-      .min(6, {message: '비밀번호를 6글자 이상으로 입력해주세요'}),
-    confirmPassword: z
-      .string()
-      .min(1, {message: '비밀번호 확인을 입력해주세요'}),
-    mobilePhone: z
-      .string()
-      .min(1, {message: '핸드폰 번호를 입력해주세요'})
-      .refine(
-        value =>
-          /^((\+?82)[ -]?)?0?1([0|1|6|7|8|9]{1})[ -]?\d{3,4}[ -]?\d{4}$/.test(
-            value,
-          ),
-        {message: '유효한 핸드폰 번호를 입력해주세요'},
-      ),
-    mobilePhoneVerifyCode: z
-      .string()
-      .min(1, '인증번호를 입력해주세요')
-      .refine(value => /^\d+$/.test(value), {
-        message: '잘못된 인증번호입니다. 인증번호는 숫자만 입력해 주세요.',
-      }),
-    skillLevel: z.string().min(1, {message: '운동 강도를 입력해주세요'}),
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: "Password don't match",
-  });
+const validationSchema = z.object({
+  name: z.string().min(1, {message: '이름을 입력해주세요'}),
+  uid: z
+    .string()
+    .min(6, {message: '6자 이상으로 입력해주세요'})
+    .refine(value => /^(?=.*[a-zA-Z])(?=.*\d).+$/.test(value), {
+      message: '최소 1자 이상의 영문과 숫자를 포함해주세요',
+    }),
+  mobilePhone: z
+    .string()
+    .min(1, {message: '핸드폰 번호를 입력해주세요'})
+    .refine(
+      value =>
+        /^((\+?82)[ -]?)?0?1([0|1|6|7|8|9]{1})[ -]?\d{3,4}[ -]?\d{4}$/.test(
+          value,
+        ),
+      {message: '유효한 핸드폰 번호를 입력해주세요'},
+    ),
+  mobilePhoneVerifyCode: z
+    .string()
+    .min(1, '인증번호를 입력해주세요')
+    .refine(value => /^\d+$/.test(value), {
+      message: '잘못된 인증번호입니다. 인증번호는 숫자만 입력해 주세요.',
+    }),
+  password: z
+    .string()
+    .min(8, {message: '비밀번호를 8글자 이상으로 입력해주세요'})
+    .max(16, {message: '비밀번호를 16글자 이하로 입력해주세요'})
+    .refine(value => /^(?=.*[a-zA-Z])(?=.*\d).+$/.test(value), {
+      message: '최소 1자 이상의 영문과 숫자를 포함해주세요',
+    }),
+  confirmedPassword: z.string(),
+  skillLevel: z.string().min(1, {message: '운동 강도를 입력해주세요'}),
+});
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
@@ -94,13 +91,16 @@ export function SignupScreen(): React.JSX.Element {
   const stepLabel = `${stepIndex + 1}/${SIGNUP_INFORMATION_STEPS.length}`;
 
   const handlePressNext = (): void => {
-    if (stepIndex === 0) {
-      // TODO: navigate 랜딩
+    if (stepIndex === SIGNUP_INFORMATION_STEPS.length - 1) {
+      // TODO: navigate 메인화면
     }
     setStepIndex(index => index + 1);
   };
 
   const handlePressPrev = (): void => {
+    if (stepIndex === 0) {
+      // TODO: navigate 랜딩
+    }
     setStepIndex(index => index - 1);
   };
 
