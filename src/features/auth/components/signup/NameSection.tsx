@@ -84,5 +84,3 @@ const StyledFieldContainer = styled.View`
 const FixedButtonWrapper = styled.View`
   width: 100%;
 `;
-
-// secureTextEntry
