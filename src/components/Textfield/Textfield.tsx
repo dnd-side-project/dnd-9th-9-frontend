@@ -14,6 +14,7 @@ interface ITextfieldProps extends TextInputProps {
   label?: string;
   hintMessage?: string;
   errorMessage?: string;
+  size?: 'md' | 'sm';
   rightElement?: () => React.JSX.Element;
 }
 
@@ -23,6 +24,7 @@ export const Textfield = ({
   label = '',
   hintMessage = '',
   errorMessage = '',
+  size = 'md',
   rightElement,
   ...props
 }: ITextfieldProps): React.JSX.Element => {
@@ -35,6 +37,7 @@ export const Textfield = ({
 
       <StyledTextInputContainer isError={isError} isFocused={isFocused}>
         <StyledTextInput
+          size={size}
           placeholderTextColor={theme.palette['gray-100']}
           onFocus={() => {
             setIsFocused(true);
@@ -83,11 +86,11 @@ const StyledTextInputContainer = styled.View<{
   transition: all 1s ease-in-out;
 `;
 
-const StyledTextInput = styled.TextInput`
+const StyledTextInput = styled.TextInput<{size: 'md' | 'sm'}>`
   flex: 1;
   padding: 10px 0;
   color: ${({theme}) => theme.palette.black};
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: ${({size}) => (size === 'md' ? '16px' : '14px')};
   font-weight: 700;
 `;
