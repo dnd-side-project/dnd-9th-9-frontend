@@ -11,21 +11,21 @@ import {Text} from '../Text/Text';
 interface ITextfieldProps extends TextInputProps {
   isError?: boolean;
   isValid?: boolean;
+  size?: 'md' | 'sm';
   label?: string;
   hintMessage?: string;
   errorMessage?: string;
-  size?: 'md' | 'sm';
   rightElement?: () => React.JSX.Element;
 }
 
 export const Textfield = ({
   isError = false,
   isValid = false,
+  size = 'md',
   label = '',
   hintMessage = '',
   errorMessage = '',
-  size = 'md',
-  rightElement,
+  rightElement: RightElement,
   ...props
 }: ITextfieldProps): React.JSX.Element => {
   const [isFocused, setIsFocused] = useState(false);
@@ -52,7 +52,8 @@ export const Textfield = ({
         {rightIcon != null && (
           <Icon svgXml={rightIcon} width={40} height={40} />
         )}
-        {rightElement?.()}
+
+        {RightElement != null && <RightElement />}
       </StyledTextInputContainer>
 
       {errorMessage !== '' ? (
