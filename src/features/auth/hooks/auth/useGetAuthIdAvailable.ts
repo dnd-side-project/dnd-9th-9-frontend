@@ -23,9 +23,8 @@ const fetcher = async ({uid}: IProps): Promise<boolean> =>
 export const useGetAuthIdAvailable = ({
   uid,
   enabled = true,
-}: IQueryProps): UseQueryResult<boolean, Error> => {
-  console.log(uid, enabled);
-  return useQuery({
+}: IQueryProps): UseQueryResult<boolean, Error> =>
+  useQuery({
     queryKey: KEYS.idAvailable(uid),
     queryFn: async () =>
       await fetcher({
@@ -34,4 +33,3 @@ export const useGetAuthIdAvailable = ({
     initialData: false,
     enabled,
   });
-};
