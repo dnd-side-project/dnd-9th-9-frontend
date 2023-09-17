@@ -6,6 +6,7 @@ const palette = {
   'error-light': '#FF6565',
   'error-dark': '#FF4646',
   'sub-400': '#C781FF',
+  'blue-400': '#62B3FF',
   'gray-0': '#FFFFFF',
   'gray-50': '#F7F7FA',
   'gray-100': '#F0F0F5',

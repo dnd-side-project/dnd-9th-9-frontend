@@ -46,7 +46,6 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
           }}
         />
         <Button
-          disabled
           text="회원가입"
           size="md"
           onPress={() => {
