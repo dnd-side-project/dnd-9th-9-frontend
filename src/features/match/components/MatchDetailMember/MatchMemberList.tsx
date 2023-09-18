@@ -11,13 +11,13 @@ import {Gap} from '../../../../components/Gap';
 import {Icon} from '../../../../components/Icon';
 import {Text} from '../../../../components/Text';
 import {useGetFieldDetail} from '../../hooks/field';
-import {type IUserField} from '../../types';
+import {type IUserField, type ITeamEntry} from '../../types';
 
 interface IMatchMemberListProps {
   id: number;
   userRole: 'MEMBER' | 'LEADER' | 'GUEST';
   type: 'MEMBER' | 'DELETE' | 'ASSIGN' | 'REQUEST';
-  members: IUserField[] | undefined;
+  members: IUserField[] | ITeamEntry[] | undefined;
   checkedMember?: number[];
   isSettingMode?: boolean;
   isSummary?: boolean;
@@ -49,8 +49,9 @@ export const MatchMemberList = ({
     REQUEST: '요청',
   } as const;
 
-  const memberData =
-    type === 'REQUEST' && isSummary ? members?.slice(0, 3) : members;
+  let memberData =
+    type === 'REQUEST' ? (members as ITeamEntry[]) : (members as IUserField[]);
+  memberData = type === 'REQUEST' && isSummary ? members?.slice(0, 3) : members;
 
   const handleSettingList = (): void => {};
 
@@ -102,9 +103,13 @@ export const MatchMemberList = ({
             key={`${type}-member-${idx}`}
             isSettingMode={isSettingMode}
             memberInfo={memberInfo}
-            isCheck={checkedMember.includes(memberInfo.id)}
+            isCheck={checkedMember.includes(
+              type === 'REQUEST' ? memberInfo?.entryId : memberInfo?.id,
+            )}
             onPressCheckBox={() => {
-              onPressCheckMember(memberInfo.id);
+              onPressCheckMember(
+                type === 'REQUEST' ? memberInfo?.entryId : memberInfo?.id,
+              );
             }}
           />
         ))

@@ -7,11 +7,12 @@ import {Tag} from '../../../../components/Tag';
 import {Text} from '../../../../components/Text';
 import {SkillLevels} from '../../const';
 import {type IUserField} from '../../types';
+import {type ITeamEntry} from '../../types/fieldEntry';
 
 interface IMatchMemberListItemProps {
   isSettingMode?: boolean;
   isCheck?: boolean;
-  memberInfo: IUserField;
+  memberInfo: IUserField | ITeamEntry;
   onPressCheckBox?: () => void;
 }
 
@@ -35,7 +36,7 @@ export const MatchMemberListItem = ({
         fontWeight="700"
         text={memberInfo.name}
       />
-      {memberInfo.isLeader && (
+      {Boolean(memberInfo?.isLeader) && (
         <Tag
           type="sm"
           hasBorder
