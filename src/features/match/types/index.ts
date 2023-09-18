@@ -26,3 +26,4 @@ export * from './detail';
 export * from './field';
 export * from './member';
 export * from './userField';
+export * from './fieldEntry';

@@ -7,18 +7,30 @@ import {queryClient} from '../../../../lib/react-query';
 
 interface IProps {
   id: number;
+  ids: number[];
 }
 
-const fetcher = async ({id}: IProps): Promise<string> =>
-  await axios.delete(`/user-field/${id}/eject`).then(({data}) => data);
+interface IUseDeleteUserFieldEjectProps {
+  onSuccessCallback?: () => void;
+}
+
+const fetcher = async ({id, ids}: IProps): Promise<string> =>
+  await axios
+    .delete(`/user-field/${id}/eject?ids=${ids.toString()}`)
+    .then(({data}) => data);
 
 /** DELETE: 팀원 내보내기 */
 export const useDeleteUserFieldEject = ({
-  id,
-}: IProps): UseMutationResult<string, AxiosError, IProps> =>
+  onSuccessCallback = () => {},
+}: IUseDeleteUserFieldEjectProps): UseMutationResult<
+  string,
+  AxiosError,
+  IProps
+> =>
   useMutation({
-    mutationFn: async () => await fetcher({id}),
+    mutationFn: fetcher,
     onSuccess: () => {
+      onSuccessCallback();
       void queryClient.invalidateQueries(KEYS.all);
     },
   });
