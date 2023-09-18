@@ -112,7 +112,8 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
           ) as keyof typeof SkillLevels,
         },
       });
-      navigation.replace('Landing');
+      // TODO(@minimalKim):자동 로그인 추가
+      navigation.replace('Main');
       return;
     }
     setStepIndex(index => index + 1);
