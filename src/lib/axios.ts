@@ -10,6 +10,18 @@ export const axios = Axios.create({
   },
 });
 
+axios.defaults.paramsSerializer = function (paramObj) {
+  const params = new URLSearchParams();
+
+  for (const key in paramObj) {
+    if (paramObj[key] !== null && paramObj[key] !== undefined) {
+      params.append(key, paramObj[key]);
+    }
+  }
+
+  return params.toString();
+};
+
 axios.interceptors.request.use(async config => {
   // TODO: jwt 관련 설정 추가
   // const token = await asyncStorage.get<string>(ASYNC_STORAGE_KEYS.AUTH_JWT);
