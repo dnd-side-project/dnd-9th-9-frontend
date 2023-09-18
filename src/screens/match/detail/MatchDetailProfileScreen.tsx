@@ -14,7 +14,7 @@ import {
 //   usePostFieldEntryBattle,
 //   usePostFieldEntryTeam,
 // } from '../../../features/match/hooks/fieldEntry';
-import {useGetUserFieldList} from '../../../features/match/hooks/uesrField';
+import {useGetUserFieldList} from '../../../features/match/hooks/userField';
 import {type IFieldDetailInfo} from '../../../features/match/types';
 
 interface IMatchDetailProfileScreenProps {

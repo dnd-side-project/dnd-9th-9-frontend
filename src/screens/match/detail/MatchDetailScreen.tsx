@@ -5,9 +5,9 @@ import {type RouteProp, useRoute} from '@react-navigation/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView, View} from 'react-native';
 
-import {MatchDetailMemberScreen} from './MatchDetailMemberScreen';
 import {MatchDetailProfileScreen} from './MatchDetailProfileScreen';
 import {MatchDetailMatchingScreen} from './matching/MatchDetailMatchingScreen';
+import {MatchDetailMemberScreen} from './member/MatchDetailMemberScreen';
 import {MatchDetailRecordScreen} from './record';
 import {theme} from '../../../assets/styles/theme';
 import {Text} from '../../../components/Text';
@@ -42,6 +42,9 @@ export const MatchDetailScreen = ({
     id,
   });
 
+  // TODO: ERR 처리
+  if (fieldDetailData === undefined) return <View></View>;
+
   const getScreenByRule = (): ITopTabScreen[] => {
     const userRole = fieldDetailData?.fieldDto?.fieldRole;
 
@@ -69,7 +72,9 @@ export const MatchDetailScreen = ({
           {
             name: 'TeamMember',
             label: '팀원',
-            component: MatchDetailMemberScreen,
+            component: () => (
+              <MatchDetailMemberScreen id={id} userRole={userRole} />
+            ),
           },
         ];
       default:
@@ -84,7 +89,9 @@ export const MatchDetailScreen = ({
           {
             name: 'TeamMember',
             label: '팀원',
-            component: MatchDetailMemberScreen,
+            component: () => (
+              <MatchDetailMemberScreen id={id} userRole={userRole} />
+            ),
           },
         ];
     }
