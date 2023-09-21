@@ -10,6 +10,26 @@ export const axios = Axios.create({
   },
 });
 
+axios.defaults.paramsSerializer = function (paramObj) {
+  const params = new URLSearchParams();
+
+  for (const key in paramObj) {
+    const value = paramObj[key];
+
+    if (Array.isArray(value)) {
+      value.forEach((item: any) => {
+        if (item !== null && item !== undefined) {
+          params.append(key, item);
+        }
+      });
+    } else if (value !== null && value !== undefined) {
+      params.append(key, value);
+    }
+  }
+
+  return params.toString();
+};
+
 axios.interceptors.request.use(async config => {
   // TODO: jwt 관련 설정 추가
   // const token = await asyncStorage.get<string>(ASYNC_STORAGE_KEYS.AUTH_JWT);
