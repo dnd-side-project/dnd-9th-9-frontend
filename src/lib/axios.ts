@@ -14,8 +14,16 @@ axios.defaults.paramsSerializer = function (paramObj) {
   const params = new URLSearchParams();
 
   for (const key in paramObj) {
-    if (paramObj[key] !== null && paramObj[key] !== undefined) {
-      params.append(key, paramObj[key]);
+    const value = paramObj[key];
+
+    if (Array.isArray(value)) {
+      value.forEach((item: any) => {
+        if (item !== null && item !== undefined) {
+          params.append(key, item);
+        }
+      });
+    } else if (value !== null && value !== undefined) {
+      params.append(key, value);
     }
   }
 
