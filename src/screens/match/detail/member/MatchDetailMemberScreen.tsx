@@ -9,11 +9,12 @@ import {Line} from '../../../../components/Line';
 import {MatchMemberList} from '../../../../features/match/components/MatchDetailMember';
 import {useGetFieldEntryTeam} from '../../../../features/match/hooks/fieldEntry';
 import {useGetUserFieldList} from '../../../../features/match/hooks/userField';
+import {type TUserRole} from '../../../../features/match/types';
 import {type MatchStackParamList} from '../../../../navigators/MatchNavigator';
 
 interface IMatchDetailMemberScreenProps {
   id: number;
-  userRole: 'MEMBER' | 'LEADER' | 'GUEST';
+  userRole: TUserRole;
 }
 
 export const MatchDetailMemberScreen = ({

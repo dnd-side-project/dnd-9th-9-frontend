@@ -8,10 +8,11 @@ import {BottomSheet} from '../../../../components/BottomSheet';
 import {Line} from '../../../../components/Line';
 import {Text} from '../../../../components/Text';
 import {type MatchStackParamList} from '../../../../navigators';
+import {type TUserRole} from '../../types';
 
 interface IMatchMemberSettingBottomSheetProps {
   id: number;
-  userRole: 'MEMBER' | 'LEADER' | 'GUEST';
+  userRole: TUserRole;
   type: 'MEMBER' | 'DELETE' | 'ASSIGN' | 'REQUEST';
   isOpened: boolean;
   onOpen: () => void;

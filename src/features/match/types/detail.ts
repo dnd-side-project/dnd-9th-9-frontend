@@ -4,6 +4,7 @@ import {
   type TSkillLevel,
   type TStrength,
   type IField,
+  type TUserRole,
 } from '.';
 import {type TWorkoutActivitiesType} from '../../../lib/AppleHealthKit';
 
@@ -12,7 +13,7 @@ export interface IFieldDetailInfo {
   fieldDto: IField & {
     description: string;
     endDate: string;
-    fieldRole: 'LEADER' | 'MEMBER' | 'GUEST';
+    fieldRole: TUserRole;
     fieldStatus: 'COMPLETED' | 'IN_PROGRESS' | 'RECRUITING';
     rule: string;
     strength: TStrength;

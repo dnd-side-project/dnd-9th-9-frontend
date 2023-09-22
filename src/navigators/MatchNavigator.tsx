@@ -3,6 +3,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {
+  type TUserRole,
   type IFieldListPaginationParams,
   type IFieldListParams,
   type IMatchDetailRecord,
@@ -54,20 +55,20 @@ export type MatchStackParamList = {
   MatchDetailMember: undefined;
   MatchDetailMemberMore: {
     id: number;
-    userRole: 'MEMBER' | 'LEADER' | 'GUEST';
+    userRole: TUserRole;
     type: 'MEMBER' | 'REQUEST';
   };
   MatchDetailMemberRequestAccept: {
     id: number;
-    userRole: 'MEMBER' | 'LEADER' | 'GUEST';
+    userRole: TUserRole;
   };
   MatchDetailMemberDelete: {
     id: number;
-    userRole: 'MEMBER' | 'LEADER' | 'GUEST';
+    userRole: TUserRole;
   };
   MatchDetailMemberAssign: {
     id: number;
-    userRole: 'MEMBER' | 'LEADER' | 'GUEST';
+    userRole: TUserRole;
   };
 };
 

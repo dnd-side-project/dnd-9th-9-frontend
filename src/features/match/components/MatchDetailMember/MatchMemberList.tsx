@@ -11,13 +11,13 @@ import {Gap} from '../../../../components/Gap';
 import {Icon} from '../../../../components/Icon';
 import {Text} from '../../../../components/Text';
 import {useGetFieldDetail} from '../../hooks/field';
-import {type IUserField, type ITeamEntry} from '../../types';
+import {type IUserField, type ITeamEntry, type TUserRole} from '../../types';
 
 interface IMatchMemberListProps {
   id: number;
-  userRole: 'MEMBER' | 'LEADER' | 'GUEST';
+  userRole: TUserRole;
   type: 'MEMBER' | 'DELETE' | 'ASSIGN' | 'REQUEST';
-  members: IUserField[] | ITeamEntry[] | undefined;
+  members?: IUserField[] | ITeamEntry[];
   checkedMember?: number[];
   isSettingMode?: boolean;
   isSummary?: boolean;
