@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import styled from '@emotion/native';
 import {TouchableOpacity, View} from 'react-native';
@@ -51,7 +51,7 @@ export const MatchMemberList = ({
 
   const handleSettingList = (): void => {};
 
-  const memberData = React.useMemo(() => {
+  const memberData = useMemo(() => {
     if (type === 'REQUEST') {
       return isSummary
         ? (members.slice(0, 3) as ITeamEntry[])
