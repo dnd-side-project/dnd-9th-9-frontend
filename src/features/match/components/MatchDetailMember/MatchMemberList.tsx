@@ -49,11 +49,16 @@ export const MatchMemberList = ({
     REQUEST: '요청',
   } as const;
 
-  let memberData =
-    type === 'REQUEST' ? (members as ITeamEntry[]) : (members as IUserField[]);
-  memberData = type === 'REQUEST' && isSummary ? members?.slice(0, 3) : members;
-
   const handleSettingList = (): void => {};
+
+  const memberData = React.useMemo(() => {
+    if (type === 'REQUEST') {
+      return isSummary
+        ? (members.slice(0, 3) as ITeamEntry[])
+        : (members as ITeamEntry[]);
+    }
+    return members as IUserField[];
+  }, [type, isSummary, members]);
 
   return (
     <View style={{flex: 1}}>
