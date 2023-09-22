@@ -3,6 +3,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {
+  type TUserRole,
   type IFieldListPaginationParams,
   type IFieldListParams,
   type IMatchDetailRecord,
@@ -20,7 +21,13 @@ import {
   MatchDetailRecordDetailScreen,
   MatchDetailRecordScreen,
   MatchDetailScreen,
+  MatchDetailMemberRequestAcceptScreen,
 } from '../screens/match/detail';
+import {
+  MatchDetailMemberAssignScreen,
+  MatchDetailMemberDeleteScreen,
+  MatchDetailMemberMoreScreen,
+} from '../screens/match/detail/member';
 import {AutoMatchScreen, MatchFilterScreen} from '../screens/match/list';
 
 export type MatchStackParamList = {
@@ -46,6 +53,23 @@ export type MatchStackParamList = {
     type: 'RECEIVED' | 'SENT';
   };
   MatchDetailMember: undefined;
+  MatchDetailMemberMore: {
+    id: number;
+    userRole: TUserRole;
+    type: 'MEMBER' | 'REQUEST';
+  };
+  MatchDetailMemberRequestAccept: {
+    id: number;
+    userRole: TUserRole;
+  };
+  MatchDetailMemberDelete: {
+    id: number;
+    userRole: TUserRole;
+  };
+  MatchDetailMemberAssign: {
+    id: number;
+    userRole: TUserRole;
+  };
 };
 
 const Stack = createNativeStackNavigator<MatchStackParamList>();
@@ -119,6 +143,29 @@ export function MatchNavigator(): React.JSX.Element {
       <Stack.Screen
         name="MatchDetailMember"
         component={MatchDetailMemberScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailMemberMore"
+        component={MatchDetailMemberMoreScreen}
+        options={{headerTitle: ''}}
+        initialParams={{
+          type: 'REQUEST',
+        }}
+      />
+      <Stack.Screen
+        name="MatchDetailMemberRequestAccept"
+        component={MatchDetailMemberRequestAcceptScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailMemberAssign"
+        component={MatchDetailMemberAssignScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailMemberDelete"
+        component={MatchDetailMemberDeleteScreen}
         options={{headerTitle: ''}}
       />
       {/* TODO: 하위 스크린 MatchNavigator 에 셋팅 */}

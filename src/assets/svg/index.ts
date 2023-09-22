@@ -177,6 +177,14 @@ const informationXmlData = `
   </defs>
 </svg>`;
 
+const threeDotXmlData = `
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="4" viewBox="0 0 20 4" fill="none">
+  <circle cx="2" cy="2" r="2" fill="#252730"/>
+  <circle cx="10" cy="2" r="2" fill="#252730"/>
+  <circle cx="18" cy="2" r="2" fill="#252730"/>
+</svg>
+`;
+
 const errorXmlData = `
 <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">
   <g clip-path="url(#clip0_405_6471)">
@@ -240,4 +248,5 @@ export {
   errorXmlData,
   eyeClosedXmlData,
   eyeOpenedXmlData,
+  threeDotXmlData,
 };
