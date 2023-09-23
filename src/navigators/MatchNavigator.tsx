@@ -92,6 +92,7 @@ export function MatchNavigator(): React.JSX.Element {
           period: [],
           skillLevel: [],
           strength: [],
+          matchStatus: 'APPLICATION',
         }}
       />
       <Stack.Screen name="MatchFilter" component={MatchFilterScreen} />

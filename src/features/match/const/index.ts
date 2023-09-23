@@ -30,4 +30,10 @@ const Strengths = {
   HIGH: '보통이상',
 } as const;
 
-export {FieldTypes, Periods, Goals, SkillLevels, Strengths};
+const MyMatchStatus = {
+  APPLICATION: '신청',
+  PROGRESS: '진행중',
+  COMPLETE: '진행완료',
+} as const;
+
+export {FieldTypes, Periods, Goals, SkillLevels, Strengths, MyMatchStatus};
