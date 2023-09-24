@@ -15,25 +15,25 @@ export const IdSection = ({
   control,
   trigger,
   formState,
+  getValues,
   onNext,
 }: IFormSectionProps): React.JSX.Element => {
   const [enabled, setEnabled] = useState(false);
-  const [uid, setUid] = useState('');
   const error = formState.errors.uid;
 
   const {data: isIdAvailable, isFetching} = useGetAuthIdAvailable({
-    uid,
+    uid: getValues('uid'),
     enabled,
   });
 
   const errorMessage = useMemo(() => {
-    if (isFetching) {
+    if (isFetching || !enabled) {
       return '';
     }
     if (error?.message != null) {
       return error?.message;
     }
-    if (isIdAvailable === false && enabled) {
+    if (isIdAvailable === false) {
       return '이미 사용중인 아이디 입니다.';
     }
     return '';
@@ -64,14 +64,14 @@ export const IdSection = ({
           control={control}
           name="uid"
           rules={{
-            onChange: ({target}) => {
-              setUid(target.value);
-              if (isIdAvailable != null) {
-                void trigger('uid');
-              }
+            onChange: () => {
+              void trigger('uid');
+
               if (enabled) {
                 setEnabled(false);
-                void queryClient.invalidateQueries(KEYS.idAvailable(uid));
+                void queryClient.invalidateQueries(
+                  KEYS.idAvailable(getValues('uid')),
+                );
               }
             },
           }}
@@ -80,7 +80,7 @@ export const IdSection = ({
               label="아이디"
               placeholder="6자 이상 영문+숫자 조합으로 만들어 주세요"
               textContentType="nickname"
-              isError={error != null}
+              isError={errorMessage !== ''}
               isValid={isIdAvailable}
               value={value}
               errorMessage={errorMessage}
@@ -102,7 +102,7 @@ export const IdSection = ({
           <Button
             text="중복확인"
             onPress={handlePressCheckAvailableId}
-            disabled={uid.length === 0}
+            disabled={getValues('uid') == null || getValues('uid').length === 0}
           />
         )}
       </FixedButtonWrapper>
