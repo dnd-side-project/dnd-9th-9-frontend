@@ -6,8 +6,10 @@ import {Controller} from 'react-hook-form';
 import {Button} from '../../../../components/Button';
 import {Text} from '../../../../components/Text';
 import {Textfield} from '../../../../components/Textfield/Textfield';
+import {queryClient} from '../../../../lib/react-query';
 import {type IFormSectionProps} from '../../../../screens/auth/SignupScreen';
 import {useGetAuthIdAvailable} from '../../hooks/auth';
+import {KEYS} from '../../hooks/auth/keys';
 
 export const IdSection = ({
   control,
@@ -19,13 +21,15 @@ export const IdSection = ({
   const [uid, setUid] = useState('');
   const error = formState.errors.uid;
 
-  const {data: isIdAvailable, refetch: getAuthIdAvailable} =
-    useGetAuthIdAvailable({
-      uid,
-      enabled,
-    });
+  const {data: isIdAvailable, isFetching} = useGetAuthIdAvailable({
+    uid,
+    enabled,
+  });
 
   const errorMessage = useMemo(() => {
+    if (isFetching) {
+      return '';
+    }
     if (error?.message != null) {
       return error?.message;
     }
@@ -33,11 +37,10 @@ export const IdSection = ({
       return '이미 사용중인 아이디 입니다.';
     }
     return '';
-  }, [error, isIdAvailable]);
+  }, [error, enabled, isFetching, isIdAvailable]);
 
   const handlePressCheckAvailableId = (): void => {
     setEnabled(true);
-    void getAuthIdAvailable();
   };
 
   const handlePressNext = async (): Promise<void> => {
@@ -62,10 +65,13 @@ export const IdSection = ({
           name="uid"
           rules={{
             onChange: ({target}) => {
-              void trigger('uid');
               setUid(target.value);
+              if (isIdAvailable != null) {
+                void trigger('uid');
+              }
               if (enabled) {
                 setEnabled(false);
+                void queryClient.invalidateQueries(KEYS.idAvailable(uid));
               }
             },
           }}
@@ -93,7 +99,11 @@ export const IdSection = ({
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           <Button text="다음" onPress={handlePressNext} />
         ) : (
-          <Button text="중복확인" onPress={handlePressCheckAvailableId} />
+          <Button
+            text="중복확인"
+            onPress={handlePressCheckAvailableId}
+            disabled={uid.length === 0}
+          />
         )}
       </FixedButtonWrapper>
     </StyledSection>
