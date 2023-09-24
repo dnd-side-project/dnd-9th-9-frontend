@@ -10,6 +10,7 @@ import {z} from 'zod';
 
 import {arrowLeftXmlData} from '../../assets/svg';
 import {Icon} from '../../components/Icon';
+import {ConfirmModal} from '../../components/Modal';
 import {Text} from '../../components/Text';
 import {
   NameSection,
@@ -97,9 +98,9 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
   const currentStep = SIGNUP_INFORMATION_STEPS[stepIndex];
   const stepLabel = `${stepIndex + 1}/${SIGNUP_INFORMATION_STEPS.length}`;
 
-  const {mutateAsync: postSignup} = usePostSignup();
-
-  const {mutateAsync: postLogin} = usePostLogin();
+  const {mutateAsync: postSignup, error: postSignupError} = usePostSignup();
+  const {mutateAsync: postLogin, error: postLoginError} = usePostLogin();
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const handlePressNext = async (): Promise<void> => {
     if (stepIndex === SIGNUP_INFORMATION_STEPS.length - 1) {
@@ -126,8 +127,9 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
 
         navigation.replace('Main');
       } catch (e) {
-        console.error(e);
+        setShowErrorModal(true);
       }
+      return;
     }
     setStepIndex(index => index + 1);
   };
@@ -140,6 +142,11 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
     setStepIndex(index => index - 1);
   };
 
+  const handlePressConfirmError = (): void => {
+    setShowErrorModal(false);
+    navigation.popToTop();
+  };
+
   return (
     <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
       <StyledTopBar>
@@ -148,6 +155,17 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
         </TouchableOpacity>
         <Text type="head4" text={stepLabel} color="gray-500" />
       </StyledTopBar>
+
+      <ConfirmModal
+        visible={showErrorModal}
+        title={'회원가입에 실패했습니다'}
+        subTitle={
+          postSignupError?.message ??
+          postLoginError?.message ??
+          '다시 시도해주세요'
+        }
+        handleConfirm={handlePressConfirmError}
+      />
 
       <currentStep.formSection onNext={handlePressNext} {...signupForm} />
     </SafeAreaView>
