@@ -1,10 +1,14 @@
-import {type TFieldType, type IFieldListPaginationParams} from '../../types';
+import {
+  type TFieldType,
+  type IFieldListPaginationParams,
+  type IFieldListParams,
+} from '../../types';
 
 export const KEYS = {
   all: ['field'] as const,
   list: ({
-    pageSize,
-    pageNumber,
+    page,
+    size,
     fieldType,
     goal,
     memberCount,
@@ -16,8 +20,8 @@ export const KEYS = {
       ...KEYS.all,
       'list',
       {
-        pageSize,
-        pageNumber,
+        page,
+        size,
         fieldType,
         goal,
         memberCount,
@@ -25,6 +29,20 @@ export const KEYS = {
         skillLevel,
         strength,
       },
+    ] as const,
+  count: ({
+    fieldType,
+    goal,
+    memberCount,
+    period,
+    skillLevel,
+    strength,
+    keyword,
+  }: IFieldListParams) =>
+    [
+      ...KEYS.all,
+      'count',
+      {fieldType, goal, memberCount, period, skillLevel, strength, keyword},
     ] as const,
   detail: (id: number) => [...KEYS.all, 'detail', id] as const,
   detailTerminate: (id: number) => [...KEYS.detail(id), 'terminate'] as const,
