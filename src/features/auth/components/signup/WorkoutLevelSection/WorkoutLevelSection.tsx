@@ -47,12 +47,7 @@ export const WorkoutLevelSection = ({
             },
           }}
           render={({field: {onChange, value}}) => (
-            <WorkoutLevelRadioGroup
-              selectedLevel={value}
-              onChange={level => {
-                onChange(level);
-              }}
-            />
+            <WorkoutLevelRadioGroup selectedLevel={value} onChange={onChange} />
           )}
         />
       </StyledFieldContainer>
