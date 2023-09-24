@@ -13,7 +13,10 @@ import {Searching} from '../../../components/Searching';
 import {Text} from '../../../components/Text';
 import {MatchingFloating} from '../../../features/match/components';
 import {MatchFieldTypeFilterRadio} from '../../../features/match/components/MatchFilter';
-import {useGetInfiniteFieldList} from '../../../features/match/hooks/field';
+import {
+  useGetInfiniteFieldList,
+  useGetFieldCount,
+} from '../../../features/match/hooks/field';
 import {type IFieldListPaginationParams} from '../../../features/match/types';
 import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
@@ -51,7 +54,15 @@ export const MatchListScreen = ({
     keyword,
   });
 
-  const totalListCount = fieldListData?.pages[0]?.totalCount ?? 0;
+  const {data: fieldCountData} = useGetFieldCount({
+    fieldType,
+    goal,
+    memberCount,
+    period,
+    skillLevel,
+    strength,
+    keyword,
+  });
 
   const isFilterActive =
     goal.length > 0 ||
@@ -90,7 +101,7 @@ export const MatchListScreen = ({
         <StyledFlexView>
           <Text
             type="body3"
-            text={`총 ${totalListCount}개의 매칭`}
+            text={`총 ${fieldCountData ?? 0}개의 매칭`}
             color="gray-700"
           />
           <FilterButton
@@ -109,45 +120,43 @@ export const MatchListScreen = ({
           />
         </StyledFlexView>
 
-        {totalListCount <= 0 ? (
-          <View>
-            <Gap size="140px" />
-            <Text
-              type="body2"
-              textAlign="center"
-              color="gray-600"
-              fontWeight="600"
-              text="조건에 맞는 매칭이 없습니다."
+        <FlatList
+          scrollEnabled={false}
+          data={fieldListData?.pages.map(page => page.fieldsInfos).flat()}
+          keyExtractor={(item, idx) => `match-${item.id}-${idx}`}
+          renderItem={({item}) => (
+            <ListItem
+              key={`match-item-${item?.id}`}
+              id={item?.id}
+              currentSize={item?.currentSize}
+              fieldType={item?.fieldType}
+              goal={item?.goal}
+              maxSize={item?.maxSize}
+              name={item?.name}
+              period={item?.period}
+              profileImg={item?.profileImg}
+              skillLevel={item?.skillLevel}
             />
-          </View>
-        ) : (
-          <FlatList
-            scrollEnabled={false}
-            data={fieldListData?.pages.map(page => page.fieldsInfos).flat()}
-            keyExtractor={(item, idx) => `match-${item.id}-${idx}`}
-            renderItem={({item}) => (
-              <ListItem
-                key={`match-item-${item?.id}`}
-                id={item?.id}
-                currentSize={item?.currentSize}
-                fieldType={item?.fieldType}
-                goal={item?.goal}
-                maxSize={item?.maxSize}
-                name={item?.name}
-                period={item?.period}
-                profileImg={item?.profileImg}
-                skillLevel={item?.skillLevel}
+          )}
+          onEndReached={() => {
+            if ((hasNextPage ?? false) && !isFetchingNextPage) {
+              void fetchNextPage();
+            }
+          }}
+          onEndReachedThreshold={0.5}
+          ListEmptyComponent={
+            <View>
+              <Gap size="140px" />
+              <Text
+                type="body2"
+                textAlign="center"
+                color="gray-600"
+                fontWeight="600"
+                text="조건에 맞는 매칭이 없습니다."
               />
-            )}
-            // TODO: 해당 로직 검토
-            onEndReached={() => {
-              if ((hasNextPage ?? false) && !isFetchingNextPage) {
-                void fetchNextPage();
-              }
-            }}
-            onEndReachedThreshold={0.5}
-          />
-        )}
+            </View>
+          }
+        />
       </ScrollView>
 
       <MatchingFloating
