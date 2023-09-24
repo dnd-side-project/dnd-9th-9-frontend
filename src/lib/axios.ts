@@ -1,5 +1,7 @@
 import Axios from 'axios';
 
+import {asyncStorage, ASYNC_STORAGE_KEYS} from './asyncStorage';
+
 // TODO: env 관련 설정 추가
 export const API_URL = '/api';
 
@@ -11,11 +13,12 @@ export const axios = Axios.create({
 });
 
 axios.interceptors.request.use(async config => {
-  // TODO: jwt 관련 설정 추가
-  // const token = await asyncStorage.get<string>(ASYNC_STORAGE_KEYS.AUTH_JWT);
-  // if (token != null) {
-  //   config.headers.setAuthorization(token);
-  // }
+  const token = await asyncStorage.get<string>(
+    ASYNC_STORAGE_KEYS.AUTH_JWT_ACCESS_TOKEN,
+  );
+  if (token != null) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 });
 

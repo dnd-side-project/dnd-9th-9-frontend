@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, {useState} from 'react';
 
 import styled from '@emotion/native';
@@ -17,7 +18,7 @@ import {
   PasswordSection,
   WorkoutLevelSection,
 } from '../../features/auth/components/signup';
-import {usePostSignup} from '../../features/auth/hooks/auth';
+import {usePostLogin, usePostSignup} from '../../features/auth/hooks/auth';
 import {type SkillLevels} from '../../features/match/const';
 import {type RootStackParamList} from '../../navigators';
 
@@ -96,25 +97,37 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
   const currentStep = SIGNUP_INFORMATION_STEPS[stepIndex];
   const stepLabel = `${stepIndex + 1}/${SIGNUP_INFORMATION_STEPS.length}`;
 
-  const {mutate} = usePostSignup();
+  const {mutateAsync: postSignup} = usePostSignup();
 
-  const handlePressNext = (): void => {
+  const {mutateAsync: postLogin} = usePostLogin();
+
+  const handlePressNext = async (): Promise<void> => {
     if (stepIndex === SIGNUP_INFORMATION_STEPS.length - 1) {
-      mutate({
-        body: {
-          name: signupForm.getValues('name'),
-          uid: signupForm.getValues('uid'),
-          phoneNum: signupForm.getValues('mobilePhone'),
-          password: signupForm.getValues('password'),
-          // TODO(@minimalKim): zod enum check로 대체
-          skillLevel: signupForm.getValues(
-            'skillLevel',
-          ) as keyof typeof SkillLevels,
-        },
-      });
-      // TODO(@minimalKim):자동 로그인 추가
-      navigation.replace('Main');
-      return;
+      try {
+        await postSignup({
+          body: {
+            name: signupForm.getValues('name'),
+            uid: signupForm.getValues('uid'),
+            phoneNum: signupForm.getValues('mobilePhone'),
+            password: signupForm.getValues('password'),
+            // TODO(@minimalKim): zod enum check로 대체
+            skillLevel: signupForm.getValues(
+              'skillLevel',
+            ) as keyof typeof SkillLevels,
+          },
+        });
+
+        await postLogin({
+          body: {
+            uid: signupForm.getValues('uid'),
+            password: signupForm.getValues('password'),
+          },
+        });
+
+        navigation.replace('Main');
+      } catch (e) {
+        console.error(e);
+      }
     }
     setStepIndex(index => index + 1);
   };
