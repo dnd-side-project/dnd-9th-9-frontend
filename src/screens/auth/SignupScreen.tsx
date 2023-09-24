@@ -144,7 +144,7 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
 
   const handlePressConfirmError = (): void => {
     setShowErrorModal(false);
-    navigation.popToTop();
+    navigation.pop();
   };
 
   return (
