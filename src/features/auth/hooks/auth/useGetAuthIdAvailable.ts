@@ -30,6 +30,5 @@ export const useGetAuthIdAvailable = ({
       await fetcher({
         uid,
       }),
-    initialData: false,
     enabled,
   });
