@@ -156,7 +156,11 @@ export const PasswordSection = ({
         <Button
           text="다음"
           onPress={handlePressNext}
-          disabled={getValues('password') == null || error?.message != null}
+          disabled={
+            getValues('password') == null ||
+            getValues('password').length === 0 ||
+            error?.message != null
+          }
         />
       </FixedButtonWrapper>
     </StyledSection>
