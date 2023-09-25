@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, {useState} from 'react';
 
 import styled from '@emotion/native';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useForm, type UseFormReturn} from 'react-hook-form';
 import {SafeAreaView, TouchableOpacity} from 'react-native';
 import {z} from 'zod';
 
 import {arrowLeftXmlData} from '../../assets/svg';
 import {Icon} from '../../components/Icon';
+import {ConfirmModal} from '../../components/Modal';
 import {Text} from '../../components/Text';
 import {
   NameSection,
@@ -16,6 +19,11 @@ import {
   PasswordSection,
   WorkoutLevelSection,
 } from '../../features/auth/components/signup';
+import {usePostLogin, usePostSignup} from '../../features/auth/hooks/auth';
+import {type SkillLevels} from '../../features/match/const';
+import {type RootStackParamList} from '../../navigators';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'Landing'>;
 
 const validationSchema = z.object({
   name: z.string().min(1, {message: '이름을 입력해주세요'}),
@@ -49,7 +57,7 @@ const validationSchema = z.object({
       message: '최소 1자 이상의 영문과 숫자를 포함해주세요',
     }),
   confirmedPassword: z.string(),
-  skillLevel: z.string().min(1, {message: '운동 강도를 입력해주세요'}),
+  skillLevel: z.string().nonempty('운동 레벨을 선택해주세요'),
 });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
@@ -81,7 +89,7 @@ const SIGNUP_INFORMATION_STEPS = [
   },
 ] as const;
 
-export function SignupScreen(): React.JSX.Element {
+export function SignupScreen({navigation}: Props): React.JSX.Element {
   const signupForm = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
@@ -90,18 +98,53 @@ export function SignupScreen(): React.JSX.Element {
   const currentStep = SIGNUP_INFORMATION_STEPS[stepIndex];
   const stepLabel = `${stepIndex + 1}/${SIGNUP_INFORMATION_STEPS.length}`;
 
-  const handlePressNext = (): void => {
+  const {mutateAsync: postSignup, error: postSignupError} = usePostSignup();
+  const {mutateAsync: postLogin, error: postLoginError} = usePostLogin();
+  const [showErrorModal, setShowErrorModal] = useState(false);
+
+  const handlePressNext = async (): Promise<void> => {
     if (stepIndex === SIGNUP_INFORMATION_STEPS.length - 1) {
-      // TODO: navigate 메인화면
+      try {
+        await postSignup({
+          body: {
+            name: signupForm.getValues('name'),
+            uid: signupForm.getValues('uid'),
+            phoneNum: signupForm.getValues('mobilePhone'),
+            password: signupForm.getValues('password'),
+            // TODO(@minimalKim): zod enum check로 대체
+            skillLevel: signupForm.getValues(
+              'skillLevel',
+            ) as keyof typeof SkillLevels,
+          },
+        });
+
+        await postLogin({
+          body: {
+            uid: signupForm.getValues('uid'),
+            password: signupForm.getValues('password'),
+          },
+        });
+
+        navigation.replace('Main');
+      } catch (e) {
+        setShowErrorModal(true);
+      }
+      return;
     }
     setStepIndex(index => index + 1);
   };
 
   const handlePressPrev = (): void => {
     if (stepIndex === 0) {
-      // TODO: navigate 랜딩
+      navigation.pop();
+      return;
     }
     setStepIndex(index => index - 1);
+  };
+
+  const handlePressConfirmError = (): void => {
+    setShowErrorModal(false);
+    navigation.pop();
   };
 
   return (
@@ -113,14 +156,18 @@ export function SignupScreen(): React.JSX.Element {
         <Text type="head4" text={stepLabel} color="gray-500" />
       </StyledTopBar>
 
-      {<currentStep.formSection onNext={handlePressNext} {...signupForm} />}
+      <ConfirmModal
+        visible={showErrorModal}
+        title={'회원가입에 실패했습니다'}
+        subTitle={
+          postSignupError?.message ??
+          postLoginError?.message ??
+          '다시 시도해주세요'
+        }
+        handleConfirm={handlePressConfirmError}
+      />
 
-      {/* <Button
-        text="Submit"
-        onPress={() => {
-          void handleSubmit(onSubmit)();
-        }}
-      /> */}
+      <currentStep.formSection onNext={handlePressNext} {...signupForm} />
     </SafeAreaView>
   );
 }

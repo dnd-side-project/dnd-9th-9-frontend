@@ -153,7 +153,15 @@ export const PasswordSection = ({
       </StyledFieldContainer>
 
       <FixedButtonWrapper>
-        <Button text="다음" onPress={handlePressNext} />
+        <Button
+          text="다음"
+          onPress={handlePressNext}
+          disabled={
+            getValues('password') == null ||
+            getValues('password').length === 0 ||
+            error?.message != null
+          }
+        />
       </FixedButtonWrapper>
     </StyledSection>
   );

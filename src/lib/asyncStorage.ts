@@ -8,7 +8,8 @@ import {type ValueOf} from '../utils/types';
 const PREFIX = 'matchup' as const;
 
 export const ASYNC_STORAGE_KEYS = {
-  AUTH_JWT: 'auth-jwt-token',
+  AUTH_JWT_ACCESS_TOKEN: 'auth-jwt-access-token',
+  AUTH_JWT_REFRESH_TOKEN: 'auth-jwt-refresh-token',
 } as const;
 
 type TAsyncStorageKey = ValueOf<typeof ASYNC_STORAGE_KEYS>;
