@@ -6,16 +6,22 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, TouchableOpacity, View} from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
+import {Button} from '../../../../components/Button';
 import {Modal} from '../../../../components/Modal';
-import {MatchApplyList} from '../../../../features/match/components/MatchDetailMatching';
+import {Text} from '../../../../components/Text';
 import {
-  APPLY_DUMMY_DATA,
-  SENT_DUMMY_DATA,
-  useGetFieldDetailEntryBattle,
-} from '../../../../features/match/hooks/field/useGetFieldDetailEntryBattle';
+  MatchApplyHeader,
+  MatchApplyList,
+} from '../../../../features/match/components/MatchDetailMatching';
+import {
+  useDeleteFieldEntry,
+  useGetInfiniteFieldEntryBattleDetail,
+  usePostFieldEntryAccept,
+} from '../../../../features/match/hooks/fieldEntry';
 import {type MatchStackParamList} from '../../../../navigators';
 
 type TMatchDetailMatchingMoreRouteProps = RouteProp<
@@ -23,31 +29,62 @@ type TMatchDetailMatchingMoreRouteProps = RouteProp<
   'MatchDetailMatchingMore'
 >;
 
-type TMatchDetailMatchingMoreNavigationProps = NativeStackNavigationProp<
-  MatchStackParamList,
-  'MatchDetailMatchingMore'
->;
-
 export const MatchDetailMatchingMoreScreen = (): React.JSX.Element => {
-  const selectMatchId = 1;
-
   const route = useRoute<TMatchDetailMatchingMoreRouteProps>();
-  const navigation = useNavigation<TMatchDetailMatchingMoreNavigationProps>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
 
-  const {type} = route.params;
+  const {id, type} = route.params;
 
+  const {
+    data: fieldEntryBattleData,
+    isLoading: isLoadingFieldEntryBattle,
+    isFetchingNextPage: isFetchingNextPageFieldEntryBattle,
+    fetchNextPage: fetchNextPageFieldEntryBattle,
+    hasNextPage: hasNextPageFieldEntryBattle,
+  } = useGetInfiniteFieldEntryBattleDetail({
+    id,
+    page: 0,
+    size: 3,
+    fieldDirection: type,
+  });
+
+  const {mutate: deleteFieldEntrySent} = useDeleteFieldEntry({
+    onSuccessCallback: () => {
+      Toast.show('매칭 신청이 취소되었습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+    },
+  });
+
+  const {mutate: postAcceptFieldEntry} = usePostFieldEntryAccept({
+    onSuccessCallback: () => {
+      Toast.show('매칭이 시작되었습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+      navigation.pop();
+    },
+  });
+
+  const [isSettingMode, setIsSettingMode] = useState(false);
+  const [checkedApply, setCheckedApply] = useState<number>();
   const [settingModalInfo, setSettingModalInfo] = useState({
     visible: false,
     title: '',
     subTitle: '',
   });
 
-  const DUMMY_DATA = type === 'SENT' ? SENT_DUMMY_DATA : APPLY_DUMMY_DATA;
+  if (isLoadingFieldEntryBattle) return <View></View>;
 
-  const {data = DUMMY_DATA} = useGetFieldDetailEntryBattle({
-    id: selectMatchId,
-    fieldDirection: type,
-  });
+  const handleSettingList = (): void => {
+    setIsSettingMode(value => !value);
+    setCheckedApply(undefined);
+  };
+
+  const handleTeamDetail = (matchId: number): void => {
+    if (isSettingMode) return;
+    navigation.push('MatchDetail', {id: matchId});
+  };
 
   const handleSettingConfirmButton = (): void => {
     if (type === 'SENT') {
@@ -57,7 +94,6 @@ export const MatchDetailMatchingMoreScreen = (): React.JSX.Element => {
         subTitle: '선택한 매칭은 목록에서 제거됩니다.',
       });
     } else if (type === 'RECEIVED') {
-      // TODO: 제거/수락 모드에 따라 모달 내용 변경
       setSettingModalInfo({
         visible: true,
         title: '선택한 팀과 매칭을 시작할까요?',
@@ -74,28 +110,64 @@ export const MatchDetailMatchingMoreScreen = (): React.JSX.Element => {
     });
   };
 
-  const handleTeamDetail = (matchId: number): void => {
-    navigation.navigate('MatchDetailProfile', {id: matchId});
+  const handleConfirmModal = (): void => {
+    if (checkedApply === undefined) return;
+
+    if (type === 'SENT') deleteFieldEntrySent({entryId: checkedApply});
+    else if (type === 'RECEIVED') postAcceptFieldEntry({entryId: checkedApply});
+
+    handleCancelModal();
   };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.palette['gray-0']}}>
-      <MatchApplyList
-        isSummary={false}
-        totalCount={data.totalCount}
-        applies={data.fieldEntriesInfos}
+      <MatchApplyHeader
         type={type}
-        onPressSettingConfirmButton={handleSettingConfirmButton}
-        onPressTeamDetail={handleTeamDetail}
+        settingIcon={
+          <TouchableOpacity activeOpacity={0.8} onPress={handleSettingList}>
+            <Text
+              type="body2"
+              color="gray-600"
+              fontWeight="400"
+              text={isSettingMode ? '설정취소' : '설정'}
+            />
+          </TouchableOpacity>
+        }
       />
+
+      <MatchApplyList
+        type={type}
+        isSettingMode={isSettingMode}
+        fieldEntryBattleData={fieldEntryBattleData}
+        checkedId={checkedApply}
+        onPressTeamDetail={handleTeamDetail}
+        onPressCheckBox={setCheckedApply}
+        onEndReached={() => {
+          if (
+            (hasNextPageFieldEntryBattle ?? false) &&
+            !isFetchingNextPageFieldEntryBattle
+          ) {
+            void fetchNextPageFieldEntryBattle();
+          }
+        }}
+      />
+
+      {isSettingMode && (
+        <View style={{position: 'absolute', bottom: 0, width: '100%'}}>
+          <Button
+            text={type === 'SENT' ? '신청 취소' : '요청 수락'}
+            disabled={checkedApply === undefined}
+            onPress={handleSettingConfirmButton}
+          />
+        </View>
+      )}
 
       <Modal
         visible={settingModalInfo.visible}
         title={settingModalInfo.title}
         subTitle={settingModalInfo.subTitle}
         handleCancel={handleCancelModal}
-        // TODO: 신청한 매칭 취소 or 요청받은 매칭 제거 or 요청받은 매칭 수락 API 연동
-        handleConfirm={() => {}}
+        handleConfirm={handleConfirmModal}
       />
     </SafeAreaView>
   );

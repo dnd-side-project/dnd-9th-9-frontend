@@ -67,7 +67,12 @@ export const MatchDetailScreen = ({
           {
             name: 'TeamMatching',
             label: '매칭',
-            component: MatchDetailMatchingScreen,
+            component: () => (
+              <MatchDetailMatchingScreen
+                id={id}
+                assignedField={fieldDetailData?.assignedFieldDto}
+              />
+            ),
           },
           {
             name: 'TeamMember',
