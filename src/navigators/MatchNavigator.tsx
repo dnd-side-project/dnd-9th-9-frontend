@@ -43,6 +43,7 @@ export type MatchStackParamList = {
   MatchDetailMatchingMore: {
     id: number;
     type: 'RECEIVED' | 'SENT';
+    userRole: TUserRole;
   };
   MatchDetailMemberMore: {
     id: number;

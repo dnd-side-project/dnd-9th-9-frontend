@@ -34,7 +34,7 @@ export const MatchDetailMatchingMoreScreen = (): React.JSX.Element => {
   const navigation =
     useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
 
-  const {id, type} = route.params;
+  const {id, type, userRole = 'GUEST'} = route.params;
 
   const {
     data: fieldEntryBattleData,
@@ -123,16 +123,18 @@ export const MatchDetailMatchingMoreScreen = (): React.JSX.Element => {
     <SafeAreaView style={{flex: 1, backgroundColor: theme.palette['gray-0']}}>
       <MatchApplyHeader
         type={type}
-        settingIcon={
-          <TouchableOpacity activeOpacity={0.8} onPress={handleSettingList}>
-            <Text
-              type="body2"
-              color="gray-600"
-              fontWeight="400"
-              text={isSettingMode ? '설정취소' : '설정'}
-            />
-          </TouchableOpacity>
-        }
+        {...(userRole === 'LEADER' && {
+          settingIcon: (
+            <TouchableOpacity activeOpacity={0.8} onPress={handleSettingList}>
+              <Text
+                type="body2"
+                color="gray-600"
+                fontWeight="400"
+                text={isSettingMode ? '설정취소' : '설정'}
+              />
+            </TouchableOpacity>
+          ),
+        })}
       />
 
       <MatchApplyList

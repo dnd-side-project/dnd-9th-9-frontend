@@ -71,6 +71,7 @@ export const MatchDetailScreen = ({
               <MatchDetailMatchingScreen
                 id={id}
                 assignedField={fieldDetailData?.assignedFieldDto}
+                userRole={fieldDetailData?.fieldDto?.fieldRole}
               />
             ),
           },

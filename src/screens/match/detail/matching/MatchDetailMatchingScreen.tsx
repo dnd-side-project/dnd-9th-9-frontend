@@ -16,17 +16,19 @@ import {
   MatchApplyHeader,
 } from '../../../../features/match/components/MatchDetailMatching';
 import {useGetInfiniteFieldEntryBattleDetail} from '../../../../features/match/hooks/fieldEntry';
-import {type IField} from '../../../../features/match/types';
+import {type TUserRole, type IField} from '../../../../features/match/types';
 import {type MatchStackParamList} from '../../../../navigators/MatchNavigator';
 
 interface IMatchDetailMatchingScreenProps {
   id: number;
   assignedField: IField;
+  userRole: TUserRole;
 }
 
 export const MatchDetailMatchingScreen = ({
   id,
   assignedField,
+  userRole,
 }: IMatchDetailMatchingScreenProps): React.JSX.Element => {
   const navigation =
     useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
@@ -65,7 +67,7 @@ export const MatchDetailMatchingScreen = ({
       : 0;
 
   const handleMoreMatch = (type: 'SENT' | 'RECEIVED'): void => {
-    navigation.navigate('MatchDetailMatchingMore', {id, type});
+    navigation.navigate('MatchDetailMatchingMore', {id, type, userRole});
   };
 
   const handleTeamDetail = (matchId: number): void => {
