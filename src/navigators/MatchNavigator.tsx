@@ -14,13 +14,9 @@ import {
   CreateMatchProfileScreen,
 } from '../screens/match/create';
 import {
-  MatchDetailMatchingMoreScreen,
-  MatchDetailMatchingScreen,
-  MatchDetailMemberScreen,
-  MatchDetailProfileScreen,
-  MatchDetailRecordDetailScreen,
-  MatchDetailRecordScreen,
   MatchDetailScreen,
+  MatchDetailMatchingMoreScreen,
+  MatchDetailRecordDetailScreen,
   MatchDetailMemberRequestAcceptScreen,
 } from '../screens/match/detail';
 import {
@@ -43,16 +39,11 @@ export type MatchStackParamList = {
   MatchDetail: {
     id: number;
   };
-  MatchDetailProfile: {
-    id: number;
-  };
-  MatchDetailRecord: undefined;
   MatchDetailRecordDetail: IMatchDetailRecord;
-  MatchDetailMatching: undefined;
   MatchDetailMatchingMore: {
+    id: number;
     type: 'RECEIVED' | 'SENT';
   };
-  MatchDetailMember: undefined;
   MatchDetailMemberMore: {
     id: number;
     userRole: TUserRole;
@@ -118,33 +109,13 @@ export function MatchNavigator(): React.JSX.Element {
         options={{headerTitle: ''}}
       />
       <Stack.Screen
-        name="MatchDetailProfile"
-        component={MatchDetailProfileScreen}
-        options={{headerTitle: ''}}
-      />
-      <Stack.Screen
-        name="MatchDetailRecord"
-        component={MatchDetailRecordScreen}
-        options={{headerTitle: ''}}
-      />
-      <Stack.Screen
         name="MatchDetailRecordDetail"
         component={MatchDetailRecordDetailScreen}
         options={{headerTitle: ''}}
       />
       <Stack.Screen
-        name="MatchDetailMatching"
-        component={MatchDetailMatchingScreen}
-        options={{headerTitle: ''}}
-      />
-      <Stack.Screen
         name="MatchDetailMatchingMore"
         component={MatchDetailMatchingMoreScreen}
-        options={{headerTitle: ''}}
-      />
-      <Stack.Screen
-        name="MatchDetailMember"
-        component={MatchDetailMemberScreen}
         options={{headerTitle: ''}}
       />
       <Stack.Screen
@@ -170,10 +141,6 @@ export function MatchNavigator(): React.JSX.Element {
         component={MatchDetailMemberDeleteScreen}
         options={{headerTitle: ''}}
       />
-      {/* TODO: 하위 스크린 MatchNavigator 에 셋팅 */}
-      {/* 팀 상세 관련 스크린 (설정, 현재 팀원, 정보 수정, 프로필 수정, 알림, 기록보기, 매칭된 팀 프로필, 신청한 상대팀, 요청받은 상대팀, 방장 넘기기, 팀원 삭제, 요청 ...) */}
-      {/* 자동 매칭 선택 스크린 */}
-      {/* 자동 매칭 스크린 */}
     </Stack.Navigator>
   );
 }
