@@ -3,8 +3,8 @@ import React from 'react';
 import {type RouteProp, useRoute} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native';
 
-import {MatchListScreen} from './list/MatchListScreen';
-import {MyMatchListTabScreen} from './MyMatchListTabScreen';
+import {MatchListScreen} from './list';
+import {MyMatchListScreen} from './my';
 import {theme} from '../../assets/styles/theme';
 import {
   type ITopTabScreen,
@@ -27,6 +27,7 @@ export const MatchScreen = (): React.JSX.Element => {
     skillLevel,
     strength,
     keyword,
+    matchStatus,
   } = route.params;
 
   const screens: ITopTabScreen[] = [
@@ -50,7 +51,9 @@ export const MatchScreen = (): React.JSX.Element => {
     {
       name: 'MyMatchListTab',
       label: 'MY매칭',
-      component: MyMatchListTabScreen,
+      component: () => (
+        <MyMatchListScreen matchStatus={matchStatus ?? 'APPLICATION'} />
+      ),
     },
   ];
 

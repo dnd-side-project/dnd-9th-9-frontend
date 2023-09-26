@@ -4,12 +4,14 @@ import {
   type TPeriod,
   type TSkillLevel,
   type TStrength,
+  type TMyMatchStatus,
 } from '.';
 
 export interface IFieldListPaginationParams extends IFieldListParams {
   fieldId?: number | null;
   page: number;
   size: number;
+  matchStatus?: TMyMatchStatus;
 }
 
 export interface IFieldListParams {

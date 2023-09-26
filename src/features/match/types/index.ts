@@ -5,6 +5,7 @@ import {
   type Goals,
   type SkillLevels,
   type Strengths,
+  type MyMatchStatus,
 } from '../const';
 
 export type TFieldType = keyof typeof FieldTypes;
@@ -21,6 +22,9 @@ export type TSkillLevelLabel = ValueOf<typeof SkillLevels>;
 
 export type TStrength = keyof typeof Strengths;
 export type TStrengthLabel = ValueOf<typeof Strengths>;
+
+export type TMyMatchStatus = keyof typeof MyMatchStatus;
+export type TMyMatchStatusLabel = ValueOf<typeof MyMatchStatus>;
 
 export type TUserRole = 'MEMBER' | 'LEADER' | 'GUEST';
 
