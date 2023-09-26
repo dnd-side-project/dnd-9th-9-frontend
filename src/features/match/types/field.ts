@@ -7,6 +7,7 @@ import {
 } from '.';
 
 export interface IFieldListPaginationParams extends IFieldListParams {
+  fieldId?: number | null;
   page: number;
   size: number;
 }

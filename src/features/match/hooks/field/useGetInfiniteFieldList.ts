@@ -11,23 +11,20 @@ const initialData: {
   pageParams: any;
   pages: Array<{
     fieldsInfos: IField[];
-    totalCount: number;
-    currentPageNumber: number;
     currentPageSize: number;
   }>;
 } = {
   pageParams: [],
   pages: [
     {
-      fieldsInfos: [],
-      totalCount: 0,
-      currentPageNumber: 0,
       currentPageSize: 0,
+      fieldsInfos: [],
     },
   ],
 };
 
 const fetcher = async ({
+  fieldId,
   size,
   page,
   fieldType,
@@ -39,13 +36,12 @@ const fetcher = async ({
   keyword,
 }: IFieldListPaginationParams): Promise<{
   fieldsInfos: IField[];
-  totalCount: number;
-  currentPageNumber: number;
   currentPageSize: number;
 }> =>
   await axios
     .get(`/field`, {
       params: {
+        fieldId,
         size,
         page,
         fieldType,
@@ -60,6 +56,7 @@ const fetcher = async ({
     .then(({data}) => data);
 
 export const useGetInfiniteFieldList = ({
+  fieldId,
   size,
   page,
   fieldType,
@@ -72,14 +69,13 @@ export const useGetInfiniteFieldList = ({
 }: IFieldListPaginationParams): UseInfiniteQueryResult<
   {
     fieldsInfos: IField[];
-    totalCount: number;
-    currentPageNumber: number;
     currentPageSize: number;
   },
   Error
 > =>
   useInfiniteQuery({
     queryKey: KEYS.list({
+      fieldId,
       size,
       page,
       fieldType,
@@ -90,10 +86,11 @@ export const useGetInfiniteFieldList = ({
       strength,
       keyword,
     }),
-    queryFn: async ({pageParam = 0}) =>
+    queryFn: async ({pageParam = null}) =>
       await fetcher({
+        fieldId: pageParam,
         size,
-        page: pageParam,
+        page,
         fieldType,
         goal,
         memberCount,
@@ -103,16 +100,11 @@ export const useGetInfiniteFieldList = ({
         keyword,
       }),
     getNextPageParam: lastPage => {
-      const {currentPageNumber, currentPageSize, fieldsInfos, totalCount} =
-        lastPage;
+      const {fieldsInfos} = lastPage;
 
-      const currentDataCount =
-        currentPageNumber > 0
-          ? (currentPageNumber - 1) * currentPageSize + fieldsInfos.length
-          : fieldsInfos.length;
-      const nextPage = currentPageNumber + 1;
-
-      return totalCount > currentDataCount ? nextPage : null;
+      return fieldsInfos.length === 0
+        ? undefined
+        : fieldsInfos[fieldsInfos.length - 1].id;
     },
     initialData,
   });

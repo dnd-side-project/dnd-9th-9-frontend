@@ -36,6 +36,7 @@ export const MatchFieldTypeFilterRadio = ({
           activeOpacity={0.8}
           onPress={() => {
             navigation.navigate('MatchList', {
+              fieldId: null,
               page,
               size,
               fieldType: value,

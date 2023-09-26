@@ -84,6 +84,7 @@ export function MatchNavigator(): React.JSX.Element {
           headerShown: false,
         }}
         initialParams={{
+          fieldId: null,
           page: 0,
           size: 10,
           fieldType: 'DUEL',
