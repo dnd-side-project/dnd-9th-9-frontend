@@ -17,7 +17,7 @@ export const TodayCalorieSection = (): React.JSX.Element => {
 
   const achievementPercent = (
     ((burnedCalorieGoal?.burnedCalorie ?? 0) /
-      (burnedCalorieGoal?.goalCalorie ?? 1)) *
+      Math.max(burnedCalorieGoal?.goalCalorie ?? 0, 1)) *
     100
   ).toFixed(1);
 
