@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/native';
-import {TouchableOpacity, View} from 'react-native';
+import {StatusBar, TouchableOpacity, View} from 'react-native';
 
 import {alarmXmlData} from '../../../assets/svg';
 import {Icon} from '../../../components/Icon';
@@ -9,12 +9,14 @@ import {Text} from '../../../components/Text';
 import {useGetUserFieldProgress} from '../../match/hooks/userField';
 import {useGetMyProfileDetail} from '../../my/hooks/profile';
 
-export const TopBanner = (): React.JSX.Element => {
+export const MainBanner = (): React.JSX.Element => {
   const {data: userFieldProgress} = useGetUserFieldProgress();
   const {data: myProfileDetail} = useGetMyProfileDetail();
 
   return (
     <StyledTopBanner>
+      <StatusBar barStyle="light-content" />
+
       <View>
         <StyledIconWrapper>
           <TouchableOpacity>

@@ -1,3 +1,3 @@
 export * from './CurrentWorkoutSection';
 export * from './TodayCalorieSection';
-export * from './TopBanner';
+export * from './MainBanner';
