@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   PanResponder,
+  type ViewStyle,
 } from 'react-native';
 
 import {BottomSheetContext} from './BottomSheetContext';
@@ -19,6 +20,7 @@ import {BottomSheetContext} from './BottomSheetContext';
 interface IBottomSheetProps extends PropsWithChildren {
   isOpened: boolean;
   defaultSelectedTabId?: string;
+  style: Animated.WithAnimatedObject<ViewStyle>;
   onOpen?: () => void;
   onClose?: () => void;
 }
@@ -26,6 +28,7 @@ interface IBottomSheetProps extends PropsWithChildren {
 export const BottomSheet = ({
   isOpened,
   defaultSelectedTabId = '',
+  style,
   onOpen,
   onClose,
   children,
@@ -98,7 +101,7 @@ export const BottomSheet = ({
               <StyledBackground />
             </TouchableWithoutFeedback>
             <StyledAnimatedView
-              style={{transform: [{translateY}]}}
+              style={{transform: [{translateY}], ...style}}
               {...panResponders.panHandlers}>
               {children}
             </StyledAnimatedView>
