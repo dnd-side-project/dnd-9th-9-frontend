@@ -2,8 +2,7 @@ import {type TSkillLevel} from '../../match/types';
 
 export type TGender = 'FEMALE' | 'MALE';
 
-// TODO(@minimalKim): 백엔드 Enum 확인
-export type TLoginType = 'APPLE' | 'GOOGLE' | 'KAKAO';
+export type TLoginType = 'APPLE' | 'GOOGLE' | 'KAKAO' | 'MATCH_UP';
 
 export interface IProfileDetail {
   age: string;
