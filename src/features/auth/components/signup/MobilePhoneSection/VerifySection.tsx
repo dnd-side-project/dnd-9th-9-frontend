@@ -105,6 +105,7 @@ export const VerifySection = ({
         body: {
           phoneNum,
           code: getValues('mobilePhoneVerifyCode'),
+          verifyingType: 'SIGN_UP',
         },
       });
       stopTimer();
