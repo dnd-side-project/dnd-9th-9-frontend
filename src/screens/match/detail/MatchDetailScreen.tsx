@@ -48,59 +48,51 @@ export const MatchDetailScreen = ({
   const getScreenByRule = (): ITopTabScreen[] => {
     const userRole = fieldDetailData?.fieldDto?.fieldRole;
 
-    switch (userRole) {
-      case 'MEMBER':
-      case 'LEADER':
-        return [
-          {
-            name: 'TeamProfile',
-            label: '프로필',
-            component: () => (
-              <MatchDetailProfileScreen fieldDetailData={fieldDetailData} />
-            ),
-          },
-          {
-            name: 'TeamRecord',
-            label: '기록',
-            component: () => <MatchDetailRecordScreen id={id} />,
-          },
-          {
-            name: 'TeamMatching',
-            label: '매칭',
-            component: () => (
-              <MatchDetailMatchingScreen
-                id={id}
-                assignedField={fieldDetailData?.assignedFieldDto}
-                userRole={fieldDetailData?.fieldDto?.fieldRole}
-              />
-            ),
-          },
-          {
-            name: 'TeamMember',
-            label: '팀원',
-            component: () => (
-              <MatchDetailMemberScreen id={id} userRole={userRole} />
-            ),
-          },
-        ];
-      default:
-        return [
-          {
-            name: 'TeamProfile',
-            label: '프로필',
-            component: () => (
-              <MatchDetailProfileScreen fieldDetailData={fieldDetailData} />
-            ),
-          },
-          {
-            name: 'TeamMember',
-            label: '팀원',
-            component: () => (
-              <MatchDetailMemberScreen id={id} userRole={userRole} />
-            ),
-          },
-        ];
+    const screens = [];
+
+    if (userRole === 'MEMBER' || userRole === 'LEADER') {
+      screens.push({
+        name: 'TeamRecord',
+        label: '기록',
+        component: () => (
+          <MatchDetailRecordScreen
+            id={id}
+            fieldStatus={fieldDetailData?.fieldDto?.fieldStatus}
+            assignedField={fieldDetailData?.assignedFieldDto}
+            fieldType={fieldDetailData?.fieldDto?.fieldType}
+          />
+        ),
+      });
+      screens.push({
+        name: 'TeamMatching',
+        label: '매칭',
+        component: () => (
+          <MatchDetailMatchingScreen
+            id={id}
+            assignedField={fieldDetailData?.assignedFieldDto}
+            userRole={fieldDetailData?.fieldDto?.fieldRole}
+          />
+        ),
+      });
     }
+
+    return [
+      {
+        name: 'TeamProfile',
+        label: '프로필',
+        component: () => (
+          <MatchDetailProfileScreen fieldDetailData={fieldDetailData} />
+        ),
+      },
+      ...screens,
+      {
+        name: 'TeamMember',
+        label: '팀원',
+        component: () => (
+          <MatchDetailMemberScreen id={id} userRole={userRole} />
+        ),
+      },
+    ];
   };
 
   const screens = getScreenByRule();
