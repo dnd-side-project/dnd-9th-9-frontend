@@ -8,13 +8,13 @@ import {Gap} from '../../../../components/Gap';
 import {Tags} from '../../../../components/Tag';
 import {Text} from '../../../../components/Text';
 import {FieldTypes, Periods, SkillLevels} from '../../const';
-import {type IMatchApply} from '../../types';
+import {type IBattleEntry} from '../../types';
 
 interface IMatchApplyListItemProps {
   isSettingMode?: boolean;
   isCheck?: boolean;
-  apply: IMatchApply;
-  onPressCheckBox?: () => void;
+  apply: IBattleEntry;
+  onPressCheckBox?: (entryId: number) => void;
   onPressTeamDetail: (matchId: number) => void;
 }
 
@@ -27,16 +27,16 @@ export const MatchApplyListItem = ({
   isSettingMode = false,
   isCheck = false,
   apply,
-  onPressCheckBox,
+  onPressCheckBox = () => {},
   onPressTeamDetail,
 }: IMatchApplyListItemProps): React.JSX.Element => {
   const {
+    currentSize,
     entryId,
-    matchId,
-    name,
-    memberCount,
-    memberMaxCount,
+    fieldId,
     fieldType,
+    maxSize,
+    name,
     period,
     skillLevel,
   } = apply;
@@ -47,13 +47,18 @@ export const MatchApplyListItem = ({
       isSettingMode={isSettingMode}
       isCheck={isCheck}>
       {isSettingMode && (
-        <CheckBox isCheck={isCheck} onPress={onPressCheckBox} />
+        <CheckBox
+          isCheck={isCheck}
+          onPress={() => {
+            onPressCheckBox(entryId);
+          }}
+        />
       )}
 
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => {
-          if (!isSettingMode) onPressTeamDetail(matchId);
+          if (!isSettingMode) onPressTeamDetail(fieldId);
         }}>
         <Text type="body1" color="gray-700" fontWeight="600" text={name} />
         <Gap size="12px" />
@@ -61,7 +66,7 @@ export const MatchApplyListItem = ({
           type="body3"
           color="gray-700"
           fontWeight="700"
-          text={`팀원 모집 완료 ${memberCount.toString()}/${memberMaxCount.toString()}`}
+          text={`팀원 모집 완료 ${currentSize.toString()}/${maxSize.toString()}`}
         />
         <Gap size="10px" />
         <Tags
