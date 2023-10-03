@@ -7,7 +7,7 @@ import {Controller} from 'react-hook-form';
 import {Button} from '../../../../../components/Button';
 import {Textfield} from '../../../../../components/Textfield/Textfield';
 import {useInterval} from '../../../../../hooks/common';
-import {type IFormSectionProps} from '../../../../../screens/auth/SignupScreen';
+import {type IFormSectionProps} from '../../../../../screens/auth/FindIdScreen';
 import {usePostVerify, usePostSendCode} from '../../../hooks/verification';
 
 interface IVerifySectionProps extends IFormSectionProps {
@@ -105,7 +105,7 @@ export const VerifySection = ({
         body: {
           phoneNum,
           code: getValues('mobilePhoneVerifyCode'),
-          verifyingType: 'SIGN_UP',
+          verifyingType: 'FIND_ID',
         },
       });
       stopTimer();

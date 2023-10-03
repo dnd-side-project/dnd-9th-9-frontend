@@ -5,11 +5,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {BottomTabNavigator} from './BottomTabNavigator';
 import {LandingScreen, LoginScreen, SignupScreen} from '../screens/auth';
+import {FindIdScreen} from '../screens/auth/FindIdScreen';
 
 export type RootStackParamList = {
   Landing: undefined;
   Login: undefined;
   Signup: undefined;
+  FindId: undefined;
   Main: undefined;
 };
 
@@ -30,6 +32,13 @@ export function AppNavigator(): React.JSX.Element {
         <Stack.Screen
           name="Signup"
           component={SignupScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="FindId"
+          component={FindIdScreen}
           options={{
             headerShown: false,
           }}

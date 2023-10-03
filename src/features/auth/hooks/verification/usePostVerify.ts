@@ -1,11 +1,13 @@
 import {type UseMutationResult, useMutation} from '@tanstack/react-query';
 
 import {axios} from '../../../../lib/axios';
+import {type TVerifyingType} from '../../types';
 
 interface IProps {
   body: {
     phoneNum: string;
     code: string;
+    verifyingType: TVerifyingType;
   };
 }
 
