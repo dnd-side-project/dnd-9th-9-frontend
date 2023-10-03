@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import styled from '@emotion/native';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
+import dayjs from 'dayjs';
 import {useForm, type UseFormReturn} from 'react-hook-form';
 import {SafeAreaView, TouchableOpacity} from 'react-native';
 import {z} from 'zod';
@@ -21,6 +22,16 @@ import {
 } from '../../features/auth/components/signup';
 import {usePostLogin, usePostSignup} from '../../features/auth/hooks/auth';
 import {type SkillLevels} from '../../features/match/const';
+import {usePatchMyOnboardProfile} from '../../features/my/hooks/profile';
+import {
+  getActivitySummary,
+  getAuthStatus,
+  getBiologicalSex,
+  getLatestHeight,
+  getLatestWeight,
+  HealthStatusCode,
+  initHealthKit,
+} from '../../lib/AppleHealthKit';
 import {type RootStackParamList} from '../../navigators';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Landing'>;
@@ -102,6 +113,49 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
   const {mutateAsync: postLogin, error: postLoginError} = usePostLogin();
   const [showErrorModal, setShowErrorModal] = useState(false);
 
+  const {mutate: patchMyOnboardProfile} = usePatchMyOnboardProfile();
+
+  const getIsLinkedUser = async (): Promise<boolean> => {
+    const authStatus = await getAuthStatus();
+    const isLinkedUser = !Object.values(authStatus.permissions)
+      .flat()
+      .some(permission => permission === HealthStatusCode.NotDetermined);
+    return isLinkedUser;
+  };
+
+  const getHealthKitData = async (): Promise<{
+    height: number | null;
+    weight: number | null;
+    gender: string | null;
+    calorieGoal: number | null;
+  }> => {
+    // NOTE: data 없을 경우 error 발생
+    const height = await getLatestHeight()
+      .then(({value}) => value)
+      .catch(() => null);
+
+    const weight = await getLatestWeight()
+      .then(({value}) => value)
+      .catch(() => null);
+
+    const gender = await getBiologicalSex()
+      .then(({value}) => value)
+      .catch(() => null);
+
+    const calorieGoal = await getActivitySummary({
+      startDate: dayjs().add(-6, 'month').toISOString(),
+    })
+      .then(data => data.at(-1)?.appleExerciseTimeGoal)
+      .catch(() => null);
+
+    return {
+      height,
+      weight,
+      gender,
+      calorieGoal: calorieGoal ?? null,
+    };
+  };
+
   const handlePressNext = async (): Promise<void> => {
     if (stepIndex === SIGNUP_INFORMATION_STEPS.length - 1) {
       try {
@@ -124,11 +178,39 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
             password: signupForm.getValues('password'),
           },
         });
-
-        navigation.replace('Main');
       } catch (e) {
         setShowErrorModal(true);
       }
+
+      navigation.replace('Main');
+
+      void initHealthKit();
+      const isLinkedUser = await getIsLinkedUser();
+
+      if (!isLinkedUser) {
+        // TODO: 신체정보 페이지 이동
+        return;
+      }
+
+      try {
+        const data = await getHealthKitData();
+        const hasSomeNullData = Object.values(data).some(
+          value => value == null,
+        );
+        if (hasSomeNullData) {
+          // TODO: 신체정보 페이지 이동
+          console.log('신체정보 페이지 이동');
+          return;
+        }
+
+        // @ts-expect-error NOTE: 위 if 문에서 null check가 되었음을 추론하는 type 추가 필요
+        patchMyOnboardProfile({body: {...data, isAppleLinked: true}});
+      } catch (error) {
+        // TODO: 신체정보 페이지 이동
+        console.log('신체정보 페이지 이동');
+        return;
+      }
+
       return;
     }
     setStepIndex(index => index + 1);
