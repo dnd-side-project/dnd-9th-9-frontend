@@ -94,7 +94,7 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
               <StyledSnsButton backgroundColor={theme.palette['gray-0']}>
                 <Icon svgXml={googleLogoXmlData} width={20} height={20} />
                 <Text
-                  text="구글로 계속하기"
+                  text={getSnsButtonLabel('구글')}
                   type="body2"
                   color="gray-900"
                   fontWeight="600"
