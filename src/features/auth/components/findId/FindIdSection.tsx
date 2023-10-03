@@ -13,12 +13,9 @@ import {useGetFindId} from '../../hooks/auth/useGetFindId';
 
 export const FindIdSection = ({
   getValues,
+  onPressSignin,
 }: IFormSectionProps): React.JSX.Element => {
   const [isBottomSheetOpened, setIsBottomSheetOpened] = useState(false);
-
-  const handlePressNext = async (): Promise<void> => {
-    setIsBottomSheetOpened(true);
-  };
 
   const {
     isSuccess,
@@ -72,7 +69,21 @@ export const FindIdSection = ({
       </ScrollView>
 
       <FixedButtonWrapper>
-        <Button text="다음" onPress={handlePressNext} />
+        {uids != null && uids.length > 0 ? (
+          <Button
+            text="다음"
+            onPress={() => {
+              setIsBottomSheetOpened(true);
+            }}
+          />
+        ) : (
+          <Button
+            text="회원가입 하기"
+            onPress={() => {
+              onPressSignin();
+            }}
+          />
+        )}
       </FixedButtonWrapper>
 
       <BottomSheet

@@ -50,6 +50,7 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 
 export interface IFormSectionProps extends UseFormReturn<ValidationSchema> {
   onNext: () => void;
+  onPressSignin: () => void;
 }
 
 const FIND_ID_INFORMATION_STEPS = [
@@ -91,6 +92,10 @@ export function FindIdScreen({navigation}: Props): React.JSX.Element {
     setStepIndex(index => index - 1);
   };
 
+  const handlePressSignin = (): void => {
+    navigation.replace('Signup');
+  };
+
   return (
     <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
       <StyledTopBar>
@@ -100,7 +105,11 @@ export function FindIdScreen({navigation}: Props): React.JSX.Element {
         <Text type="head4" text={stepLabel} color="gray-500" />
       </StyledTopBar>
 
-      <currentStep.formSection onNext={handlePressNext} {...findIdForm} />
+      <currentStep.formSection
+        onNext={handlePressNext}
+        onPressSignin={handlePressSignin}
+        {...findIdForm}
+      />
     </SafeAreaView>
   );
 }
