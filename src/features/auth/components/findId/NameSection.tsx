@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import React from 'react';
 
 import styled from '@emotion/native';
@@ -18,7 +17,7 @@ export const NameSection = ({
 }: IFormSectionProps): React.JSX.Element => {
   const error = formState.errors.name;
 
-  const handlePressNext = async (): Promise<void> => {
+  const goNextIfValid = async (): Promise<void> => {
     const isValid = await trigger('name');
 
     if (isValid) {
@@ -64,7 +63,12 @@ export const NameSection = ({
       </StyledFieldContainer>
 
       <FixedButtonWrapper>
-        <Button text="다음" onPress={handlePressNext} />
+        <Button
+          text="다음"
+          onPress={() => {
+            void goNextIfValid();
+          }}
+        />
       </FixedButtonWrapper>
     </StyledSection>
   );
