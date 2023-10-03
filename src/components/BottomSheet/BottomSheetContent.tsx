@@ -1,4 +1,4 @@
-import {useContext, type PropsWithChildren} from 'react';
+import {useContext, type PropsWithChildren, useMemo} from 'react';
 import React from 'react';
 
 import {View} from 'react-native';
@@ -6,7 +6,7 @@ import {View} from 'react-native';
 import {BottomSheetContext} from './BottomSheetContext';
 
 interface IBottomSheetContentProps extends PropsWithChildren {
-  id: string;
+  id?: string;
 }
 
 export const BottomSheetContent = ({
@@ -15,7 +15,10 @@ export const BottomSheetContent = ({
 }: IBottomSheetContentProps): React.JSX.Element => {
   const {currentTabId} = useContext(BottomSheetContext);
 
-  const isCurrentTab = currentTabId === id;
+  const isCurrentTab = useMemo(() => {
+    if (id === undefined) return true;
+    return currentTabId === id;
+  }, [id]);
 
   return <>{isCurrentTab && <View>{children}</View>}</>;
 };

@@ -10,20 +10,15 @@ import {z} from 'zod';
 
 import {arrowLeftXmlData} from '../../assets/svg';
 import {Icon} from '../../components/Icon';
-import {ConfirmModal} from '../../components/Modal';
 import {Text} from '../../components/Text';
 import {
   NameSection,
-  IdSection,
   MobilePhoneSection,
-  PasswordSection,
-  WorkoutLevelSection,
-} from '../../features/auth/components/signup';
-import {usePostLogin, usePostSignup} from '../../features/auth/hooks/auth';
-import {type SkillLevels} from '../../features/match/const';
+  FindIdSection,
+} from '../../features/auth/components/findId';
 import {type RootStackParamList} from '../../navigators';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'FindId'>;
 
 const validationSchema = z.object({
   name: z.string().min(1, {message: '이름을 입력해주세요'}),
@@ -49,86 +44,41 @@ const validationSchema = z.object({
     .refine(value => /^\d+$/.test(value), {
       message: '잘못된 인증번호입니다. 인증번호는 숫자만 입력해 주세요.',
     }),
-  password: z
-    .string()
-    .min(8, {message: '비밀번호를 8글자 이상으로 입력해주세요'})
-    .max(16, {message: '비밀번호를 16글자 이하로 입력해주세요'})
-    .refine(value => /^(?=.*[a-zA-Z])(?=.*\d).+$/.test(value), {
-      message: '최소 1자 이상의 영문과 숫자를 포함해주세요',
-    }),
-  confirmedPassword: z.string(),
-  skillLevel: z.string().nonempty('운동 레벨을 선택해주세요'),
 });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 export interface IFormSectionProps extends UseFormReturn<ValidationSchema> {
   onNext: () => void;
+  onPressSignin: () => void;
 }
 
-const SIGNUP_INFORMATION_STEPS = [
+const FIND_ID_INFORMATION_STEPS = [
   {
     info: '이름',
     formSection: NameSection,
-  },
-  {
-    info: '아이디',
-    formSection: IdSection,
   },
   {
     info: '전화번호 인증',
     formSection: MobilePhoneSection,
   },
   {
-    info: '비밀번호',
-    formSection: PasswordSection,
-  },
-  {
-    info: '운동레벨',
-    formSection: WorkoutLevelSection,
+    info: '아이디 찾기',
+    formSection: FindIdSection,
   },
 ] as const;
 
-export function SignupScreen({navigation}: Props): React.JSX.Element {
-  const signupForm = useForm<ValidationSchema>({
+export function FindIdScreen({navigation}: Props): React.JSX.Element {
+  const findIdForm = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
 
   const [stepIndex, setStepIndex] = useState(0);
-  const currentStep = SIGNUP_INFORMATION_STEPS[stepIndex];
-  const stepLabel = `${stepIndex + 1}/${SIGNUP_INFORMATION_STEPS.length}`;
-
-  const {mutateAsync: postSignup, error: postSignupError} = usePostSignup();
-  const {mutateAsync: postLogin, error: postLoginError} = usePostLogin();
-  const [showErrorModal, setShowErrorModal] = useState(false);
+  const currentStep = FIND_ID_INFORMATION_STEPS[stepIndex];
+  const stepLabel = `${stepIndex + 1}/${FIND_ID_INFORMATION_STEPS.length}`;
 
   const handlePressNext = async (): Promise<void> => {
-    if (stepIndex === SIGNUP_INFORMATION_STEPS.length - 1) {
-      try {
-        await postSignup({
-          body: {
-            name: signupForm.getValues('name'),
-            uid: signupForm.getValues('uid'),
-            phoneNum: signupForm.getValues('mobilePhone'),
-            password: signupForm.getValues('password'),
-            // TODO(@minimalKim): zod enum check로 대체
-            skillLevel: signupForm.getValues(
-              'skillLevel',
-            ) as keyof typeof SkillLevels,
-          },
-        });
-
-        await postLogin({
-          body: {
-            uid: signupForm.getValues('uid'),
-            password: signupForm.getValues('password'),
-          },
-        });
-
-        navigation.replace('Main');
-      } catch (e) {
-        setShowErrorModal(true);
-      }
+    if (stepIndex === FIND_ID_INFORMATION_STEPS.length - 1) {
       return;
     }
     setStepIndex(index => index + 1);
@@ -142,9 +92,8 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
     setStepIndex(index => index - 1);
   };
 
-  const handlePressConfirmError = (): void => {
-    setShowErrorModal(false);
-    navigation.pop();
+  const handlePressSignin = (): void => {
+    navigation.replace('Signup');
   };
 
   return (
@@ -156,18 +105,11 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
         <Text type="head4" text={stepLabel} color="gray-500" />
       </StyledTopBar>
 
-      <ConfirmModal
-        visible={showErrorModal}
-        title={'회원가입에 실패했습니다'}
-        subTitle={
-          postSignupError?.message ??
-          postLoginError?.message ??
-          '다시 시도해주세요'
-        }
-        handleConfirm={handlePressConfirmError}
+      <currentStep.formSection
+        onNext={handlePressNext}
+        onPressSignin={handlePressSignin}
+        {...findIdForm}
       />
-
-      <currentStep.formSection onNext={handlePressNext} {...signupForm} />
     </SafeAreaView>
   );
 }
