@@ -53,6 +53,14 @@ export const KEYS = {
     page: number,
     size: number,
   ) => [...KEYS.detail(id), 'record', {date, fieldType, page, size}] as const,
+  detailRecordSummary: (id: number, filedSide: 'HOME' | 'AWAY', date: string) =>
+    [...KEYS.detail(id), 'record-summary', {id, filedSide, date}] as const,
+  detailRecordTeamRanking: (
+    id: number,
+    filedSide: 'HOME' | 'AWAY',
+    date: string,
+  ) =>
+    [...KEYS.detail(id), 'record-team-ranking', {id, filedSide, date}] as const,
   auto: (type: string) => [...KEYS.all, 'auto', {type}] as const,
   detailEntryBattle: (
     id: number,

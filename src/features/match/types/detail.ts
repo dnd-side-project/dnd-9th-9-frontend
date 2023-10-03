@@ -35,6 +35,28 @@ export interface IMatchDetailRecord {
   userId: number;
 }
 
+export interface IMatchDetailRecordSummary {
+  goalAchievedCount: number;
+  opponentFieldName: string;
+  totalBurnedCalorie: number;
+  totalExerciseTimeMinute: number;
+  totalRecordCount: number;
+  winStatus: 'DRAW' | 'LOSE' | 'WIN';
+}
+
+interface IMatchDetailRecordTeamRankingItem {
+  profileImg: string;
+  userId: number;
+  value: number;
+}
+
+export interface IMatchDetailRecordTeamRanking {
+  burnedCalorieRanking: IMatchDetailRecordTeamRankingItem[];
+  exerciseTimeRanking: IMatchDetailRecordTeamRankingItem[];
+  goalAchievedCountRanking: IMatchDetailRecordTeamRankingItem[];
+  recordCountRanking: IMatchDetailRecordTeamRankingItem[];
+}
+
 // 매칭 탭
 export interface IMatchApply {
   entryId: number;
