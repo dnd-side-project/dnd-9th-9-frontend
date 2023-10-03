@@ -104,7 +104,11 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
 
             {isLogin ? (
               <StyledHorizontalView>
-                <StyledTextButton>
+                <StyledTextButton
+                  onPress={() => {
+                    setShowBottomModal(false);
+                    navigation.push('FindId');
+                  }}>
                   <Text
                     text="아이디 찾기"
                     type="body2"
@@ -123,7 +127,11 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
                 </StyledTextButton>
               </StyledHorizontalView>
             ) : (
-              <StyledTextButton>
+              <StyledTextButton
+                onPress={() => {
+                  setShowBottomModal(false);
+                  navigation.push('Signup');
+                }}>
                 <Text
                   text="이메일로 가입하기"
                   type="body2"
