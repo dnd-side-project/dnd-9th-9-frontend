@@ -23,7 +23,7 @@ import {usePostLogin, usePostSignup} from '../../features/auth/hooks/auth';
 import {type SkillLevels} from '../../features/match/const';
 import {type RootStackParamList} from '../../navigators';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Landing'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
 
 const validationSchema = z.object({
   name: z.string().min(1, {message: '이름을 입력해주세요'}),
