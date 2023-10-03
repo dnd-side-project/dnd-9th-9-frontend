@@ -18,6 +18,7 @@ import {
   MatchDetailMatchingMoreScreen,
   MatchDetailRecordDetailScreen,
   MatchDetailMemberRequestAcceptScreen,
+  MatchDetailRecordSummaryScreen,
 } from '../screens/match/detail';
 import {
   MatchDetailMemberAssignScreen,
@@ -40,6 +41,11 @@ export type MatchStackParamList = {
     id: number;
   };
   MatchDetailRecordDetail: IMatchDetailRecord;
+  MatchDetailRecordSummary: {
+    date: string;
+    fieldSide: 'HOME' | 'AWAY';
+    id: number;
+  };
   MatchDetailMatchingMore: {
     id: number;
     type: 'RECEIVED' | 'SENT';
@@ -112,6 +118,11 @@ export function MatchNavigator(): React.JSX.Element {
       <Stack.Screen
         name="MatchDetailRecordDetail"
         component={MatchDetailRecordDetailScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailRecordSummary"
+        component={MatchDetailRecordSummaryScreen}
         options={{headerTitle: ''}}
       />
       <Stack.Screen
