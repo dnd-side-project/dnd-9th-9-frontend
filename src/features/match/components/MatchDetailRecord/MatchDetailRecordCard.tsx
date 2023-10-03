@@ -3,6 +3,8 @@ import React from 'react';
 import styled from '@emotion/native';
 import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {type InfiniteData} from '@tanstack/react-query';
+import {FlatList, View} from 'react-native';
 
 import {MatchDetailRecordCardItem} from './MatchDetailRecordCardItem';
 import {Text} from '../../../../components/Text';
@@ -10,40 +12,57 @@ import {type MatchStackParamList} from '../../../../navigators';
 import {type IMatchDetailRecord} from '../../types';
 
 interface IMatchDetailRecordCardProps {
-  records: IMatchDetailRecord[];
+  recordData?: InfiniteData<{
+    currentPageNumber: number;
+    currentPageSize: number;
+    daysLeft: number;
+    recordList: IMatchDetailRecord[];
+    rule: string;
+    totalCount: number;
+    winStatus: 'DRAW' | 'LOSE' | 'WIN';
+  }>;
+  onEndReached?: () => void;
 }
 
 export const MatchDetailRecordCard = ({
-  records,
+  recordData,
+  onEndReached,
 }: IMatchDetailRecordCardProps): React.JSX.Element => {
   const navigation =
     useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
 
   const handleRecordDetail = (record: IMatchDetailRecord): void => {
-    console.log('이동');
     navigation.navigate('MatchDetailRecordDetail', record);
   };
 
   return (
-    <StyledCardWrapper>
-      {records.map(record => (
-        <MatchDetailRecordCardItem
-          key={`record-${record.id}`}
-          burnedCalorie={record.burnedCalorie}
-          durationMinute={record.durationMinute}
-          exerciseDateTime={record.exerciseDateTime}
-          id={record.id}
-          isLeader={record.isLeader}
-          isMemoPublic={record.isMemoPublic}
-          memoContent={record.memoContent}
-          memoImg={record.memoImg}
-          name={record.name}
-          profileImg={record.profileImg}
-          sports={record.sports}
-          userId={record.userId}
-          onPressCardItem={handleRecordDetail}
-        />
-      ))}
+    <View>
+      <FlatList
+        scrollEnabled={false}
+        data={recordData?.pages.map(page => page.recordList).flat()}
+        keyExtractor={item => `match-record-${item.id}`}
+        renderItem={({item}) => (
+          <MatchDetailRecordCardItem
+            burnedCalorie={item.burnedCalorie}
+            durationMinute={item.durationMinute}
+            exerciseDateTime={item.exerciseDateTime}
+            id={item.id}
+            isLeader={item.isLeader}
+            isMemoPublic={item.isMemoPublic}
+            memoContent={item.memoContent}
+            memoImg={item.memoImg}
+            name={item.name}
+            profileImg={item.profileImg}
+            sports={item.sports}
+            userId={item.userId}
+            onPressCardItem={() => {
+              handleRecordDetail(item);
+            }}
+          />
+        )}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.5}
+      />
 
       <StyledNoContentWrapper>
         <Text
@@ -64,11 +83,9 @@ export const MatchDetailRecordCard = ({
           />
         </StyledWakeUpButton>
       </StyledNoContentWrapper>
-    </StyledCardWrapper>
+    </View>
   );
 };
-
-const StyledCardWrapper = styled.View``;
 
 const StyledNoContentWrapper = styled.View`
   margin: 60px 0 0 0;
