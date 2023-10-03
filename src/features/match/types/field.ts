@@ -42,9 +42,9 @@ export interface ICreateField extends Omit<IField, 'currentSize' | 'id'> {
   strength: TStrength;
 }
 
-export type TAutoFieldInfo = Omit<IField, 'fieldType'> & {
-  strength: string;
-};
+export interface IAutoFieldInfo extends Omit<IField, 'fieldType'> {
+  strength: TStrength;
+}
 
 export interface IFieldListInfo {
   length: number;

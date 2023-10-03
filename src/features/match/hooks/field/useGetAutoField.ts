@@ -2,24 +2,25 @@ import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
-import {type TAutoFieldInfo} from '../../types';
+import {type IAutoFieldInfo} from '../../types';
 
 interface IProps {
-  fieldType: string;
+  fieldType: 'DUEL' | 'TEAM_BATTLE';
 }
 
-const fetcher = async ({fieldType}: IProps): Promise<TAutoFieldInfo> =>
-  await axios
-    .get(`/field/auto`, {
-      params: {
-        fieldType,
-      },
-    })
-    .then(({data}) => data);
+const fetcher = async ({fieldType}: IProps): Promise<IAutoFieldInfo> => {
+  const {data} = await axios.get(`/field/auto`, {
+    params: {
+      fieldType,
+    },
+  });
+  await new Promise(resolve => setTimeout(resolve, 3000));
+  return data;
+};
 
 export const useGetAutoField = ({
   fieldType,
-}: IProps): UseQueryResult<TAutoFieldInfo, Error> =>
+}: IProps): UseQueryResult<IAutoFieldInfo, Error> =>
   useQuery({
     queryKey: KEYS.auto(fieldType),
     queryFn: async () => await fetcher({fieldType}),
