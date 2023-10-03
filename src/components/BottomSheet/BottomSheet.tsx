@@ -20,7 +20,7 @@ import {BottomSheetContext} from './BottomSheetContext';
 interface IBottomSheetProps extends PropsWithChildren {
   isOpened: boolean;
   defaultSelectedTabId?: string;
-  style: Animated.WithAnimatedObject<ViewStyle>;
+  style?: Animated.WithAnimatedObject<ViewStyle>;
   onOpen?: () => void;
   onClose?: () => void;
 }
