@@ -10,7 +10,7 @@ interface IProps {
 
 const fetcher = async ({body}: IProps): Promise<string> =>
   await axios
-    .post('/verification/send-code', body, {
+    .post('/verification/sign-up-code', body, {
       headers: {'Content-Type': 'application/json'},
     })
     .then(({data}) => data);
