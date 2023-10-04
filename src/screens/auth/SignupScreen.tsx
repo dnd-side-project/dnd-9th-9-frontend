@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import styled from '@emotion/native';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -24,14 +24,14 @@ import {usePostLogin, usePostSignup} from '../../features/auth/hooks/auth';
 import {type SkillLevels} from '../../features/match/const';
 import {usePatchMyOnboardProfile} from '../../features/my/hooks/profile';
 import {
-  getActivitySummary,
-  getAuthStatus,
-  getBiologicalSex,
-  getLatestHeight,
-  getLatestWeight,
-  HealthStatusCode,
-  initHealthKit,
-} from '../../lib/AppleHealthKit';
+  useGetActivitySummary,
+  useGetBiologicalSex,
+  useGetHealthKitAuthStatus,
+  useGetLatestHeight,
+  useGetLatestWeight,
+  useInitHealthKit,
+} from '../../hooks/healthKit';
+import {HealthStatusCode} from '../../lib/AppleHealthKit';
 import {type RootStackParamList} from '../../navigators';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
@@ -115,39 +115,23 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
 
   const {mutate: patchMyOnboardProfile} = usePatchMyOnboardProfile();
 
-  const getIsLinkedUser = async (): Promise<boolean> => {
-    const authStatus = await getAuthStatus();
-    const isLinkedUser = !Object.values(authStatus.permissions)
+  const {mutateAsync: initHealthKit} = useInitHealthKit();
+  const {data: healthKitAuthStatus} = useGetHealthKitAuthStatus();
+  const {data: height} = useGetLatestHeight();
+  const {data: weight} = useGetLatestWeight();
+  const {data: gender} = useGetBiologicalSex();
+  const {data: activitySummary} = useGetActivitySummary({
+    startDate: dayjs().add(-6, 'month').toISOString(),
+  });
+
+  const isLinkedUser = useMemo(() => {
+    if (healthKitAuthStatus == null) return false;
+
+    const isLinkedUser = !Object.values(healthKitAuthStatus.permissions)
       .flat()
       .some(permission => permission === HealthStatusCode.NotDetermined);
     return isLinkedUser;
-  };
-
-  const getHealthKitData = async (): Promise<{
-    height: number | null;
-    weight: number | null;
-    gender: string | null;
-    calorieGoal: number | null;
-  }> => {
-    // NOTE: data 없을 경우 error 발생
-    const {value: height} = await getLatestHeight();
-
-    const {value: weight} = await getLatestWeight();
-
-    const {value: gender} = await getBiologicalSex();
-
-    const calorieGoal =
-      (await getActivitySummary({
-        startDate: dayjs().add(-6, 'month').toISOString(),
-      }).then(data => data.at(-1)?.appleExerciseTimeGoal)) ?? null;
-
-    return {
-      height,
-      weight,
-      gender,
-      calorieGoal,
-    };
-  };
+  }, [healthKitAuthStatus]);
 
   const handlePressNext = async (): Promise<void> => {
     if (stepIndex === SIGNUP_INFORMATION_STEPS.length - 1) {
@@ -177,32 +161,34 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
 
       navigation.replace('Main');
 
-      void initHealthKit();
-      const isLinkedUser = await getIsLinkedUser();
+      try {
+        await initHealthKit();
+      } catch (error) {
+        // TODO: 신체정보 페이지 이동
+      }
 
       if (!isLinkedUser) {
         // TODO: 신체정보 페이지 이동
         return;
       }
 
-      try {
-        const data = await getHealthKitData();
-        const hasSomeNullData = Object.values(data).some(
-          value => value == null,
-        );
-        if (hasSomeNullData) {
-          // TODO: 신체정보 페이지 이동
-          console.log('신체정보 페이지 이동');
-          return;
-        }
+      const healthKitData = {
+        height,
+        weight,
+        gender,
+        calorieGoal: activitySummary?.at(-1)?.appleExerciseTimeGoal,
+      };
+      const hasSomeNullData = Object.values(healthKitData).some(
+        value => value == null,
+      );
 
-        // @ts-expect-error NOTE: 위 if 문에서 null check가 되었음을 추론하는 type 추가 필요
-        patchMyOnboardProfile({body: {...data, isAppleLinked: true}});
-      } catch (error) {
+      if (hasSomeNullData) {
         // TODO: 신체정보 페이지 이동
         console.log('신체정보 페이지 이동');
         return;
       }
+      // @ts-expect-error NOTE: 위 if 문에서 null check가 되었음을 추론하는 type 추가 필요
+      patchMyOnboardProfile({body: {...healthKitData, isAppleLinked: true}});
 
       return;
     }
