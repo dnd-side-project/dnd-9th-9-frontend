@@ -31,7 +31,7 @@ import {
   useGetLatestWeight,
   useInitHealthKit,
 } from '../../hooks/healthKit';
-import {HealthStatusCode} from '../../lib/AppleHealthKit';
+import {defaultPermissions, HealthStatusCode} from '../../lib/AppleHealthKit';
 import {type RootStackParamList} from '../../navigators';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
@@ -162,7 +162,7 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
       navigation.replace('Main');
 
       try {
-        await initHealthKit();
+        await initHealthKit(defaultPermissions);
       } catch (error) {
         // TODO: 신체정보 페이지 이동
       }

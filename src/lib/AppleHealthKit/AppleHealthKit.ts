@@ -14,7 +14,13 @@ interface IHealthValue<T> {
   value: T;
 }
 
-const permissions: HealthKitPermissions = {
+export enum HealthStatusCode {
+  NotDetermined = 0,
+  SharingDenied = 1,
+  SharingAuthorized = 2,
+}
+
+export const defaultPermissions: HealthKitPermissions = {
   permissions: {
     read: [
       AppleHealthKit.Constants.Permissions.ActivitySummary,
@@ -29,7 +35,9 @@ const permissions: HealthKitPermissions = {
   },
 };
 
-export const initHealthKit = async (): Promise<void> => {
+export const initHealthKit = async (
+  permissions: HealthKitPermissions = defaultPermissions,
+): Promise<void> => {
   await new Promise((resolve, reject) => {
     AppleHealthKit.initHealthKit(permissions, (error: string) => {
       // NOTE: error = object | null
@@ -43,7 +51,9 @@ export const initHealthKit = async (): Promise<void> => {
   });
 };
 
-export const getAuthStatus = async (): Promise<HealthStatusResult> =>
+export const getAuthStatus = async (
+  permissions: HealthKitPermissions = defaultPermissions,
+): Promise<HealthStatusResult> =>
   await new Promise((resolve, reject) => {
     AppleHealthKit.getAuthStatus(permissions, (error, results) => {
       if (error != null) {

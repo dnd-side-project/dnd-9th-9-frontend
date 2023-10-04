@@ -1,15 +1,18 @@
 import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
-import {getAuthStatus, type HealthStatusResult} from '../../lib/AppleHealthKit';
+import {
+  getAuthStatus,
+  type HealthKitPermissions,
+  type HealthStatusResult,
+} from '../../lib/AppleHealthKit';
 
-export const useGetHealthKitAuthStatus = (): UseQueryResult<
-  HealthStatusResult,
-  Error
-> =>
+export const useGetHealthKitAuthStatus = (
+  permissions?: HealthKitPermissions,
+): UseQueryResult<HealthStatusResult, Error> =>
   useQuery({
-    queryKey: KEYS.auth(),
-    queryFn: getAuthStatus,
+    queryKey: KEYS.auth(permissions),
+    queryFn: async () => await getAuthStatus(permissions),
     initialData: {
       permissions: {
         read: [],
