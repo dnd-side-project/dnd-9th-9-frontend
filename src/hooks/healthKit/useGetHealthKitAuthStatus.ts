@@ -1,32 +1,15 @@
 import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
-import {
-  AppleHealthKit,
-  type HealthStatusResult,
-  type HealthKitPermissions,
-} from '../../lib/AppleHealthKit';
+import {getAuthStatus, type HealthStatusResult} from '../../lib/AppleHealthKit';
 
-interface IProps extends HealthKitPermissions {}
-
-const fetcher = async ({permissions}: IProps): Promise<HealthStatusResult> => {
-  return await new Promise((resolve, reject) => {
-    AppleHealthKit.getAuthStatus({permissions}, (err, results) => {
-      if (err != null) {
-        reject(new Error(err));
-      } else {
-        resolve(results);
-      }
-    });
-  });
-};
-
-export const useGetHealthKitAuthStatus = ({
-  permissions,
-}: IProps): UseQueryResult<HealthStatusResult, Error> =>
+export const useGetHealthKitAuthStatus = (): UseQueryResult<
+  HealthStatusResult,
+  Error
+> =>
   useQuery({
-    queryKey: KEYS.auth({permissions}),
-    queryFn: async () => await fetcher({permissions}),
+    queryKey: KEYS.auth(),
+    queryFn: getAuthStatus,
     initialData: {
       permissions: {
         read: [],
