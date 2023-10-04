@@ -38,13 +38,14 @@ export const defaultPermissions: HealthKitPermissions = {
 export const initHealthKit = async (
   permissions: HealthKitPermissions = defaultPermissions,
 ): Promise<void> => {
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     AppleHealthKit.initHealthKit(permissions, (error: string) => {
       // NOTE: error = object | null
       if (error != null) {
         // TODO: error screen 추가 필요
         reject(new Error(error));
       } else {
+        resolve();
         console.log('initHealthKit');
       }
     });
