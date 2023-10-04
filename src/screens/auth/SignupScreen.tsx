@@ -130,29 +130,22 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
     calorieGoal: number | null;
   }> => {
     // NOTE: data 없을 경우 error 발생
-    const height = await getLatestHeight()
-      .then(({value}) => value)
-      .catch(() => null);
+    const {value: height} = await getLatestHeight();
 
-    const weight = await getLatestWeight()
-      .then(({value}) => value)
-      .catch(() => null);
+    const {value: weight} = await getLatestWeight();
 
-    const gender = await getBiologicalSex()
-      .then(({value}) => value)
-      .catch(() => null);
+    const {value: gender} = await getBiologicalSex();
 
-    const calorieGoal = await getActivitySummary({
-      startDate: dayjs().add(-6, 'month').toISOString(),
-    })
-      .then(data => data.at(-1)?.appleExerciseTimeGoal)
-      .catch(() => null);
+    const calorieGoal =
+      (await getActivitySummary({
+        startDate: dayjs().add(-6, 'month').toISOString(),
+      }).then(data => data.at(-1)?.appleExerciseTimeGoal)) ?? null;
 
     return {
       height,
       weight,
       gender,
-      calorieGoal: calorieGoal ?? null,
+      calorieGoal,
     };
   };
 

@@ -10,6 +10,10 @@ import AppleHealthKit, {
 
 // https://github.com/agencyenterprise/react-native-health
 
+interface IHealthValue<T> {
+  value: T;
+}
+
 const permissions: HealthKitPermissions = {
   permissions: {
     read: [
@@ -50,24 +54,30 @@ export const getAuthStatus = async (): Promise<HealthStatusResult> =>
     });
   });
 
-export const getLatestHeight = async (): Promise<HealthValue> =>
-  await new Promise((resolve, reject) => {
+export const getLatestHeight = async (): Promise<
+  HealthValue | IHealthValue<null>
+> =>
+  await new Promise(resolve => {
     AppleHealthKit.getLatestHeight({}, (error, results) => {
+      // NOTE: data 없을 경우 error 발생
       if (error != null) {
-        reject(new Error(''));
+        resolve({value: null});
       } else {
         resolve(results);
       }
     });
   });
 
-export const getLatestWeight = async (): Promise<HealthValue> =>
-  await new Promise((resolve, reject) => {
+export const getLatestWeight = async (): Promise<
+  HealthValue | IHealthValue<null>
+> =>
+  await new Promise(resolve => {
     AppleHealthKit.getLatestWeight(
       {unit: 'gram' as HealthUnit},
       (error, results) => {
         if (error != null) {
-          reject(new Error(error));
+          // NOTE: data 없을 경우 error 발생
+          resolve({value: null});
         } else {
           resolve(results);
         }
@@ -75,11 +85,14 @@ export const getLatestWeight = async (): Promise<HealthValue> =>
     );
   });
 
-export const getBiologicalSex = async (): Promise<{value: string}> =>
-  await new Promise((resolve, reject) => {
+export const getBiologicalSex = async (): Promise<
+  IHealthValue<string | null>
+> =>
+  await new Promise(resolve => {
     AppleHealthKit.getBiologicalSex({}, (error, results) => {
       if (error != null) {
-        reject(new Error(error));
+        // NOTE: data 없을 경우 error 발생
+        resolve({value: null});
       } else {
         // NOTE: results = {value: string}
         resolve(results as unknown as {value: string});
@@ -93,7 +106,6 @@ export const getActivitySummary = async (
   await new Promise((resolve, reject) => {
     AppleHealthKit.getActivitySummary(options, (error, results) => {
       if (error != null) {
-        console.log(error);
         reject(new Error(error));
       } else {
         resolve(results);
