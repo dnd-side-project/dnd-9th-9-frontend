@@ -12,6 +12,13 @@ interface IEntryProps {
   size: number;
 }
 
+interface IBattleProps {
+  id: number;
+  page: number;
+  size: number;
+  fieldDirection: 'RECEIVED' | 'SENT';
+}
+
 export const KEYS = {
   all: ['field-entry'] as const,
   fieldEntry: ({fieldType, page, size}: IFieldEntryProps) =>
@@ -24,7 +31,8 @@ export const KEYS = {
         size,
       },
     ] as const,
-  battle: (id: number) => [...KEYS.all, 'battle', id] as const,
+  battle: ({id, page, size, fieldDirection}: IBattleProps) =>
+    [...KEYS.all, 'battle', {id, page, size, fieldDirection}] as const,
   team: (id: number) => [...KEYS.all, 'team', id] as const,
   entry: ({id, page, size}: IEntryProps) =>
     [
