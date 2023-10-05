@@ -5,6 +5,7 @@ import {
   type TStrength,
   type IField,
   type TUserRole,
+  type TWinStatus,
 } from '.';
 import {type TWorkoutActivitiesType} from '../../../lib/AppleHealthKit';
 
@@ -33,6 +34,28 @@ export interface IMatchDetailRecord {
   profileImg: string;
   sports: TWorkoutActivitiesType;
   userId: number;
+}
+
+export interface IMatchDetailRecordSummary {
+  goalAchievedCount: number;
+  opponentFieldName: string;
+  totalBurnedCalorie: number;
+  totalExerciseTimeMinute: number;
+  totalRecordCount: number;
+  winStatus: TWinStatus;
+}
+
+interface IMatchDetailRecordTeamRankingItem {
+  profileImg: string;
+  userId: number;
+  value: number;
+}
+
+export interface IMatchDetailRecordTeamRanking {
+  burnedCalorieRanking: IMatchDetailRecordTeamRankingItem[];
+  exerciseTimeRanking: IMatchDetailRecordTeamRankingItem[];
+  goalAchievedCountRanking: IMatchDetailRecordTeamRankingItem[];
+  recordCountRanking: IMatchDetailRecordTeamRankingItem[];
 }
 
 // 매칭 탭

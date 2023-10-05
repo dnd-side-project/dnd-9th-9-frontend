@@ -88,7 +88,12 @@ export const MatchMemberList = ({
             activeOpacity={0.8}
             onPress={isSummary ? onPressMore : handleSettingList}>
             {isSummary ? (
-              <Icon svgXml={arrowRightXmlData} width={44} height={44} />
+              <Icon
+                svgXml={arrowRightXmlData}
+                width={44}
+                height={44}
+                color="black"
+              />
             ) : (
               <TouchableOpacity
                 activeOpacity={0.8}

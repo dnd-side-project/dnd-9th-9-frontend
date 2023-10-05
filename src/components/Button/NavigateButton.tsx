@@ -3,6 +3,7 @@ import React from 'react';
 import styled from '@emotion/native';
 
 import {type TPalette} from '../../assets/styles/emotion';
+import {theme} from '../../assets/styles/theme';
 import {arrowRightXmlData} from '../../assets/svg';
 import {Icon} from '../Icon';
 import {Text} from '../Text';
@@ -35,8 +36,13 @@ export const NavigateButton = ({
       backgroundColor={backgroundColor}
       onPress={onPress}
       activeOpacity={0.8}>
-      <Text type="body2" color="black" fontWeight="600" text={text} />
-      <Icon svgXml={arrowRightXmlData} width={44} height={44} />
+      <Text type="body2" color={color} fontWeight="600" text={text} />
+      <Icon
+        svgXml={arrowRightXmlData}
+        color={theme.palette[color]}
+        width={44}
+        height={44}
+      />
     </StyledNavigateButton>
   );
 };
@@ -45,7 +51,6 @@ const StyledNavigateButton = styled.TouchableOpacity<IStyledNavigateButton>`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  color: ${props => props.theme.palette[props.color]};
   background-color: ${props => props.theme.palette[props.backgroundColor]};
   border-radius: ${props => props.theme.borderRadius.md};
   width: ${props => props.width};

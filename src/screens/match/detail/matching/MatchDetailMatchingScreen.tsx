@@ -93,7 +93,12 @@ export const MatchDetailMatchingScreen = ({
                   onPress={() => {
                     handleMoreMatch('SENT');
                   }}>
-                  <Icon svgXml={arrowRightXmlData} width={44} height={44} />
+                  <Icon
+                    color="black"
+                    svgXml={arrowRightXmlData}
+                    width={44}
+                    height={44}
+                  />
                 </TouchableOpacity>
               }
             />
@@ -126,7 +131,12 @@ export const MatchDetailMatchingScreen = ({
                   onPress={() => {
                     handleMoreMatch('RECEIVED');
                   }}>
-                  <Icon svgXml={arrowRightXmlData} width={44} height={44} />
+                  <Icon
+                    color="black"
+                    svgXml={arrowRightXmlData}
+                    width={44}
+                    height={44}
+                  />
                 </TouchableOpacity>
               }
             />

@@ -6,6 +6,7 @@ import {
   type SkillLevels,
   type Strengths,
   type MyMatchStatus,
+  type WinStatus,
 } from '../const';
 
 export type TFieldType = keyof typeof FieldTypes;
@@ -27,6 +28,8 @@ export type TMyMatchStatus = keyof typeof MyMatchStatus;
 export type TMyMatchStatusLabel = ValueOf<typeof MyMatchStatus>;
 
 export type TUserRole = 'MEMBER' | 'LEADER' | 'GUEST';
+
+export type TWinStatus = Exclude<keyof typeof WinStatus, 'DEFAULT'>;
 
 export * from './detail';
 export * from './field';
