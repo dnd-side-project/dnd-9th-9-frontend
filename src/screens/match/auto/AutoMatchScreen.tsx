@@ -23,11 +23,11 @@ export const AutoMatchScreen = (): React.JSX.Element => {
 
   const handleMatchType = (type: 'DUEL' | 'TEAM_BATTLE'): void => {
     if (type === 'DUEL') {
-      // TODO (@chajuhui123): DUEL 인데 DUEL에 속하지 못하고, 리더가 아닌 경우 모달 return
+      // TODO (@chajuhui123): DUEL 매칭에 속하지 않은 경우 모달 return
       setCheckedItem('DUEL');
       navigation.navigate('AutoMatchResult', {fieldType: 'DUEL'});
     } else if (type === 'TEAM_BATTLE') {
-      // TODO (@chajuhui123): EAM_BATTLE 인데 TEAM_BATTLE에 속하지 못하고, 리더가 아닌 경우 모달 return
+      // TODO (@chajuhui123): TEAM_BATTLE 매칭에 속하지 않은  모달 return
       setCheckedItem('TEAM_BATTLE');
       navigation.navigate('AutoMatchResult', {fieldType: 'TEAM_BATTLE'});
     }
