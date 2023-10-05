@@ -9,7 +9,7 @@ import {FlatList, View} from 'react-native';
 import {MatchDetailRecordCardItem} from './MatchDetailRecordCardItem';
 import {Text} from '../../../../components/Text';
 import {type MatchStackParamList} from '../../../../navigators';
-import {type IMatchDetailRecord} from '../../types';
+import {type TWinStatus, type IMatchDetailRecord} from '../../types';
 
 interface IMatchDetailRecordCardProps {
   recordData?: InfiniteData<{
@@ -19,7 +19,7 @@ interface IMatchDetailRecordCardProps {
     recordList: IMatchDetailRecord[];
     rule: string;
     totalCount: number;
-    winStatus: 'DRAW' | 'LOSE' | 'WIN';
+    winStatus: TWinStatus;
   }>;
   onEndReached?: () => void;
 }

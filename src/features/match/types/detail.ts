@@ -5,6 +5,7 @@ import {
   type TStrength,
   type IField,
   type TUserRole,
+  type TWinStatus,
 } from '.';
 import {type TWorkoutActivitiesType} from '../../../lib/AppleHealthKit';
 
@@ -41,7 +42,7 @@ export interface IMatchDetailRecordSummary {
   totalBurnedCalorie: number;
   totalExerciseTimeMinute: number;
   totalRecordCount: number;
-  winStatus: 'DRAW' | 'LOSE' | 'WIN';
+  winStatus: TWinStatus;
 }
 
 interface IMatchDetailRecordTeamRankingItem {

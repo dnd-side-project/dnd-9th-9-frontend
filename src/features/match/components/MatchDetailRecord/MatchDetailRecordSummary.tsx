@@ -11,7 +11,7 @@ interface IMatchDetailRecordSummaryProps {
   totalBurnedCalorie?: number;
   totalRecordCount?: number;
   goalAchievedCount?: number;
-  winStatus?: 'DRAW' | 'WIN' | 'LOSE' | 'DEFAULT';
+  winStatus?: keyof typeof WinStatus;
 }
 
 export const MatchDetailRecordSummary = ({

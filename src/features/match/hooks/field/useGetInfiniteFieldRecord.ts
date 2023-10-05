@@ -5,7 +5,11 @@ import {
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
-import {type IMatchDetailRecord, type TFieldType} from '../../types';
+import {
+  type TWinStatus,
+  type IMatchDetailRecord,
+  type TFieldType,
+} from '../../types';
 
 interface IProps {
   id: number;
@@ -22,7 +26,7 @@ interface IFieldRecord {
   recordList: IMatchDetailRecord[];
   rule: string;
   totalCount: number;
-  winStatus: 'DRAW' | 'LOSE' | 'WIN';
+  winStatus: TWinStatus;
 }
 
 const fetcher = async ({
