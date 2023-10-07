@@ -5,7 +5,7 @@ import {type TGender} from '../../types';
 
 interface IProps {
   body: {
-    calorieGoal: number;
+    calorieGoal?: number;
     gender: TGender;
     height: number;
     isAppleLinked: boolean;
