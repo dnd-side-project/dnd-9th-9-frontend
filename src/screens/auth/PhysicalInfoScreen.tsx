@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/native';
+import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
 
 import {Text} from '../../components/Text';
@@ -12,8 +13,11 @@ import {
   useGetLatestHeight,
   useGetLatestWeight,
 } from '../../hooks/healthKit';
+import {type RootStackParamList} from '../../navigators';
 
-export const PhysicalInfoScreen = (): React.JSX.Element => {
+type Props = NativeStackScreenProps<RootStackParamList, 'PhysicalInfoScreen'>;
+
+export const PhysicalInfoScreen = ({navigation}: Props): React.JSX.Element => {
   const {data: healthKitAuthStatus} = useGetHealthKitAuthStatus();
   const {data: height} = useGetLatestHeight();
   const {data: weight} = useGetLatestWeight();
@@ -32,6 +36,9 @@ export const PhysicalInfoScreen = (): React.JSX.Element => {
         }
         defaultGender={gender as TGender}
         isAllLinked={healthKitAuthStatus?.isAllLinked ?? false}
+        onNext={() => {
+          navigation.push('Main');
+        }}
       />
     </SafeAreaView>
   );

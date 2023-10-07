@@ -30,6 +30,7 @@ interface IPhysicalInfoForm {
   defaultHeight?: number;
   defaultGender?: TGender;
   isAllLinked: boolean;
+  onNext: () => void;
 }
 
 export const PhysicalInfoForm = ({
@@ -37,6 +38,7 @@ export const PhysicalInfoForm = ({
   defaultHeight,
   defaultGender,
   isAllLinked,
+  onNext,
 }: IPhysicalInfoForm): React.JSX.Element => {
   const {mutate: patchMyOnboardProfile} = usePatchMyOnboardProfile();
 
@@ -63,6 +65,8 @@ export const PhysicalInfoForm = ({
         isAppleLinked: isAllLinked,
       },
     });
+
+    onNext();
   };
 
   // NOTE: 위 useForm defaultValues 미작동으로 인한 추가
