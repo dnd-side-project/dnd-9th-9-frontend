@@ -8,10 +8,24 @@ import {checkXmlData, errorXmlData} from '../../assets/svg';
 import {Icon} from '../Icon';
 import {Text} from '../Text/Text';
 
+const TextfieldSizes = {
+  sm: {
+    fontSize: '14px',
+  },
+  md: {
+    fontSize: '16px',
+  },
+  lg: {
+    fontSize: '26px',
+  },
+} as const;
+
+type TextfieldSize = keyof typeof TextfieldSizes;
+
 interface ITextfieldProps extends TextInputProps {
   isError?: boolean;
   isValid?: boolean;
-  size?: 'md' | 'sm';
+  size?: TextfieldSize;
   label?: string;
   hintMessage?: string;
   errorMessage?: string;
@@ -87,11 +101,11 @@ const StyledTextInputContainer = styled.View<{
   transition: all 1s ease-in-out;
 `;
 
-const StyledTextInput = styled.TextInput<{size: 'md' | 'sm'}>`
+const StyledTextInput = styled.TextInput<{size: TextfieldSize}>`
   flex: 1;
   padding: 10px 0;
   color: ${({theme}) => theme.palette.black};
   font-family: Pretendard;
-  font-size: ${({size}) => (size === 'md' ? '16px' : '14px')};
+  font-size: ${({size}) => TextfieldSizes[size].fontSize};
   font-weight: 700;
 `;
