@@ -26,7 +26,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export function AppNavigator(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="PhysicalInfoScreen">
+      <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen
           name="Landing"
           component={LandingScreen}
