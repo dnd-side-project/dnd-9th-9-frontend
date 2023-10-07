@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 
 import styled from '@emotion/native';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -31,7 +31,7 @@ import {
   useGetLatestWeight,
   useInitHealthKit,
 } from '../../hooks/healthKit';
-import {defaultPermissions, HealthStatusCode} from '../../lib/AppleHealthKit';
+import {defaultPermissions} from '../../lib/AppleHealthKit';
 import {type RootStackParamList} from '../../navigators';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
@@ -124,15 +124,6 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
     startDate: dayjs().add(-6, 'month').toISOString(),
   });
 
-  const isLinkedUser = useMemo(() => {
-    if (healthKitAuthStatus == null) return false;
-
-    const isLinkedUser = !Object.values(healthKitAuthStatus.permissions)
-      .flat()
-      .some(permission => permission === HealthStatusCode.NotDetermined);
-    return isLinkedUser;
-  }, [healthKitAuthStatus]);
-
   const handlePressNext = async (): Promise<void> => {
     if (stepIndex === SIGNUP_INFORMATION_STEPS.length - 1) {
       try {
@@ -164,11 +155,11 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
       try {
         await initHealthKit(defaultPermissions);
       } catch (error) {
-        // TODO: 신체정보 페이지 이동
+        navigation.push('PhysicalInfoScreen');
       }
 
-      if (!isLinkedUser) {
-        // TODO: 신체정보 페이지 이동
+      if (!(healthKitAuthStatus?.isAllLinked ?? false)) {
+        navigation.push('PhysicalInfoScreen');
         return;
       }
 
@@ -183,8 +174,7 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
       );
 
       if (hasSomeNullData) {
-        // TODO: 신체정보 페이지 이동
-        console.log('신체정보 페이지 이동');
+        navigation.push('PhysicalInfoScreen');
         return;
       }
       // @ts-expect-error NOTE: 위 if 문에서 null check가 되었음을 추론하는 type 추가 필요
