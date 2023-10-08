@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 
 import {SafeAreaView, ScrollView} from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../assets/styles/theme';
 import {Button} from '../../../components/Button';
@@ -10,10 +11,10 @@ import {
   MatchDetailProfileSection,
   MatchDetailMembers,
 } from '../../../features/match/components/MatchDetailProfile';
-// import {
-//   usePostFieldEntryBattle,
-//   usePostFieldEntryTeam,
-// } from '../../../features/match/hooks/fieldEntry';
+import {
+  usePostFieldEntryBattle,
+  usePostFieldEntryTeam,
+} from '../../../features/match/hooks/fieldEntry';
 import {useGetUserFieldList} from '../../../features/match/hooks/userField';
 import {type IFieldDetailInfo} from '../../../features/match/types';
 
@@ -30,22 +31,43 @@ export const MatchDetailProfileScreen = ({
     subTitle: '',
   });
 
-  const {assignedFieldDto} = fieldDetailData;
-
   const {id, fieldType, fieldStatus, fieldRole, maxSize, currentSize} =
     fieldDetailData?.fieldDto;
 
   const {data: userListData} = useGetUserFieldList({id});
 
-  // const {mutate: mutateFieldEntryTeam} = usePostFieldEntryTeam({
-  //   openModal: setModalInfo,
-  // });
+  const {mutate: mutateFieldEntryTeam} = usePostFieldEntryTeam({
+    onSuccessCallback: () => {
+      Toast.show('팀원 신청이 완료되었습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+    },
+    onErrorCallback: error => {
+      setModalInfo({
+        isVisible: true,
+        title: error?.response?.data?.message ?? '오류가 발생하였습니다',
+        subTitle: '다시 한 번 확인해주세요.',
+      });
+    },
+  });
 
-  // const {mutate: mutateFieldEntryBattle} = usePostFieldEntryBattle({
-  //   openModal: setModalInfo,
-  // });
+  const {mutate: mutateFieldEntryBattle} = usePostFieldEntryBattle({
+    onSuccessCallback: () => {
+      Toast.show('매칭 신청이 완료되었습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+    },
+    onErrorCallback: error => {
+      setModalInfo({
+        isVisible: true,
+        title: error?.response?.data?.message ?? '오류가 발생하였습니다',
+        subTitle: '다시 한 번 확인해주세요.',
+      });
+    },
+  });
 
   const isAbleApplyMatchMember =
+    fieldType !== 'DUEL' &&
     fieldStatus === 'RECRUITING' &&
     maxSize !== currentSize &&
     fieldRole === 'GUEST';
@@ -53,18 +75,18 @@ export const MatchDetailProfileScreen = ({
   const isAbleApplyMatching =
     fieldType !== 'TEAM' &&
     fieldStatus === 'RECRUITING' &&
-    assignedFieldDto === null &&
+    fieldDetailData?.assignedFieldDto === null &&
     maxSize === currentSize &&
     fieldRole === 'GUEST';
 
   const handleApplyMember = (): void => {
-    // const body = {targetFieldId: id, teamType: fieldType};
-    // mutateFieldEntryTeam({body});
+    const body = {targetFieldId: id, teamType: fieldType};
+    mutateFieldEntryTeam({body});
   };
 
   const handleApplyMatching = (): void => {
-    // const body = {targetFieldId: id, battleType: fieldType};
-    // mutateFieldEntryBattle({body});
+    const body = {targetFieldId: id, battleType: fieldType};
+    mutateFieldEntryBattle({body});
   };
 
   return (
