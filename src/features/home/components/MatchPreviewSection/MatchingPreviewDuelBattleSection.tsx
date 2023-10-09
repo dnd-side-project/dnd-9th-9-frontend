@@ -103,21 +103,22 @@ export const MatchingPreviewDuelBattleSection = (): React.JSX.Element => {
               </MatchingPreviewSectionCardListItem>
               <MatchingPreviewSectionCardListItem label="활동링 달성">
                 <Text
-                  text={`${duelBattleInfos.totalRecordCount.winningUserName}님이 ${duelBattleInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
+                  // TODO(@minimalKim): 수치 %인지 확인
+                  text={`${duelBattleInfos.goalAchievedCount.winningUserName}님이 ${duelBattleInfos?.goalAchievedCount.gap}% 더 앞서있어요!`}
                   type="body3"
                   color="gray-600"
                 />
               </MatchingPreviewSectionCardListItem>
               <MatchingPreviewSectionCardListItem label="운동시간">
                 <Text
-                  text={`${duelBattleInfos.totalRecordCount.winningUserName}님이 ${duelBattleInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
+                  text={`${duelBattleInfos.totalExerciseTimeMinute.winningUserName}님이 ${duelBattleInfos?.totalExerciseTimeMinute.gap}분 더 앞서있어요!`}
                   type="body3"
                   color="gray-600"
                 />
               </MatchingPreviewSectionCardListItem>
               <MatchingPreviewSectionCardListItem label="소모칼로리">
                 <Text
-                  text={`${duelBattleInfos.totalRecordCount.winningUserName}님이 ${duelBattleInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
+                  text={`${duelBattleInfos.totalBurnedCalorie.winningUserName}님이 ${duelBattleInfos?.totalBurnedCalorie.gap}회 더 앞서있어요!`}
                   type="body3"
                   color="gray-600"
                 />
