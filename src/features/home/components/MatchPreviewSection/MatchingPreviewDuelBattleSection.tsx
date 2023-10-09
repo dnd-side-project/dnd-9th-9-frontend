@@ -13,24 +13,26 @@ import {useGetUserFieldHomeBattle} from '../../hooks/userField';
 import {type IUserFieldHomeBattle} from '../../types';
 
 type THomeBattleField = Exclude<keyof IUserFieldHomeBattle, 'name'>;
-interface IHomeBattleListInfo {
-  gap: number;
-  winningUserName: string;
-}
 
-type THomeBattleListInfos = Record<THomeBattleField, IHomeBattleListInfo>;
+type THomeBattleFieldInfos = Record<
+  THomeBattleField,
+  {
+    gap: number;
+    winningUserName: string;
+  }
+>;
 
-export const MatchingPreviewDuelSection = (): React.JSX.Element => {
+export const MatchingPreviewDuelBattleSection = (): React.JSX.Element => {
   const {data: userFieldBattle} = useGetUserFieldHomeBattle({
     battleType: 'DUEL',
   });
 
-  const duelFieldInfos: THomeBattleListInfos | null = useMemo(() => {
+  const duelBattleInfos: THomeBattleFieldInfos | null = useMemo(() => {
     if (userFieldBattle == null) {
       return null;
     }
 
-    const result: THomeBattleListInfos = {
+    const result: THomeBattleFieldInfos = {
       goalAchievedCount: {
         gap: 0,
         winningUserName: '',
@@ -76,7 +78,7 @@ export const MatchingPreviewDuelSection = (): React.JSX.Element => {
 
   return (
     <View>
-      {userFieldBattle != null && duelFieldInfos != null ? (
+      {userFieldBattle != null && duelBattleInfos != null ? (
         <MatchingPreviewSectionCard
           title={() => (
             <StyledTitleContainer>
@@ -94,28 +96,28 @@ export const MatchingPreviewDuelSection = (): React.JSX.Element => {
             <StyledBattleListContainer>
               <MatchingPreviewSectionCardListItem label="기록횟수">
                 <Text
-                  text={`${duelFieldInfos.totalRecordCount.winningUserName}님이 ${duelFieldInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
+                  text={`${duelBattleInfos.totalRecordCount.winningUserName}님이 ${duelBattleInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
                   type="body3"
                   color="gray-600"
                 />
               </MatchingPreviewSectionCardListItem>
               <MatchingPreviewSectionCardListItem label="활동링 달성">
                 <Text
-                  text={`${duelFieldInfos.totalRecordCount.winningUserName}님이 ${duelFieldInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
+                  text={`${duelBattleInfos.totalRecordCount.winningUserName}님이 ${duelBattleInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
                   type="body3"
                   color="gray-600"
                 />
               </MatchingPreviewSectionCardListItem>
               <MatchingPreviewSectionCardListItem label="운동시간">
                 <Text
-                  text={`${duelFieldInfos.totalRecordCount.winningUserName}님이 ${duelFieldInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
+                  text={`${duelBattleInfos.totalRecordCount.winningUserName}님이 ${duelBattleInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
                   type="body3"
                   color="gray-600"
                 />
               </MatchingPreviewSectionCardListItem>
               <MatchingPreviewSectionCardListItem label="소모칼로리">
                 <Text
-                  text={`${duelFieldInfos.totalRecordCount.winningUserName}님이 ${duelFieldInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
+                  text={`${duelBattleInfos.totalRecordCount.winningUserName}님이 ${duelBattleInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
                   type="body3"
                   color="gray-600"
                 />
