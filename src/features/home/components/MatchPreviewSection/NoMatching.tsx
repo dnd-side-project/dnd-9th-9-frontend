@@ -26,7 +26,7 @@ export const NoMatching = (): React.JSX.Element => {
 };
 
 const StyledNoMatchingContainer = styled.View`
-  height: 400px;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
