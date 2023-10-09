@@ -20,31 +20,18 @@ interface IResponse {
 }
 
 const fetcher = async ({battleType}: IProps): Promise<IResponse> =>
+  // TODO(@minimalKim): 유저 썸네일 추가 요청 또는 디자인 명세 수정 요청
   await axios
     .get(`/user-field/home/battle`, {
       params: {
         battleType,
       },
     })
-    .then(({data}) => data)
-    .then(() => ({
-      away: {
-        goalAchievedCount: 0,
-        name: 'test우저',
-        totalBurnedCalorie: 0,
-        totalExerciseTimeMinute: 0,
-        totalRecordCount: 0,
-      },
-      daysLeft: 0,
-      fieldId: 0,
-      home: {
-        goalAchievedCount: 0,
-        name: 'test우저2',
-        totalBurnedCalorie: 0,
-        totalExerciseTimeMinute: 0,
-        totalRecordCount: 0,
-      },
-    }));
+    // TODO(@minimalKim): 진행 중인 배틀이 없을 경우 null이 아닌 빈 string 반환 됨 -> 백엔드 수정요청
+    .then(({data}) => {
+      if (data === '') return null;
+      return data;
+    });
 
 /**
  * 홈화면 나의 배틀 현황 조회 (팀 제외)
