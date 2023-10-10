@@ -213,7 +213,7 @@ const DescriptionContainer = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 4;
+  gap: 4px;
 `;
 
 const StyledBattleProfile = styled.View<{
