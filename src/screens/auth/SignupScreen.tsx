@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import styled from '@emotion/native';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
+import dayjs from 'dayjs';
 import {useForm, type UseFormReturn} from 'react-hook-form';
 import {SafeAreaView, TouchableOpacity} from 'react-native';
 import {z} from 'zod';
@@ -21,6 +22,16 @@ import {
 } from '../../features/auth/components/signup';
 import {usePostLogin, usePostSignup} from '../../features/auth/hooks/auth';
 import {type SkillLevels} from '../../features/match/const';
+import {usePatchMyOnboardProfile} from '../../features/my/hooks/profile';
+import {
+  useGetActivitySummary,
+  useGetBiologicalSex,
+  useGetHealthKitAuthStatus,
+  useGetLatestHeight,
+  useGetLatestWeight,
+  useInitHealthKit,
+} from '../../hooks/healthKit';
+import {defaultPermissions} from '../../lib/AppleHealthKit';
 import {type RootStackParamList} from '../../navigators';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
@@ -102,6 +113,17 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
   const {mutateAsync: postLogin, error: postLoginError} = usePostLogin();
   const [showErrorModal, setShowErrorModal] = useState(false);
 
+  const {mutate: patchMyOnboardProfile} = usePatchMyOnboardProfile();
+
+  const {mutateAsync: initHealthKit} = useInitHealthKit();
+  const {data: healthKitAuthStatus} = useGetHealthKitAuthStatus();
+  const {data: height} = useGetLatestHeight();
+  const {data: weight} = useGetLatestWeight();
+  const {data: gender} = useGetBiologicalSex();
+  const {data: activitySummary} = useGetActivitySummary({
+    startDate: dayjs().add(-6, 'month').toISOString(),
+  });
+
   const handlePressNext = async (): Promise<void> => {
     if (stepIndex === SIGNUP_INFORMATION_STEPS.length - 1) {
       try {
@@ -124,11 +146,40 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
             password: signupForm.getValues('password'),
           },
         });
-
-        navigation.replace('Main');
       } catch (e) {
         setShowErrorModal(true);
       }
+
+      navigation.replace('Main');
+
+      try {
+        await initHealthKit(defaultPermissions);
+      } catch (error) {
+        navigation.push('PhysicalInfoScreen');
+      }
+
+      if (!(healthKitAuthStatus?.isAllLinked ?? false)) {
+        navigation.push('PhysicalInfoScreen');
+        return;
+      }
+
+      const healthKitData = {
+        height,
+        weight,
+        gender,
+        calorieGoal: activitySummary?.at(-1)?.appleExerciseTimeGoal,
+      };
+      const hasSomeNullData = Object.values(healthKitData).some(
+        value => value == null,
+      );
+
+      if (hasSomeNullData) {
+        navigation.push('PhysicalInfoScreen');
+        return;
+      }
+      // @ts-expect-error NOTE: 위 if 문에서 null check가 되었음을 추론하는 type 추가 필요
+      patchMyOnboardProfile({body: {...healthKitData, isAppleLinked: true}});
+
       return;
     }
     setStepIndex(index => index + 1);
