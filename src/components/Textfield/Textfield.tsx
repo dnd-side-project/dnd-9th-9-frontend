@@ -3,29 +3,16 @@ import React, {useState} from 'react';
 import styled from '@emotion/native';
 import {type TextInputProps} from 'react-native';
 
+import {type TTypography} from '../../assets/styles/emotion';
 import {theme} from '../../assets/styles/theme';
 import {checkXmlData, errorXmlData} from '../../assets/svg';
 import {Icon} from '../Icon';
 import {Text} from '../Text/Text';
 
-const TextfieldSizes = {
-  sm: {
-    fontSize: '14px',
-  },
-  md: {
-    fontSize: '16px',
-  },
-  lg: {
-    fontSize: '26px',
-  },
-} as const;
-
-type TextfieldSize = keyof typeof TextfieldSizes;
-
 interface ITextfieldProps extends TextInputProps {
   isError?: boolean;
   isValid?: boolean;
-  size?: TextfieldSize;
+  type?: TTypography;
   label?: string;
   hintMessage?: string;
   errorMessage?: string;
@@ -35,7 +22,7 @@ interface ITextfieldProps extends TextInputProps {
 export const Textfield = ({
   isError = false,
   isValid = false,
-  size = 'md',
+  type = 'body2',
   label = '',
   hintMessage = '',
   errorMessage = '',
@@ -51,7 +38,7 @@ export const Textfield = ({
 
       <StyledTextInputContainer isError={isError} isFocused={isFocused}>
         <StyledTextInput
-          size={size}
+          type={type}
           placeholderTextColor={theme.palette['gray-100']}
           onFocus={() => {
             setIsFocused(true);
@@ -101,11 +88,11 @@ const StyledTextInputContainer = styled.View<{
   transition: all 1s ease-in-out;
 `;
 
-const StyledTextInput = styled.TextInput<{size: TextfieldSize}>`
+const StyledTextInput = styled.TextInput<{type: TTypography}>`
   flex: 1;
   padding: 10px 0;
   color: ${({theme}) => theme.palette.black};
-  font-family: Pretendard;
-  font-size: ${({size}) => TextfieldSizes[size].fontSize};
+  font-family: ${props => props.theme.typography[props.type].fontFamily};
+  font-size: ${props => props.theme.typography[props.type].fontSize};
   font-weight: 700;
 `;
