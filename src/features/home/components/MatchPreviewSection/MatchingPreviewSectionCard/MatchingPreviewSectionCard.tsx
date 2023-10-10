@@ -37,6 +37,7 @@ const StyledMatchingPreviewSectionCard = styled.View`
   background-color: ${({theme}) => theme.palette['gray-50']};
   border-radius: ${({theme}) => theme.borderRadius.md};
   padding: 20px;
+  padding-bottom: 26px;
   width: 100%;
 `;
 
