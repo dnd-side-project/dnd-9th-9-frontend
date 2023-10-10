@@ -10,11 +10,9 @@ import {
 import {NoMatching} from './NoMatching';
 import {Text} from '../../../../components/Text';
 import {useGetUserFieldHomeBattle} from '../../hooks/userField';
-import {type IUserFieldHomeBattle} from '../../types';
+import {type THomeBattleField} from '../../types';
 
-type THomeBattleField = Exclude<keyof IUserFieldHomeBattle, 'name'>;
-
-type THomeBattleFieldInfos = Record<
+type THomeDuelBattleFieldInfos = Record<
   THomeBattleField,
   {
     gap: number;
@@ -27,12 +25,12 @@ export const MatchingPreviewDuelBattleSection = (): React.JSX.Element => {
     battleType: 'DUEL',
   });
 
-  const duelBattleInfos: THomeBattleFieldInfos | null = useMemo(() => {
+  const duelBattleInfos: THomeDuelBattleFieldInfos | null = useMemo(() => {
     if (userFieldBattle == null) {
       return null;
     }
 
-    const result: THomeBattleFieldInfos = {
+    const result: THomeDuelBattleFieldInfos = {
       goalAchievedCount: {
         gap: 0,
         winningUserName: '',
@@ -77,7 +75,7 @@ export const MatchingPreviewDuelBattleSection = (): React.JSX.Element => {
   }, [userFieldBattle]);
 
   return (
-    <View>
+    <>
       {userFieldBattle != null && duelBattleInfos != null ? (
         <MatchingPreviewSectionCard
           title={() => (
@@ -129,7 +127,7 @@ export const MatchingPreviewDuelBattleSection = (): React.JSX.Element => {
       ) : (
         <NoMatching />
       )}
-    </View>
+    </>
   );
 };
 
@@ -140,7 +138,7 @@ const StyledTitleContainer = styled.View`
 
 const StyledBattleListContainer = styled.View`
   display: flex;
-  gap: 20px;
+  gap: 26px;
   margin-top: 16px;
   padding-right: 16px;
 `;

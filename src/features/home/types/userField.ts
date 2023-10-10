@@ -51,3 +51,5 @@ export interface IUserFieldHomeBattle {
   /** 기록 횟수 */
   totalRecordCount: number;
 }
+
+export type THomeBattleField = Exclude<keyof IUserFieldHomeBattle, 'name'>;
