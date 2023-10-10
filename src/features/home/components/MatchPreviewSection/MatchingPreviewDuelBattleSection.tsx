@@ -93,33 +93,99 @@ export const MatchingPreviewDuelBattleSection = (): React.JSX.Element => {
             />
             <StyledBattleListContainer>
               <MatchingPreviewSectionCardListItem label="기록횟수">
-                <Text
-                  text={`${duelBattleInfos.totalRecordCount.winningUserName}님이 ${duelBattleInfos?.totalRecordCount.gap}회 더 앞서있어요!`}
-                  type="body3"
-                  color="gray-600"
-                />
+                <DescriptionContainer>
+                  <StyledBattleProfile
+                    isHome={
+                      duelBattleInfos.totalRecordCount.winningUserName ===
+                      userFieldBattle.home.name
+                    }>
+                    <Text
+                      text={duelBattleInfos.totalRecordCount.winningUserName[0]}
+                      color="gray-0"
+                      type="body2"
+                      fontWeight="700"
+                    />
+                  </StyledBattleProfile>
+                  <Text
+                    text={`님이 ${duelBattleInfos.totalRecordCount.gap}회 더 앞서있어요!`}
+                    type="body3"
+                    color="gray-600"
+                  />
+                </DescriptionContainer>
               </MatchingPreviewSectionCardListItem>
+
               <MatchingPreviewSectionCardListItem label="활동링 달성">
-                <Text
-                  // TODO(@minimalKim): 수치 %인지 확인
-                  text={`${duelBattleInfos.goalAchievedCount.winningUserName}님이 ${duelBattleInfos?.goalAchievedCount.gap}% 더 앞서있어요!`}
-                  type="body3"
-                  color="gray-600"
-                />
+                <DescriptionContainer>
+                  <StyledBattleProfile
+                    isHome={
+                      duelBattleInfos.goalAchievedCount.winningUserName ===
+                      userFieldBattle.home.name
+                    }>
+                    <Text
+                      text={
+                        duelBattleInfos.goalAchievedCount.winningUserName[0]
+                      }
+                      color="gray-0"
+                      type="body2"
+                      fontWeight="700"
+                    />
+                  </StyledBattleProfile>
+                  <Text
+                    // TODO(@minimalKim): 수치 %인지 확인
+                    text={`님이 ${duelBattleInfos.goalAchievedCount.gap}% 더 앞서있어요!`}
+                    type="body3"
+                    color="gray-600"
+                  />
+                </DescriptionContainer>
               </MatchingPreviewSectionCardListItem>
+
               <MatchingPreviewSectionCardListItem label="운동시간">
-                <Text
-                  text={`${duelBattleInfos.totalExerciseTimeMinute.winningUserName}님이 ${duelBattleInfos?.totalExerciseTimeMinute.gap}분 더 앞서있어요!`}
-                  type="body3"
-                  color="gray-600"
-                />
+                <DescriptionContainer>
+                  <StyledBattleProfile
+                    isHome={
+                      duelBattleInfos.totalExerciseTimeMinute
+                        .winningUserName === userFieldBattle.home.name
+                    }>
+                    <Text
+                      text={
+                        duelBattleInfos.totalExerciseTimeMinute
+                          .winningUserName[0]
+                      }
+                      color="gray-0"
+                      type="body2"
+                      fontWeight="700"
+                    />
+                  </StyledBattleProfile>
+                  <Text
+                    text={`님이 ${duelBattleInfos.totalExerciseTimeMinute.gap}분 더 앞서있어요!`}
+                    type="body3"
+                    color="gray-600"
+                  />
+                </DescriptionContainer>
               </MatchingPreviewSectionCardListItem>
+
               <MatchingPreviewSectionCardListItem label="소모칼로리">
-                <Text
-                  text={`${duelBattleInfos.totalBurnedCalorie.winningUserName}님이 ${duelBattleInfos?.totalBurnedCalorie.gap}회 더 앞서있어요!`}
-                  type="body3"
-                  color="gray-600"
-                />
+                <DescriptionContainer>
+                  <StyledBattleProfile
+                    isHome={
+                      duelBattleInfos.totalBurnedCalorie.winningUserName ===
+                      userFieldBattle.home.name
+                    }>
+                    <Text
+                      text={
+                        duelBattleInfos.totalBurnedCalorie.winningUserName[0]
+                      }
+                      color="gray-0"
+                      type="body2"
+                      fontWeight="700"
+                    />
+                  </StyledBattleProfile>
+                  <Text
+                    text={`님이 ${duelBattleInfos.totalBurnedCalorie.gap}회 더 앞서있어요!`}
+                    type="body3"
+                    color="gray-600"
+                  />
+                </DescriptionContainer>
               </MatchingPreviewSectionCardListItem>
             </StyledBattleListContainer>
           </View>
@@ -138,7 +204,27 @@ const StyledTitleContainer = styled.View`
 
 const StyledBattleListContainer = styled.View`
   display: flex;
-  gap: 26px;
+  gap: 20px;
   margin-top: 16px;
   padding-right: 16px;
+`;
+
+const DescriptionContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4;
+`;
+
+const StyledBattleProfile = styled.View<{
+  isHome: boolean;
+}>`
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: ${({theme, isHome}) =>
+    isHome ? theme.palette['main-400'] : theme.palette['sub-400']};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
