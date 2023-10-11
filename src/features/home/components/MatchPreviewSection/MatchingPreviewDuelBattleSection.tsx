@@ -8,6 +8,7 @@ import {
   MatchingPreviewSectionCardListItem,
 } from './MatchingPreviewSectionCard';
 import {NoMatching} from './NoMatching';
+import {ProfileName} from './ProfileName';
 import {Text} from '../../../../components/Text';
 import {useGetUserFieldHomeBattle} from '../../hooks/userField';
 import {type THomeBattleField} from '../../types';
@@ -94,18 +95,13 @@ export const MatchingPreviewDuelBattleSection = (): React.JSX.Element => {
             <StyledBattleListContainer>
               <MatchingPreviewSectionCardListItem label="기록횟수">
                 <DescriptionContainer>
-                  <StyledBattleProfile
+                  <ProfileName
                     isHome={
                       duelBattleInfos.totalRecordCount.winningUserName ===
                       userFieldBattle.home.name
-                    }>
-                    <Text
-                      text={duelBattleInfos.totalRecordCount.winningUserName[0]}
-                      color="gray-0"
-                      type="body2"
-                      fontWeight="700"
-                    />
-                  </StyledBattleProfile>
+                    }
+                    name={duelBattleInfos.totalRecordCount.winningUserName[0]}
+                  />
                   <Text
                     text={`님이 ${duelBattleInfos.totalRecordCount.gap}회 더 앞서있어요!`}
                     type="body3"
@@ -116,20 +112,13 @@ export const MatchingPreviewDuelBattleSection = (): React.JSX.Element => {
 
               <MatchingPreviewSectionCardListItem label="활동링 달성">
                 <DescriptionContainer>
-                  <StyledBattleProfile
+                  <ProfileName
                     isHome={
                       duelBattleInfos.goalAchievedCount.winningUserName ===
                       userFieldBattle.home.name
-                    }>
-                    <Text
-                      text={
-                        duelBattleInfos.goalAchievedCount.winningUserName[0]
-                      }
-                      color="gray-0"
-                      type="body2"
-                      fontWeight="700"
-                    />
-                  </StyledBattleProfile>
+                    }
+                    name={duelBattleInfos.goalAchievedCount.winningUserName[0]}
+                  />
                   <Text
                     // TODO(@minimalKim): 수치 %인지 확인
                     text={`님이 ${duelBattleInfos.goalAchievedCount.gap}% 더 앞서있어요!`}
@@ -141,21 +130,15 @@ export const MatchingPreviewDuelBattleSection = (): React.JSX.Element => {
 
               <MatchingPreviewSectionCardListItem label="운동시간">
                 <DescriptionContainer>
-                  <StyledBattleProfile
+                  <ProfileName
                     isHome={
                       duelBattleInfos.totalExerciseTimeMinute
                         .winningUserName === userFieldBattle.home.name
-                    }>
-                    <Text
-                      text={
-                        duelBattleInfos.totalExerciseTimeMinute
-                          .winningUserName[0]
-                      }
-                      color="gray-0"
-                      type="body2"
-                      fontWeight="700"
-                    />
-                  </StyledBattleProfile>
+                    }
+                    name={
+                      duelBattleInfos.totalExerciseTimeMinute.winningUserName[0]
+                    }
+                  />
                   <Text
                     text={`님이 ${duelBattleInfos.totalExerciseTimeMinute.gap}분 더 앞서있어요!`}
                     type="body3"
@@ -166,20 +149,13 @@ export const MatchingPreviewDuelBattleSection = (): React.JSX.Element => {
 
               <MatchingPreviewSectionCardListItem label="소모칼로리">
                 <DescriptionContainer>
-                  <StyledBattleProfile
+                  <ProfileName
                     isHome={
                       duelBattleInfos.totalBurnedCalorie.winningUserName ===
                       userFieldBattle.home.name
-                    }>
-                    <Text
-                      text={
-                        duelBattleInfos.totalBurnedCalorie.winningUserName[0]
-                      }
-                      color="gray-0"
-                      type="body2"
-                      fontWeight="700"
-                    />
-                  </StyledBattleProfile>
+                    }
+                    name={duelBattleInfos.totalBurnedCalorie.winningUserName[0]}
+                  />
                   <Text
                     text={`님이 ${duelBattleInfos.totalBurnedCalorie.gap}회 더 앞서있어요!`}
                     type="body3"
@@ -214,17 +190,7 @@ const DescriptionContainer = styled.View`
   flex-direction: row;
   align-items: center;
   gap: 4px;
-`;
-
-const StyledBattleProfile = styled.View<{
-  isHome: boolean;
-}>`
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  background-color: ${({theme, isHome}) =>
-    isHome ? theme.palette['main-400'] : theme.palette['sub-400']};
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  min-width: 180px;
+  max-width: 65%;
 `;
