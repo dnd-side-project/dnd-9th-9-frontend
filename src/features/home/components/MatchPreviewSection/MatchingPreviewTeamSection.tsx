@@ -46,7 +46,7 @@ export const MatchingPreviewTeamSection = (): React.JSX.Element => {
                     name={userFieldHomeTeam.recordCount.name[0]}
                   />
                   <Text
-                    text={`님이 ${userFieldHomeTeam.recordCount.value}로 1등!`}
+                    text={`님이 ${userFieldHomeTeam.recordCount.value}회로 1등!`}
                     type="body3"
                     color="gray-600"
                   />
@@ -64,7 +64,7 @@ export const MatchingPreviewTeamSection = (): React.JSX.Element => {
                   />
                   <Text
                     // TODO(@minimalKim): 수치 %인지 확인
-                    text={`님이 ${userFieldHomeTeam.goalAchievedCount.value}로 1등!`}
+                    text={`님이 ${userFieldHomeTeam.goalAchievedCount.value}%로 1등!`}
                     type="body3"
                     color="gray-600"
                   />
