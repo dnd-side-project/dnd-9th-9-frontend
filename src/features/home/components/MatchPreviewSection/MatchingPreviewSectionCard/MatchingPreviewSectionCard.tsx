@@ -2,6 +2,7 @@ import React, {type PropsWithChildren} from 'react';
 
 import styled from '@emotion/native';
 
+import {theme} from '../../../../../assets/styles/theme';
 import {arrowRightXmlData} from '../../../../../assets/svg';
 import {Icon} from '../../../../../components/Icon';
 
@@ -20,7 +21,12 @@ export const MatchingPreviewSectionCard = ({
       <StyledMatchingPreviewSectionCard>
         <StyledTitleContainer onPress={onPress}>
           <StyledTitleTextContainer>{title()}</StyledTitleTextContainer>
-          <Icon svgXml={arrowRightXmlData} width={40} height={40} />
+          <Icon
+            svgXml={arrowRightXmlData}
+            width={40}
+            height={40}
+            color={theme.palette.black}
+          />
         </StyledTitleContainer>
         {children}
       </StyledMatchingPreviewSectionCard>
