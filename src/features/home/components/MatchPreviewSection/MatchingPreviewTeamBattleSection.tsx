@@ -12,7 +12,7 @@ import {NoMatching} from './NoMatching';
 import {Text} from '../../../../components/Text';
 import {useGetUserFieldHomeBattle} from '../../hooks/userField';
 
-export const MatchingPreviewTeamSection = (): React.JSX.Element => {
+export const MatchingPreviewTeamBattleSection = (): React.JSX.Element => {
   const {data: userFieldBattle} = useGetUserFieldHomeBattle({
     battleType: 'TEAM_BATTLE',
   });
