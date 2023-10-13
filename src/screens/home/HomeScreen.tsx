@@ -7,6 +7,7 @@ import {
   CurrentWorkoutSection,
   TodayCalorieSection,
   MainBanner,
+  MatchPreviewSection,
 } from '../../features/home/components';
 import {type BottomTabStackParamList} from '../../navigators';
 
@@ -17,6 +18,7 @@ export function HomeScreen({navigation}: Props): React.JSX.Element {
     <ScrollView>
       <MainBanner />
       <TodayCalorieSection />
+      <MatchPreviewSection />
       <CurrentWorkoutSection />
     </ScrollView>
   );
