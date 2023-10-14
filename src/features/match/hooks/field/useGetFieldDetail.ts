@@ -17,32 +17,4 @@ export const useGetFieldDetail = ({
   useQuery({
     queryKey: KEYS.detail(id),
     queryFn: async () => await fetcher({id}),
-    initialData: {
-      assignedFieldDto: {
-        currentSize: 0,
-        fieldType: '',
-        goal: '',
-        id: 0,
-        maxSize: 0,
-        name: '',
-        period: '',
-        profileImg: '',
-        skillLevel: '',
-      },
-      fieldDto: {
-        currentSize: 0,
-        description: '',
-        endDate: '',
-        fieldType: '',
-        goal: '',
-        id: 0,
-        maxSize: 0,
-        name: '',
-        period: '',
-        profileImg: '',
-        rule: '',
-        skillLevel: '',
-        strength: '',
-      },
-    },
   });
