@@ -2,35 +2,32 @@ import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 
 import {KEYS} from './keys';
 import {
-  AppleHealthKit,
-  type HealthStatusResult,
+  getAuthStatus,
+  HealthStatusCode,
   type HealthKitPermissions,
+  type HealthStatusResult,
 } from '../../lib/AppleHealthKit';
 
-interface IProps extends HealthKitPermissions {}
+interface IHealthStatusResult extends HealthStatusResult {
+  isAllLinked: boolean;
+}
 
-const fetcher = async ({permissions}: IProps): Promise<HealthStatusResult> => {
-  return await new Promise((resolve, reject) => {
-    AppleHealthKit.getAuthStatus({permissions}, (err, results) => {
-      if (err != null) {
-        reject(new Error(err));
-      } else {
-        resolve(results);
-      }
-    });
-  });
-};
-
-export const useGetHealthKitAuthStatus = ({
-  permissions,
-}: IProps): UseQueryResult<HealthStatusResult, Error> =>
+export const useGetHealthKitAuthStatus = (
+  permissions?: HealthKitPermissions,
+): UseQueryResult<IHealthStatusResult, Error> =>
   useQuery({
-    queryKey: KEYS.auth({permissions}),
-    queryFn: async () => await fetcher({permissions}),
+    queryKey: KEYS.auth(permissions),
+    queryFn: async () => await getAuthStatus(permissions),
     initialData: {
       permissions: {
         read: [],
         write: [],
       },
+    },
+    select: healthKitAuthStatus => {
+      const isAllLinked = !Object.values(healthKitAuthStatus.permissions)
+        .flat()
+        .some(permission => permission === HealthStatusCode.NotDetermined);
+      return {...healthKitAuthStatus, isAllLinked};
     },
   });

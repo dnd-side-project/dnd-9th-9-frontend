@@ -87,7 +87,7 @@ export const MatchDetailRecordScreen = ({
       navigation.navigate('MatchDetailRecordSummary', {
         date: selectedDate.format('YYYY-MM-DD'),
         fieldSide: 'AWAY',
-        id: assignedField.id,
+        id,
       });
     }
   };

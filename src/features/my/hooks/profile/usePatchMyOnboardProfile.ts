@@ -1,24 +1,33 @@
 import {type UseMutationResult, useMutation} from '@tanstack/react-query';
 
 import {axios} from '../../../../lib/axios';
+import {type TGender} from '../../types';
 
 interface IProps {
   body: {
-    phoneNum: string;
+    calorieGoal?: number;
+    gender: TGender;
+    height: number;
+    isAppleLinked: boolean;
+    weight: number;
   };
 }
 
 const fetcher = async ({body}: IProps): Promise<string> =>
   await axios
-    .post('/verification/sign-up-code', body, {
+    .post(`/users/my/onboard-profile`, body, {
       headers: {'Content-Type': 'application/json'},
     })
     .then(({data}) => data);
 
 /**
- * 해당 전화번호로 인증번호를 발송합니다.
+ * 온보딩 시 내 정보(신체정보) 등록
  */
-export const usePostSendCode = (): UseMutationResult<string, Error, IProps> => {
+export const usePatchMyOnboardProfile = (): UseMutationResult<
+  string,
+  Error,
+  IProps
+> => {
   return useMutation({
     mutationFn: fetcher,
   });

@@ -2,7 +2,6 @@ import React from 'react';
 
 import styled from '@emotion/native';
 import {type RouteProp, useRoute} from '@react-navigation/native';
-import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView, View} from 'react-native';
 
 import {MatchDetailProfileScreen} from './MatchDetailProfileScreen';
@@ -18,19 +17,12 @@ import {
 import {useGetFieldDetail} from '../../../features/match/hooks/field';
 import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
-type TMatchDetailScreenProps = NativeStackScreenProps<
-  MatchStackParamList,
-  'MatchDetail'
->;
-
 type TMatchDetailScreenRouteProps = RouteProp<
   MatchStackParamList,
   'MatchDetail'
 >;
 
-export const MatchDetailScreen = ({
-  navigation,
-}: TMatchDetailScreenProps): React.JSX.Element => {
+export const MatchDetailScreen = (): React.JSX.Element => {
   const route = useRoute<TMatchDetailScreenRouteProps>();
   const {id} = route.params;
 
@@ -101,7 +93,11 @@ export const MatchDetailScreen = ({
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}}>
         <StyledHeaderWrapper>
-          <Text type="head3" fontWeight="700" text="팀" />
+          <Text
+            type="head3"
+            fontWeight="700"
+            text={fieldDetailData.fieldDto.fieldType === 'DUEL' ? '1vs1' : '팀'}
+          />
         </StyledHeaderWrapper>
       </SafeAreaView>
       <TopTabNavigator size="sm" screens={screens} />
