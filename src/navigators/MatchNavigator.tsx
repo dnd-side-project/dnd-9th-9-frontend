@@ -7,8 +7,8 @@ import {
   type IFieldListPaginationParams,
   type IFieldListParams,
   type IMatchDetailRecord,
-  type ICreateField,
   type TStrength,
+  type IField,
 } from '../features/match/types';
 import {MatchScreen} from '../screens/match';
 import {
@@ -49,8 +49,8 @@ export type MatchStackParamList = {
     id: number;
   };
   UpdateInformation: Omit<
-    ICreateField,
-    'description' | 'rule' | 'strength' | 'name' | 'profileImg'
+    IField,
+    'description' | 'rule' | 'strength' | 'name' | 'profileImg' | 'currentSize'
   > & {
     strength: TStrength;
   };

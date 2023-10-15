@@ -46,11 +46,13 @@ export const MatchDetailProfileSettingScreen = (): React.JSX.Element => {
       <StyledHeaderWrapper>
         <Text type="head3" fontWeight="700" text="팀" />
       </StyledHeaderWrapper>
+
       <MatchDetailProfileSettingMenuItem
-        title="팀 프로필 수정"
-        description="팀 이름, 규칙, 공개범위 등을 수정할 수 있어요."
+        title="팀 정보 수정"
+        description="운동난이도, 레벨, 기간, 팀 인원수 등을 수정할 수 있어요."
         onPressHeader={() => {
           navigation.navigate('UpdateInformation', {
+            id: fieldDetailData?.fieldDto?.id,
             fieldType: fieldDetailData?.fieldDto?.fieldType,
             maxSize: fieldDetailData?.fieldDto?.maxSize,
             period: fieldDetailData?.fieldDto?.period,
@@ -62,8 +64,8 @@ export const MatchDetailProfileSettingScreen = (): React.JSX.Element => {
       />
       <Line size="lg" />
       <MatchDetailProfileSettingMenuItem
-        title="팀 정보 수정"
-        description="운동난이도, 레벨, 기간, 팀 인원수 등을 수정할 수 있어요."
+        title="팀 프로필 수정"
+        description="팀 이름, 규칙, 공개범위 등을 수정할 수 있어요."
         onPressHeader={() => {
           navigation.navigate('UpdateProfile', {
             profileImg: fieldDetailData?.fieldDto?.profileImg,

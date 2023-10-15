@@ -3,11 +3,13 @@ import React, {useState} from 'react';
 import styled from '@emotion/native';
 import {useRoute, type RouteProp} from '@react-navigation/native';
 import {SafeAreaView, ScrollView, View} from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import {Button} from '../../../../components/Button';
 import {Count} from '../../../../components/Count';
 import {Gap} from '../../../../components/Gap';
 import {Line} from '../../../../components/Line';
+import {ConfirmModal} from '../../../../components/Modal';
 import {Text} from '../../../../components/Text';
 import {CreateMatchInformationItem} from '../../../../features/match/components/CreateMatchInformation';
 import {
@@ -17,6 +19,7 @@ import {
   SkillLevels,
   Strengths,
 } from '../../../../features/match/const';
+import {usePatchFieldInformation} from '../../../../features/match/hooks/field/usePatchFieldInformation';
 import {type ICreateField} from '../../../../features/match/types';
 import {type MatchStackParamList} from '../../../../navigators';
 
@@ -28,14 +31,35 @@ type TUpdateTeamInformationRouteProps = RouteProp<
 export const UpdateTeamInformationScreen = (): React.JSX.Element => {
   const route = useRoute<TUpdateTeamInformationRouteProps>();
 
-  // TODO: useState 초기값은 url params 활용하여 셋팅
+  const {mutate: patchFieldInformation} = usePatchFieldInformation({
+    onSuccessCallback: () => {
+      Toast.show('팀 정보를 수정하였습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+    },
+    onErrorCallback: error => {
+      setModalInfo({
+        isVisible: true,
+        title: '오류가 발생하였습니다',
+        subTitle:
+          error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
+      });
+    },
+  });
+
   const [updateMatchPayload, setUpdateMatchPayload] = useState({
-    fieldType: route.params.fieldType,
-    maxSize: route.params.maxSize,
-    period: route.params.period,
-    goal: route.params.goal,
-    skillLevel: route.params.skillLevel,
-    strength: route.params.strength,
+    fieldType: route?.params?.fieldType,
+    maxSize: route?.params?.maxSize,
+    period: route?.params?.period,
+    goal: route?.params?.goal,
+    skillLevel: route?.params?.skillLevel,
+    strength: route?.params?.strength,
+  });
+
+  const [modalInfo, setModalInfo] = useState({
+    isVisible: false,
+    title: '',
+    subTitle: '',
   });
 
   const {fieldType, maxSize, period, goal, skillLevel, strength} =
@@ -69,7 +93,11 @@ export const UpdateTeamInformationScreen = (): React.JSX.Element => {
     if (value === 'DUEL') {
       handleUpdateMatchPayload('maxSize', 1);
       if (updateMatchPayload.fieldType !== 'DUEL') {
-        // TODO: Modal 띄우기 -> 1vs1매칭으로 변경할 경우 기존 팀원들은 삭제 됩니다.
+        setModalInfo({
+          isVisible: true,
+          title: '주의',
+          subTitle: `1vs1 매칭으로 변경할 경우\n기존 팀원들은 삭제 됩니다.`,
+        });
       }
     } else {
       handleUpdateMatchPayload('maxSize', 2);
@@ -78,7 +106,18 @@ export const UpdateTeamInformationScreen = (): React.JSX.Element => {
   };
 
   const handleUpdateConfirm = (): void => {
-    // Toast or Modal 띄우기
+    const body = {
+      fieldType,
+      maxSize,
+      period,
+      goal,
+      skillLevel,
+      strength,
+    };
+    patchFieldInformation({
+      id: route?.params?.id,
+      body,
+    });
   };
 
   return (
@@ -158,6 +197,15 @@ export const UpdateTeamInformationScreen = (): React.JSX.Element => {
           onPress={handleUpdateConfirm}
         />
       </View>
+
+      <ConfirmModal
+        visible={modalInfo.isVisible}
+        title={modalInfo.title}
+        subTitle={modalInfo.subTitle}
+        handleConfirm={() => {
+          setModalInfo({isVisible: false, title: '', subTitle: ''});
+        }}
+      />
     </SafeAreaView>
   );
 };
