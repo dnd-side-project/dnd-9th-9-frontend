@@ -1,6 +1,11 @@
 import React, {useState} from 'react';
 
-import {type RouteProp, useRoute} from '@react-navigation/native';
+import {
+  type RouteProp,
+  useRoute,
+  useNavigation,
+} from '@react-navigation/native';
+import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import Toast from 'react-native-simple-toast';
 
@@ -12,6 +17,9 @@ import {useGetUserFieldList} from '../../../../features/match/hooks/userField';
 import {type MatchStackParamList} from '../../../../navigators/MatchNavigator';
 
 export const MatchDetailMemberAssignScreen = (): React.JSX.Element => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
+
   const route =
     useRoute<RouteProp<MatchStackParamList, 'MatchDetailMemberAssign'>>();
 
@@ -21,11 +29,21 @@ export const MatchDetailMemberAssignScreen = (): React.JSX.Element => {
 
   const {data: userFieldData} = useGetUserFieldList({id});
 
-  // TODO: 성공 이후 토스트 메시지 노출 후 navigation pop
   const {mutate: patchChangeLeader} = usePatchChangeLeader({
     onSuccessCallback: () => {
       Toast.show('방장이 변경 되었습니다.', Toast.SHORT, {
         backgroundColor: '#000000c5',
+      });
+      navigation.navigate('MatchList', {
+        page: 0,
+        size: 10,
+        fieldType: 'DUEL',
+        goal: [],
+        memberCount: null,
+        period: [],
+        skillLevel: [],
+        strength: [],
+        keyword: '',
       });
     },
     onErrorCallback: error => {
