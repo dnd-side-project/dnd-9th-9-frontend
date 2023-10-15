@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
 import {Line} from '../../../../components/Line';
@@ -15,6 +16,7 @@ import {Modal} from '../../../../components/Modal';
 import {Text} from '../../../../components/Text';
 import {MatchDetailProfileSettingMenuItem} from '../../../../features/match/components/MatchDetailProfile';
 import {useGetFieldDetail} from '../../../../features/match/hooks/field';
+import {useDeleteField} from '../../../../features/match/hooks/field/useDeleteField';
 import {type MatchStackParamList} from '../../../../navigators';
 
 type TMatchDetailProfileSettingRouteProps = RouteProp<
@@ -30,8 +32,36 @@ export const MatchDetailProfileSettingScreen = (): React.JSX.Element => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  const {mutate: deleteField} = useDeleteField({
+    onSuccessCallback: () => {
+      Toast.show('팀을 삭제하였습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+      navigation.navigate('MatchList', {
+        page: 0,
+        size: 10,
+        fieldType: 'DUEL',
+        goal: [],
+        memberCount: null,
+        period: [],
+        skillLevel: [],
+        strength: [],
+        keyword: '',
+      });
+    },
+    onErrorCallback: error => {
+      Toast.show(
+        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
+        Toast.SHORT,
+        {
+          backgroundColor: '#000000c5',
+        },
+      );
+    },
+  });
+
   const {data: fieldDetailData} = useGetFieldDetail({
-    id: router.params.id,
+    id: router?.params?.id,
   });
 
   // TODO: Error 처리
@@ -68,6 +98,7 @@ export const MatchDetailProfileSettingScreen = (): React.JSX.Element => {
         description="팀 이름, 규칙, 공개범위 등을 수정할 수 있어요."
         onPressHeader={() => {
           navigation.navigate('UpdateProfile', {
+            id: fieldDetailData?.fieldDto?.id,
             profileImg: fieldDetailData?.fieldDto?.profileImg,
             name: fieldDetailData?.fieldDto?.name,
             description: fieldDetailData?.fieldDto?.description,
@@ -91,7 +122,9 @@ export const MatchDetailProfileSettingScreen = (): React.JSX.Element => {
         handleCancel={() => {
           setIsModalVisible(false);
         }}
-        handleConfirm={() => {}}
+        handleConfirm={() => {
+          deleteField({id: router.params.id});
+        }}
       />
     </SafeAreaView>
   );
