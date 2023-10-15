@@ -95,7 +95,7 @@ export const UpdateTeamInformationScreen = (): React.JSX.Element => {
       if (updateMatchPayload.fieldType !== 'DUEL') {
         setModalInfo({
           isVisible: true,
-          title: '주의',
+          title: '팀 정보 수정',
           subTitle: `1vs1 매칭으로 변경할 경우\n기존 팀원들은 삭제 됩니다.`,
         });
       }
