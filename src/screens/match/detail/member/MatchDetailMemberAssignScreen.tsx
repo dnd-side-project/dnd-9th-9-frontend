@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 import {type RouteProp, useRoute} from '@react-navigation/native';
 import {SafeAreaView, ScrollView, View} from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
 import {Button} from '../../../../components/Button';
@@ -22,7 +23,20 @@ export const MatchDetailMemberAssignScreen = (): React.JSX.Element => {
 
   // TODO: 성공 이후 토스트 메시지 노출 후 navigation pop
   const {mutate: patchChangeLeader} = usePatchChangeLeader({
-    onSuccessCallback: () => {},
+    onSuccessCallback: () => {
+      Toast.show('방장이 변경 되었습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+    },
+    onErrorCallback: error => {
+      Toast.show(
+        error?.response?.data.message ?? '알 수 없는 오류가 발생하였습니다.',
+        Toast.SHORT,
+        {
+          backgroundColor: '#000000c5',
+        },
+      );
+    },
   });
 
   const handleAssignLeader = (): void => {
