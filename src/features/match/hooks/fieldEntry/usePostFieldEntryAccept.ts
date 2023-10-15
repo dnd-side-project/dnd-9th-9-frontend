@@ -1,9 +1,9 @@
 import {useMutation, type UseMutationResult} from '@tanstack/react-query';
-import {type AxiosError} from 'axios';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
 import {queryClient} from '../../../../lib/react-query';
+import {type CustomAxiosError} from '../../../../utils/types';
 import {KEYS as FIELD_KEYS} from '../field/keys';
 
 interface IProps {
@@ -11,17 +11,19 @@ interface IProps {
 }
 
 interface IUsePostFieldEntryAcceptProps {
-  onSuccessCallback?: () => void;
+  onSuccessCallback: () => void;
+  onErrorCallback: (error: CustomAxiosError) => void;
 }
 
 const fetcher = async ({entryId}: IProps): Promise<string> =>
   await axios.post(`/field-entry/${entryId}/accept`).then(({data}) => data);
 
 export const usePostFieldEntryAccept = ({
-  onSuccessCallback = () => {},
+  onSuccessCallback,
+  onErrorCallback,
 }: IUsePostFieldEntryAcceptProps): UseMutationResult<
   string,
-  AxiosError,
+  CustomAxiosError,
   IProps
 > =>
   useMutation({
@@ -30,5 +32,8 @@ export const usePostFieldEntryAccept = ({
       onSuccessCallback();
       void queryClient.invalidateQueries(KEYS.all);
       void queryClient.fetchInfiniteQuery(FIELD_KEYS.all);
+    },
+    onError: error => {
+      onErrorCallback(error);
     },
   });

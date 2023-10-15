@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 import {type RouteProp, useRoute} from '@react-navigation/native';
 import {SafeAreaView, ScrollView, View} from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
 import {Button} from '../../../../components/Button';
@@ -21,20 +22,30 @@ export const MatchDetailMemberRequestAcceptScreen = (): React.JSX.Element => {
   const [checkedMember, setCheckedMember] = useState<number[]>([]);
 
   const {mutate: postFieldEntryAccept} = usePostFieldEntryAccept({
-    onSuccessCallback: () => {},
+    onSuccessCallback: () => {
+      Toast.show('팀원 요청을 수락하였습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+    },
+    onErrorCallback: error => {
+      Toast.show(
+        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
+        Toast.SHORT,
+        {
+          backgroundColor: '#000000c5',
+        },
+      );
+    },
   });
 
   const {data: userFieldData} = useGetFieldEntryTeam({id, size: 10, page: 0});
 
   const handleRequestAccept = (): void => {
-    // TODO: 해당 API 사용 방식 논의 중
-    postFieldEntryAccept({entryId: checkedMember});
+    postFieldEntryAccept({entryId: checkedMember[0]});
   };
 
   const handleCheckMember = (id: number): void => {
-    checkedMember.includes(id)
-      ? setCheckedMember(value => [...value.filter(value => value !== id)])
-      : setCheckedMember(value => [...value, id]);
+    checkedMember.includes(id) ? setCheckedMember([]) : setCheckedMember([id]);
   };
 
   return (
