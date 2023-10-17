@@ -16,12 +16,20 @@ interface IShowOption {
 }
 
 const DEFAULT_IOS_TOAST_STYLES: IStylesIOS = {
-  textColor: undefined,
+  textColor: '#ffffff',
   backgroundColor: 'rgba(0, 0, 0, 0.6)',
 };
 
 const DEFAULT_OFFSET_X: number = 0;
 const DEFAULT_OFFSET_Y: number = -70;
+
+const CONSTANTS = {
+  SHORT: _Toast.SHORT,
+  LONG: _Toast.LONG,
+  TOP: _Toast.TOP,
+  BOTTOM: _Toast.BOTTOM,
+  CENTER: _Toast.CENTER,
+};
 
 const show = ({
   message,
@@ -43,6 +51,7 @@ const show = ({
 
 const Toast = {
   show,
+  ...CONSTANTS,
 };
 
 export default Toast;
