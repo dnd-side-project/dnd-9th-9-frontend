@@ -34,7 +34,13 @@ export function AppNavigator(): React.JSX.Element {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="Signup"
           component={SignupScreen}
