@@ -2,6 +2,8 @@ import {type UseMutationResult, useMutation} from '@tanstack/react-query';
 
 import {ASYNC_STORAGE_KEYS, asyncStorage} from '../../../../lib/asyncStorage';
 import {axios} from '../../../../lib/axios';
+import Toast from '../../../../lib/toast';
+import {type CustomAxiosError} from '../../../../utils/types';
 
 interface IProps {
   body: {
@@ -38,6 +40,10 @@ export const usePostLogin = (): UseMutationResult<
         ASYNC_STORAGE_KEYS.AUTH_JWT_REFRESH_TOKEN,
         refreshToken,
       );
+    },
+    onError: (error: CustomAxiosError) => {
+      if (error.response?.data.message == null) return;
+      Toast.show({message: error.response?.data.message});
     },
   });
 };
