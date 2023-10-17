@@ -19,6 +19,7 @@ import {Textfield} from '../../components/Textfield/Textfield';
 import {usePostLogin} from '../../features/auth/hooks/auth';
 import {type RootStackParamList} from '../../navigators';
 
+// TODO(@minimalKim): 디자인 QA 시 validate 시점 확인 필요
 const validationSchema = z.object({
   uid: z
     .string()
