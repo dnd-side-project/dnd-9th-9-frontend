@@ -5,7 +5,10 @@ import {axios} from '../../../../lib/axios';
 import {type IUserFieldHomeTeam} from '../../types/userField';
 
 const fetcher = async (): Promise<IUserFieldHomeTeam> =>
-  await axios.get(`/user-field/home/team`).then(({data}) => data);
+  await axios.get(`/user-field/home/team`).then(({data}) => {
+    if (data === '') return null;
+    return data;
+  });
 
 /**
  * 매칭안함
