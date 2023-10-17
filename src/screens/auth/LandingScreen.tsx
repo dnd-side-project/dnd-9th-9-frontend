@@ -117,9 +117,26 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
                   />
                 </StyledTextButton>
                 <Text text="|" type="body2" color="gray-600" fontWeight="500" />
-                <StyledTextButton>
+                <StyledTextButton
+                  onPress={() => {
+                    setShowBottomModal(false);
+                    // TODO(@minimalKim): 비밀번호 찾기 스크린 추가
+                  }}>
                   <Text
                     text="비밀번호 찾기"
+                    type="body2"
+                    color="gray-600"
+                    fontWeight="500"
+                  />
+                </StyledTextButton>
+                <Text text="|" type="body2" color="gray-600" fontWeight="500" />
+                <StyledTextButton
+                  onPress={() => {
+                    setShowBottomModal(false);
+                    navigation.push('Login');
+                  }}>
+                  <Text
+                    text="일반 로그인"
                     type="body2"
                     color="gray-600"
                     fontWeight="500"
