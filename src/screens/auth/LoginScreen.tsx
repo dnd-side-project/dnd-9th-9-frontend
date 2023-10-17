@@ -75,11 +75,16 @@ export const LoginScreen = ({navigation}: Props): React.JSX.Element => {
           }}>
           <Icon svgXml={arrowLeftXmlData} height={32} width={32} />
         </StyledBackButton>
-
-        <Text type="head3" text="일반 로그인" />
       </StyledTopBar>
 
       <StyledSection>
+        <Text
+          text="일반 로그인"
+          type="head3"
+          fontWeight="600"
+          style={{paddingTop: 32}}
+        />
+
         <StyledFieldContainer>
           <Controller
             control={control}
@@ -176,29 +181,33 @@ export const LoginScreen = ({navigation}: Props): React.JSX.Element => {
 
 const StyledTopBar = styled.View`
   display: flex;
-  margin: 50px 16px;
+  flex-direction: row;
+  padding: 20px 16px;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const StyledBackButton = styled.TouchableOpacity`
   width: 32px;
-  margin-bottom: 32px;
 `;
 
 const StyledSection = styled.View`
+  display: flex;
   flex-direction: column;
   flex: 1;
   background-color: white;
+  padding: 0 16px;
 `;
 
 const StyledFieldContainer = styled.View`
-  padding: 0 16px;
   gap: 20px;
-  height: 220px;
+  padding-top: 42px;
+  padding-bottom: 32px;
 `;
 
 const ButtonWrapper = styled.View`
   width: 100%;
-  padding: 20px;
+  padding: 4px;
 `;
 
 const StyledTextButton = styled.TouchableOpacity`
