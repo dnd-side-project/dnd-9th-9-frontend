@@ -45,7 +45,11 @@ export const LoginScreen = ({navigation}: Props): React.JSX.Element => {
     resolver: zodResolver(validationSchema),
   });
 
-  const {mutate: postLogin} = usePostLogin();
+  const {mutate: postLogin} = usePostLogin({
+    onSuccess: () => {
+      navigation.navigate('Landing');
+    },
+  });
 
   const handlePressSubmit = async (): Promise<void> => {
     const isUidValid = await trigger('uid');
@@ -58,8 +62,6 @@ export const LoginScreen = ({navigation}: Props): React.JSX.Element => {
         password: getValues('password'),
       },
     });
-
-    navigation.navigate('Main');
   };
 
   return (
@@ -78,12 +80,7 @@ export const LoginScreen = ({navigation}: Props): React.JSX.Element => {
       </StyledTopBar>
 
       <StyledSection>
-        <Text
-          text="일반 로그인"
-          type="head3"
-          fontWeight="600"
-          style={{paddingTop: 32}}
-        />
+        <Text text="일반 로그인" type="head3" fontWeight="600" />
 
         <StyledFieldContainer>
           <Controller
@@ -196,7 +193,7 @@ const StyledSection = styled.View`
   flex-direction: column;
   flex: 1;
   background-color: white;
-  padding: 0 16px;
+  padding: 32px 16px 0;
 `;
 
 const StyledFieldContainer = styled.View`
