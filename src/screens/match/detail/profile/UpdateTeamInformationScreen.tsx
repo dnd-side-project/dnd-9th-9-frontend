@@ -38,12 +38,13 @@ export const UpdateTeamInformationScreen = (): React.JSX.Element => {
       });
     },
     onErrorCallback: error => {
-      setModalInfo({
-        isVisible: true,
-        title: '오류가 발생하였습니다',
-        subTitle:
-          error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
-      });
+      Toast.show(
+        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
+        Toast.SHORT,
+        {
+          backgroundColor: '#000000c5',
+        },
+      );
     },
   });
 
