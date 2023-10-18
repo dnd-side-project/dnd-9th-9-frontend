@@ -15,8 +15,10 @@ import {Line} from '../../../../components/Line';
 import {Modal} from '../../../../components/Modal';
 import {Text} from '../../../../components/Text';
 import {MatchDetailProfileSettingMenuItem} from '../../../../features/match/components/MatchDetailProfile';
-import {useGetFieldDetail} from '../../../../features/match/hooks/field';
-import {useDeleteField} from '../../../../features/match/hooks/field/useDeleteField';
+import {
+  useGetFieldDetail,
+  useDeleteField,
+} from '../../../../features/match/hooks/field';
 import {type MatchStackParamList} from '../../../../navigators';
 
 type TMatchDetailProfileSettingRouteProps = RouteProp<

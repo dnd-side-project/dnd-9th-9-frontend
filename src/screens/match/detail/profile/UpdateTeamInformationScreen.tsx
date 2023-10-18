@@ -19,7 +19,7 @@ import {
   SkillLevels,
   Strengths,
 } from '../../../../features/match/const';
-import {usePatchFieldInformation} from '../../../../features/match/hooks/field/usePatchFieldInformation';
+import {usePatchFieldInformation} from '../../../../features/match/hooks/field';
 import {type ICreateField} from '../../../../features/match/types';
 import {type MatchStackParamList} from '../../../../navigators';
 
