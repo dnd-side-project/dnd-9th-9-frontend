@@ -55,6 +55,7 @@ export type MatchStackParamList = {
     strength: TStrength;
   };
   UpdateProfile: {
+    id: number;
     profileImg: string;
     name: string;
     description: string;

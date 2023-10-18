@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 
 import {useRoute, type RouteProp} from '@react-navigation/native';
 import {SafeAreaView, ScrollView, View} from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import {Button} from '../../../../components/Button';
 import {CreateMatchProfileSection} from '../../../../features/match/components/CreateMatchProfile';
+import {usePostFieldProfile} from '../../../../features/match/hooks/field';
 import {type ICreateField} from '../../../../features/match/types';
 import {type MatchStackParamList} from '../../../../navigators';
 
@@ -12,6 +14,23 @@ type TUpdateTeamProfileProps = RouteProp<MatchStackParamList, 'UpdateProfile'>;
 
 export const UpdateTeamProfileScreen = (): React.JSX.Element => {
   const route = useRoute<TUpdateTeamProfileProps>();
+
+  const {mutateAsync: patchFieldProfile} = usePostFieldProfile({
+    onSuccessCallback: () => {
+      Toast.show('팀 프로필을 수정하였습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+    },
+    onErrorCallback: error => {
+      Toast.show(
+        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
+        Toast.SHORT,
+        {
+          backgroundColor: '#000000c5',
+        },
+      );
+    },
+  });
 
   const [updateProfilePayload, setUpdateProfilePayload] = useState({
     profileImg: route?.params?.profileImg,
@@ -35,7 +54,25 @@ export const UpdateTeamProfileScreen = (): React.JSX.Element => {
   };
 
   const handleFinishUpdateProfile = (): void => {
-    // TODO: API 연동
+    const id = route?.params?.id;
+    const {description, name, rule, profileImg} = updateProfilePayload;
+
+    const formData = new FormData();
+
+    formData.append('description', description);
+    formData.append('id', id);
+    formData.append('name', name);
+    formData.append('rule', rule);
+
+    if (profileImg !== null) {
+      formData.append('profileImg', {
+        uri: profileImg,
+        type: 'multipart/form-data',
+        name: `profile-${new Date().valueOf()}.jpeg`,
+      });
+    }
+
+    void patchFieldProfile({id, formData});
   };
 
   return (
