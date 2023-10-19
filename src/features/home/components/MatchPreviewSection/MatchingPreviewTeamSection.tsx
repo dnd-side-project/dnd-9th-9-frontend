@@ -16,7 +16,6 @@ import {useGetUserFieldHomeTeam} from '../../hooks/userField';
 export const MatchingPreviewTeamSection = (): React.JSX.Element => {
   const {data: userFieldHomeTeam} = useGetUserFieldHomeTeam();
   const {data: myProfileDetail} = useGetMyProfileDetail();
-  console.log('userFieldHomeTeam', userFieldHomeTeam);
 
   return (
     <>
