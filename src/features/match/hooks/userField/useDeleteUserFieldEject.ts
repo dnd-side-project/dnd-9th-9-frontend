@@ -1,9 +1,9 @@
 import {useMutation, type UseMutationResult} from '@tanstack/react-query';
-import {type AxiosError} from 'axios';
 
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
 import {queryClient} from '../../../../lib/react-query';
+import {type CustomAxiosError} from '../../../../utils/types';
 
 interface IProps {
   id: number;
@@ -11,7 +11,8 @@ interface IProps {
 }
 
 interface IUseDeleteUserFieldEjectProps {
-  onSuccessCallback?: () => void;
+  onSuccessCallback: () => void;
+  onErrorCallback: (error: CustomAxiosError) => void;
 }
 
 const fetcher = async ({id, ids}: IProps): Promise<string> =>
@@ -21,10 +22,11 @@ const fetcher = async ({id, ids}: IProps): Promise<string> =>
 
 /** DELETE: 팀원 내보내기 */
 export const useDeleteUserFieldEject = ({
-  onSuccessCallback = () => {},
+  onSuccessCallback,
+  onErrorCallback,
 }: IUseDeleteUserFieldEjectProps): UseMutationResult<
   string,
-  AxiosError,
+  CustomAxiosError,
   IProps
 > =>
   useMutation({
@@ -32,5 +34,8 @@ export const useDeleteUserFieldEject = ({
     onSuccess: () => {
       onSuccessCallback();
       void queryClient.invalidateQueries(KEYS.all);
+    },
+    onError: error => {
+      onErrorCallback(error);
     },
   });
