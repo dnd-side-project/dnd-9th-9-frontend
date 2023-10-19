@@ -7,6 +7,8 @@ import {
   type IFieldListPaginationParams,
   type IFieldListParams,
   type IMatchDetailRecord,
+  type TStrength,
+  type IField,
 } from '../features/match/types';
 import {MatchScreen} from '../screens/match';
 import {
@@ -19,6 +21,9 @@ import {
   MatchDetailRecordDetailScreen,
   MatchDetailMemberRequestAcceptScreen,
   MatchDetailRecordSummaryScreen,
+  MatchDetailProfileSettingScreen,
+  UpdateTeamInformationScreen,
+  UpdateTeamProfileScreen,
 } from '../screens/match/detail';
 import {
   MatchDetailMemberAssignScreen,
@@ -39,6 +44,22 @@ export type MatchStackParamList = {
   // 팀 상세 화면
   MatchDetail: {
     id: number;
+  };
+  MatchDetailProfileSetting: {
+    id: number;
+  };
+  UpdateInformation: Omit<
+    IField,
+    'description' | 'rule' | 'strength' | 'name' | 'profileImg' | 'currentSize'
+  > & {
+    strength: TStrength;
+  };
+  UpdateProfile: {
+    id: number;
+    profileImg: string;
+    name: string;
+    description: string;
+    rule: string;
   };
   MatchDetailRecordDetail: IMatchDetailRecord;
   MatchDetailRecordSummary: {
@@ -114,6 +135,21 @@ export function MatchNavigator(): React.JSX.Element {
         name="MatchDetail"
         component={MatchDetailScreen}
         options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailProfileSetting"
+        component={MatchDetailProfileSettingScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="UpdateInformation"
+        component={UpdateTeamInformationScreen}
+        options={{headerTitle: '팀 정보 수정'}}
+      />
+      <Stack.Screen
+        name="UpdateProfile"
+        component={UpdateTeamProfileScreen}
+        options={{headerTitle: '팀 프로필 수정'}}
       />
       <Stack.Screen
         name="MatchDetailRecordDetail"

@@ -4,9 +4,9 @@ import styled from '@emotion/native';
 import {type RouteProp, useRoute} from '@react-navigation/native';
 import {SafeAreaView, View} from 'react-native';
 
-import {MatchDetailProfileScreen} from './MatchDetailProfileScreen';
-import {MatchDetailMatchingScreen} from './matching/MatchDetailMatchingScreen';
-import {MatchDetailMemberScreen} from './member/MatchDetailMemberScreen';
+import {MatchDetailMatchingScreen} from './matching';
+import {MatchDetailMemberScreen} from './member';
+import {MatchDetailProfileScreen} from './profile';
 import {MatchDetailRecordScreen} from './record';
 import {theme} from '../../../assets/styles/theme';
 import {Text} from '../../../components/Text';

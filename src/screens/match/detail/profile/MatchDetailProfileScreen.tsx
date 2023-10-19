@@ -3,20 +3,20 @@ import React, {useState} from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import Toast from 'react-native-simple-toast';
 
-import {theme} from '../../../assets/styles/theme';
-import {Button} from '../../../components/Button';
-import {Line} from '../../../components/Line';
-import {ConfirmModal} from '../../../components/Modal';
+import {theme} from '../../../../assets/styles/theme';
+import {Button} from '../../../../components/Button';
+import {Line} from '../../../../components/Line';
+import {ConfirmModal} from '../../../../components/Modal';
 import {
   MatchDetailProfileSection,
   MatchDetailMembers,
-} from '../../../features/match/components/MatchDetailProfile';
+} from '../../../../features/match/components/MatchDetailProfile';
 import {
   usePostFieldEntryBattle,
   usePostFieldEntryTeam,
-} from '../../../features/match/hooks/fieldEntry';
-import {useGetUserFieldList} from '../../../features/match/hooks/userField';
-import {type IFieldDetailInfo} from '../../../features/match/types';
+} from '../../../../features/match/hooks/fieldEntry';
+import {useGetUserFieldList} from '../../../../features/match/hooks/userField';
+import {type IFieldDetailInfo} from '../../../../features/match/types';
 
 interface IMatchDetailProfileScreenProps {
   fieldDetailData: IFieldDetailInfo;

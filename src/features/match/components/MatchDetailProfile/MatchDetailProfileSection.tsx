@@ -1,12 +1,15 @@
 import React from 'react';
 
 import styled from '@emotion/native';
+import {useNavigation} from '@react-navigation/native';
+import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {TouchableOpacity, View} from 'react-native';
 
 import {Gap} from '../../../../components/Gap';
 import {Line} from '../../../../components/Line';
 import {Tag, Tags} from '../../../../components/Tag';
 import {Text} from '../../../../components/Text';
+import {type MatchStackParamList} from '../../../../navigators';
 import {FieldTypes, Goals, Periods, SkillLevels, Strengths} from '../../const';
 import {type IFieldDetailInfo} from '../../types/detail';
 
@@ -34,8 +37,12 @@ const StatusTag = ({text}: IStausTagProps): React.JSX.Element => {
 export const MatchDetailProfileSection = ({
   detailInfo,
 }: IMatchDetailProfileSectionProps): React.JSX.Element => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
+
   const {
     // profileImg,
+    id,
     name,
     description,
     rule,
@@ -72,7 +79,11 @@ export const MatchDetailProfileSection = ({
         </StyledProfileInformation>
 
         {fieldRole === 'LEADER' && (
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              navigation.navigate('MatchDetailProfileSetting', {id});
+            }}>
             <Text type="body2" color="gray-600" fontWeight="400" text="설정" />
           </TouchableOpacity>
         )}
