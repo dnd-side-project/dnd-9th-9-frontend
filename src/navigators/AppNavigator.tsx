@@ -11,6 +11,7 @@ import {
   PhysicalInfoScreen,
 } from '../screens/auth';
 import {FindIdScreen} from '../screens/auth/FindIdScreen';
+import {FindPasswordScreen} from '../screens/auth/FindPasswordScreen';
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   Signup: undefined;
   PhysicalInfoScreen: undefined;
   FindId: undefined;
+  FindPassword: undefined;
   Main: undefined;
 };
 
@@ -58,6 +60,13 @@ export function AppNavigator(): React.JSX.Element {
         <Stack.Screen
           name="FindId"
           component={FindIdScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="FindPassword"
+          component={FindPasswordScreen}
           options={{
             headerShown: false,
           }}

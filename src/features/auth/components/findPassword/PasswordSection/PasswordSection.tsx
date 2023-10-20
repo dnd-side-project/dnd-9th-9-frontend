@@ -23,7 +23,7 @@ export const PasswordSection = ({
   formState,
   showLogin,
   onSubmit,
-  onLogin,
+  onPressLogin,
 }: IFormSectionProps): React.JSX.Element => {
   const error = formState.errors.password;
 
@@ -157,18 +157,11 @@ export const PasswordSection = ({
 
       <FixedButtonWrapper>
         {showLogin ? (
-          <Button
-            text="로그인 하기"
-            onPress={() => {
-              onLogin();
-            }}
-          />
+          <Button text="로그인 하기" onPress={onPressLogin} />
         ) : isConfirm ? (
           <Button
             text="확인"
-            onPress={() => {
-              onSubmit();
-            }}
+            onPress={onSubmit}
             disabled={isErrorConfirmedPassword}
           />
         ) : (
