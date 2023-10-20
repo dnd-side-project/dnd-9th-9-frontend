@@ -102,7 +102,7 @@ export const PhysicalInfoForm = ({
               placeholder="0"
               keyboardType="numeric"
               textAlign="center"
-              size="lg"
+              type="head2"
               maxLength={3}
               isError={formState.errors.weight != null}
               value={value?.toString()}
@@ -131,7 +131,7 @@ export const PhysicalInfoForm = ({
               placeholder="0"
               keyboardType="numeric"
               textAlign="center"
-              size="lg"
+              type="head2"
               maxLength={3}
               isError={formState.errors.height != null}
               value={value?.toString()}
