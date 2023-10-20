@@ -7,6 +7,8 @@ import {
   type IFieldListPaginationParams,
   type IFieldListParams,
   type IMatchDetailRecord,
+  type TStrength,
+  type IField,
 } from '../features/match/types';
 import {
   MatchScreen,
@@ -22,6 +24,10 @@ import {
   MatchDetailMatchingMoreScreen,
   MatchDetailRecordDetailScreen,
   MatchDetailMemberRequestAcceptScreen,
+  MatchDetailRecordSummaryScreen,
+  MatchDetailProfileSettingScreen,
+  UpdateTeamInformationScreen,
+  UpdateTeamProfileScreen,
 } from '../screens/match/detail';
 import {
   MatchDetailMemberAssignScreen,
@@ -46,7 +52,28 @@ export type MatchStackParamList = {
   MatchDetail: {
     id: number;
   };
+  MatchDetailProfileSetting: {
+    id: number;
+  };
+  UpdateInformation: Omit<
+    IField,
+    'description' | 'rule' | 'strength' | 'name' | 'profileImg' | 'currentSize'
+  > & {
+    strength: TStrength;
+  };
+  UpdateProfile: {
+    id: number;
+    profileImg: string;
+    name: string;
+    description: string;
+    rule: string;
+  };
   MatchDetailRecordDetail: IMatchDetailRecord;
+  MatchDetailRecordSummary: {
+    date: string;
+    fieldSide: 'HOME' | 'AWAY';
+    id: number;
+  };
   MatchDetailMatchingMore: {
     id: number;
     type: 'RECEIVED' | 'SENT';
@@ -122,8 +149,28 @@ export function MatchNavigator(): React.JSX.Element {
         options={{headerTitle: ''}}
       />
       <Stack.Screen
+        name="MatchDetailProfileSetting"
+        component={MatchDetailProfileSettingScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="UpdateInformation"
+        component={UpdateTeamInformationScreen}
+        options={{headerTitle: '팀 정보 수정'}}
+      />
+      <Stack.Screen
+        name="UpdateProfile"
+        component={UpdateTeamProfileScreen}
+        options={{headerTitle: '팀 프로필 수정'}}
+      />
+      <Stack.Screen
         name="MatchDetailRecordDetail"
         component={MatchDetailRecordDetailScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="MatchDetailRecordSummary"
+        component={MatchDetailRecordSummaryScreen}
         options={{headerTitle: ''}}
       />
       <Stack.Screen

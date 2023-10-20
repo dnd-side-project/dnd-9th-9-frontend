@@ -2,12 +2,11 @@ import React from 'react';
 
 import styled from '@emotion/native';
 import {type RouteProp, useRoute} from '@react-navigation/native';
-import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView, View} from 'react-native';
 
-import {MatchDetailProfileScreen} from './MatchDetailProfileScreen';
-import {MatchDetailMatchingScreen} from './matching/MatchDetailMatchingScreen';
-import {MatchDetailMemberScreen} from './member/MatchDetailMemberScreen';
+import {MatchDetailMatchingScreen} from './matching';
+import {MatchDetailMemberScreen} from './member';
+import {MatchDetailProfileScreen} from './profile';
 import {MatchDetailRecordScreen} from './record';
 import {theme} from '../../../assets/styles/theme';
 import {Text} from '../../../components/Text';
@@ -18,19 +17,12 @@ import {
 import {useGetFieldDetail} from '../../../features/match/hooks/field';
 import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
-type TMatchDetailScreenProps = NativeStackScreenProps<
-  MatchStackParamList,
-  'MatchDetail'
->;
-
 type TMatchDetailScreenRouteProps = RouteProp<
   MatchStackParamList,
   'MatchDetail'
 >;
 
-export const MatchDetailScreen = ({
-  navigation,
-}: TMatchDetailScreenProps): React.JSX.Element => {
+export const MatchDetailScreen = (): React.JSX.Element => {
   const route = useRoute<TMatchDetailScreenRouteProps>();
   const {id} = route.params;
 
@@ -48,59 +40,51 @@ export const MatchDetailScreen = ({
   const getScreenByRule = (): ITopTabScreen[] => {
     const userRole = fieldDetailData?.fieldDto?.fieldRole;
 
-    switch (userRole) {
-      case 'MEMBER':
-      case 'LEADER':
-        return [
-          {
-            name: 'TeamProfile',
-            label: '프로필',
-            component: () => (
-              <MatchDetailProfileScreen fieldDetailData={fieldDetailData} />
-            ),
-          },
-          {
-            name: 'TeamRecord',
-            label: '기록',
-            component: () => <MatchDetailRecordScreen id={id} />,
-          },
-          {
-            name: 'TeamMatching',
-            label: '매칭',
-            component: () => (
-              <MatchDetailMatchingScreen
-                id={id}
-                assignedField={fieldDetailData?.assignedFieldDto}
-                userRole={fieldDetailData?.fieldDto?.fieldRole}
-              />
-            ),
-          },
-          {
-            name: 'TeamMember',
-            label: '팀원',
-            component: () => (
-              <MatchDetailMemberScreen id={id} userRole={userRole} />
-            ),
-          },
-        ];
-      default:
-        return [
-          {
-            name: 'TeamProfile',
-            label: '프로필',
-            component: () => (
-              <MatchDetailProfileScreen fieldDetailData={fieldDetailData} />
-            ),
-          },
-          {
-            name: 'TeamMember',
-            label: '팀원',
-            component: () => (
-              <MatchDetailMemberScreen id={id} userRole={userRole} />
-            ),
-          },
-        ];
+    const screens = [];
+
+    if (userRole === 'MEMBER' || userRole === 'LEADER') {
+      screens.push({
+        name: 'TeamRecord',
+        label: '기록',
+        component: () => (
+          <MatchDetailRecordScreen
+            id={id}
+            fieldStatus={fieldDetailData?.fieldDto?.fieldStatus}
+            assignedField={fieldDetailData?.assignedFieldDto}
+            fieldType={fieldDetailData?.fieldDto?.fieldType}
+          />
+        ),
+      });
+      screens.push({
+        name: 'TeamMatching',
+        label: '매칭',
+        component: () => (
+          <MatchDetailMatchingScreen
+            id={id}
+            assignedField={fieldDetailData?.assignedFieldDto}
+            userRole={fieldDetailData?.fieldDto?.fieldRole}
+          />
+        ),
+      });
     }
+
+    return [
+      {
+        name: 'TeamProfile',
+        label: '프로필',
+        component: () => (
+          <MatchDetailProfileScreen fieldDetailData={fieldDetailData} />
+        ),
+      },
+      ...screens,
+      {
+        name: 'TeamMember',
+        label: '팀원',
+        component: () => (
+          <MatchDetailMemberScreen id={id} userRole={userRole} />
+        ),
+      },
+    ];
   };
 
   const screens = getScreenByRule();
@@ -109,7 +93,11 @@ export const MatchDetailScreen = ({
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}}>
         <StyledHeaderWrapper>
-          <Text type="head3" fontWeight="700" text="팀" />
+          <Text
+            type="head3"
+            fontWeight="700"
+            text={fieldDetailData.fieldDto.fieldType === 'DUEL' ? '1vs1' : '팀'}
+          />
         </StyledHeaderWrapper>
       </SafeAreaView>
       <TopTabNavigator size="sm" screens={screens} />

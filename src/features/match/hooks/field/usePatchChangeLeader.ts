@@ -3,13 +3,15 @@ import {type UseMutationResult, useMutation} from '@tanstack/react-query';
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
 import {queryClient} from '../../../../lib/react-query';
+import {type CustomAxiosError} from '../../../../utils/types';
 
 interface IProps {
   id: number;
 }
 
 interface IUsePatchChangeLeaderProps {
-  onSuccessCallback: (id: string) => void;
+  onSuccessCallback: () => void;
+  onErrorCallback: (error: CustomAxiosError) => void;
 }
 
 const fetcher = async ({id}: IProps): Promise<string> =>
@@ -17,12 +19,20 @@ const fetcher = async ({id}: IProps): Promise<string> =>
 
 export const usePatchChangeLeader = ({
   onSuccessCallback,
-}: IUsePatchChangeLeaderProps): UseMutationResult<string, Error, IProps> => {
+  onErrorCallback,
+}: IUsePatchChangeLeaderProps): UseMutationResult<
+  string,
+  CustomAxiosError,
+  IProps
+> => {
   return useMutation({
     mutationFn: fetcher,
     onSuccess: response => {
-      onSuccessCallback(response);
+      onSuccessCallback();
       void queryClient.invalidateQueries(KEYS.all);
+    },
+    onError: error => {
+      onErrorCallback(error);
     },
   });
 };

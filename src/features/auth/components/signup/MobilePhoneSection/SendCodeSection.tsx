@@ -34,7 +34,7 @@ export const SendCodeSection = ({
     }
     const phoneNum = getValues('mobilePhone');
     try {
-      void postSendCode({
+      await postSendCode({
         body: {
           phoneNum,
         },

@@ -1,5 +1,5 @@
-// export * from './usePostFieldEntryBattle';
-// export * from './usePostFieldEntryTeam';
+export * from './usePostFieldEntryBattle';
+export * from './usePostFieldEntryTeam';
 export * from './useGetFieldEntryTeam';
 export * from './useGetInfiniteFieldEntry';
 export * from './useGetInfiniteFieldEntryBattleDetail';

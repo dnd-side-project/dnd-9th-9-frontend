@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 
+import {useNavigation} from '@react-navigation/native';
+import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {TouchableOpacity} from 'react-native';
+import Toast from 'react-native-simple-toast';
 
+import {ConfirmModal} from '../../../../components/Modal';
 import {Tag} from '../../../../components/Tag';
+import {type MatchStackParamList} from '../../../../navigators';
 import {useDeleteUserFieldExit} from '../../hooks/userField/useDeleteUserFieldExit';
 
 interface IMatchExitButtonProps {
@@ -12,7 +17,40 @@ interface IMatchExitButtonProps {
 export const MatchExitButton = ({
   id,
 }: IMatchExitButtonProps): React.JSX.Element => {
-  const {mutate: exitField} = useDeleteUserFieldExit();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
+
+  const [modalInfo, setModalInfo] = useState({
+    isVisible: false,
+    title: '',
+    subTitle: '',
+  });
+
+  const {mutate: exitField} = useDeleteUserFieldExit({
+    onSuccessCallback: () => {
+      Toast.show('팀에서 나갔습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+      navigation.navigate('MatchList', {
+        page: 0,
+        size: 10,
+        fieldType: 'DUEL',
+        goal: [],
+        memberCount: null,
+        period: [],
+        skillLevel: [],
+        strength: [],
+        keyword: '',
+      });
+    },
+    onErrorCallback: error => {
+      setModalInfo({
+        isVisible: true,
+        title: '팀 나가기',
+        subTitle: error?.response?.data?.message ?? '오류가 발생하였습니다',
+      });
+    },
+  });
 
   const handleExitTag = (): void => {
     exitField({id});
@@ -29,6 +67,14 @@ export const MatchExitButton = ({
         backgroundColor="gray-50"
         borderColor="gray-50"
         text="팀 나가기"
+      />
+      <ConfirmModal
+        visible={modalInfo.isVisible}
+        title={modalInfo.title}
+        subTitle={modalInfo.subTitle}
+        handleConfirm={() => {
+          setModalInfo({isVisible: false, title: '', subTitle: ''});
+        }}
       />
     </TouchableOpacity>
   );

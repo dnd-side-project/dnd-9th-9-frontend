@@ -2,6 +2,8 @@ import {type UseMutationResult, useMutation} from '@tanstack/react-query';
 
 import {ASYNC_STORAGE_KEYS, asyncStorage} from '../../../../lib/asyncStorage';
 import {axios} from '../../../../lib/axios';
+import Toast from '../../../../lib/toast';
+import {type CustomAxiosError} from '../../../../utils/types';
 
 interface IProps {
   body: {
@@ -15,6 +17,11 @@ interface IReturnType {
   refreshToken: string;
 }
 
+interface IQueryOptions {
+  onSuccess?: (data: IReturnType) => void;
+  onError?: (error: CustomAxiosError) => void;
+}
+
 const fetcher = async ({body}: IProps): Promise<IReturnType> =>
   await axios
     .post(`/auth/login`, body, {
@@ -22,11 +29,9 @@ const fetcher = async ({body}: IProps): Promise<IReturnType> =>
     })
     .then(({data}) => data);
 
-export const usePostLogin = (): UseMutationResult<
-  IReturnType,
-  Error,
-  IProps
-> => {
+export const usePostLogin = (
+  options?: IQueryOptions,
+): UseMutationResult<IReturnType, CustomAxiosError, IProps> => {
   return useMutation({
     mutationFn: fetcher,
     onSuccess: ({accessToken, refreshToken}) => {
@@ -38,6 +43,17 @@ export const usePostLogin = (): UseMutationResult<
         ASYNC_STORAGE_KEYS.AUTH_JWT_REFRESH_TOKEN,
         refreshToken,
       );
+
+      options?.onSuccess?.({accessToken, refreshToken});
+    },
+    onError: error => {
+      const message =
+        error.response != null
+          ? error.response?.data.message
+          : '로그인에 실패하였습니다.';
+      Toast.show({message});
+
+      options?.onError?.(error);
     },
   });
 };

@@ -64,6 +64,15 @@ export const MatchDetailMatchingMoreScreen = (): React.JSX.Element => {
       });
       navigation.pop();
     },
+    onErrorCallback: error => {
+      Toast.show(
+        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
+        Toast.SHORT,
+        {
+          backgroundColor: '#000000c5',
+        },
+      );
+    },
   });
 
   const [isSettingMode, setIsSettingMode] = useState(false);

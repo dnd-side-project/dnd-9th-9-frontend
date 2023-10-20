@@ -36,4 +36,19 @@ const MyMatchStatus = {
   COMPLETE: '진행완료',
 } as const;
 
-export {FieldTypes, Periods, Goals, SkillLevels, Strengths, MyMatchStatus};
+const WinStatus = {
+  WIN: '🔥 현재 우리팀이 앞서고 있어요!',
+  LOSE: '🔥 상대팀이 이기고 있어요. 좀 더 힘내서 앞서볼까요?',
+  DRAW: '🔥 현재 동점이에요. 좀 더 힘내서 앞서볼까요?',
+  DEFAULT: '🔥 오늘도 파이팅!',
+} as const;
+
+export {
+  FieldTypes,
+  Periods,
+  Goals,
+  SkillLevels,
+  Strengths,
+  MyMatchStatus,
+  WinStatus,
+};

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 import {type RouteProp, useRoute} from '@react-navigation/native';
 import {SafeAreaView, ScrollView, View} from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
 import {Button} from '../../../../components/Button';
@@ -20,7 +21,20 @@ export const MatchDetailMemberDeleteScreen = (): React.JSX.Element => {
 
   // TODO: 팀원 삭제 이후 토스트 안내 및 navigation pop
   const {mutate: deleteUserFieldEject} = useDeleteUserFieldEject({
-    onSuccessCallback: () => {},
+    onSuccessCallback: () => {
+      Toast.show('팀원이 삭제 되었습니다.', Toast.SHORT, {
+        backgroundColor: '#000000c5',
+      });
+    },
+    onErrorCallback: error => {
+      Toast.show(
+        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
+        Toast.SHORT,
+        {
+          backgroundColor: '#000000c5',
+        },
+      );
+    },
   });
 
   const {data: userFieldData} = useGetUserFieldList({id});

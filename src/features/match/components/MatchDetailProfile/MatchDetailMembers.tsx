@@ -26,7 +26,7 @@ export const MatchDetailMembers = ({
           fontWeight="600"
           text={`현재 팀원 ${currentSize}/${maxSize}`}
         />
-        <Icon svgXml={arrowRightXmlData} width={40} height={40} />
+        <Icon svgXml={arrowRightXmlData} width={40} height={40} color="black" />
       </StyledHeaderWrapper>
       <StyledMemberWrapper>
         {members?.map(member => (
