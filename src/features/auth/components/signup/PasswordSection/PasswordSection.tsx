@@ -5,7 +5,6 @@ import styled from '@emotion/native';
 import {Controller} from 'react-hook-form';
 import {Pressable} from 'react-native';
 
-import {ValidateGraph} from './ValidateGraph';
 import {eyeClosedXmlData, eyeOpenedXmlData} from '../../../../../assets/svg';
 import {Button} from '../../../../../components/Button';
 import {Gap} from '../../../../../components/Gap';
@@ -13,6 +12,7 @@ import {Icon} from '../../../../../components/Icon';
 import {Text} from '../../../../../components/Text';
 import {Textfield} from '../../../../../components/Textfield/Textfield';
 import {type IFormSectionProps} from '../../../../../screens/auth/SignupScreen';
+import {ValidateGraph} from '../../common/ValidateGraph';
 
 export const PasswordSection = ({
   control,
@@ -75,7 +75,7 @@ export const PasswordSection = ({
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <Textfield
-                  size="sm"
+                  type="body2"
                   label="비밀번호 확인"
                   placeholder="영문, 숫자를 포함하여 입력해주세요."
                   textContentType="password"
@@ -120,7 +120,7 @@ export const PasswordSection = ({
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <Textfield
-              size="sm"
+              type="body2"
               label="비밀번호"
               placeholder="영문, 숫자를 포함하여 입력해주세요."
               textContentType="password"

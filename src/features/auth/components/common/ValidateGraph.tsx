@@ -2,8 +2,8 @@ import React, {useCallback} from 'react';
 
 import styled from '@emotion/native';
 
-import {type theme} from '../../../../../assets/styles/theme';
-import {Text} from '../../../../../components/Text';
+import {type theme} from '../../../../assets/styles/theme';
+import {Text} from '../../../../components/Text';
 
 interface IValidateGraphProps {
   passwordLength: number;

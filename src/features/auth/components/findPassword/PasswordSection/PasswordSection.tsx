@@ -5,7 +5,6 @@ import styled from '@emotion/native';
 import {Controller} from 'react-hook-form';
 import {Pressable} from 'react-native';
 
-import {ValidateGraph} from './ValidateGraph';
 import {eyeClosedXmlData, eyeOpenedXmlData} from '../../../../../assets/svg';
 import {Button} from '../../../../../components/Button';
 import {Gap} from '../../../../../components/Gap';
@@ -13,6 +12,7 @@ import {Icon} from '../../../../../components/Icon';
 import {Text} from '../../../../../components/Text';
 import {Textfield} from '../../../../../components/Textfield/Textfield';
 import {type IFormSectionProps} from '../../../../../screens/auth/FindPasswordScreen';
+import {ValidateGraph} from '../../common/ValidateGraph';
 
 export const PasswordSection = ({
   control,
