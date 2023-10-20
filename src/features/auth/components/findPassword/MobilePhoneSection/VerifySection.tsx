@@ -12,7 +12,7 @@ import {usePostVerify, usePostSendCode} from '../../../hooks/verification';
 
 interface IVerifySectionProps extends IFormSectionProps {
   onSuccessSendCode: () => void;
-  onFailSendCode: () => void;
+  onFailSendCode: (message?: string) => void;
 }
 
 export const VerifySection = ({
@@ -27,7 +27,16 @@ export const VerifySection = ({
 }: IVerifySectionProps): React.JSX.Element => {
   const error = formState.errors.mobilePhoneVerifyCode;
 
-  const {mutateAsync: postSendCode} = usePostSendCode();
+  const {mutate: postSendCode} = usePostSendCode({
+    onSuccessCallback: () => {
+      onSuccessSendCode();
+      startTimer();
+    },
+    onErrorCallback: error => {
+      onFailSendCode(error.response?.data.message);
+    },
+  });
+
   const {
     mutate: postVerify,
     data: isVerify,
@@ -82,28 +91,20 @@ export const VerifySection = ({
   }, []);
 
   const handlePressReSendCode = (): void => {
-    const phoneNum = getValues('mobilePhone');
-    try {
-      void postSendCode({
-        body: {
-          phoneNum,
-        },
-      });
-      onSuccessSendCode();
-      startTimer();
-    } catch (error) {
-      onFailSendCode();
-    }
+    postSendCode({
+      body: {
+        phoneNum: getValues('mobilePhone'),
+      },
+    });
   };
 
   const handlePressVerifyCode = async (): Promise<void> => {
-    const phoneNum = getValues('mobilePhone');
     const isValid = await trigger('mobilePhoneVerifyCode');
 
     if (isValid) {
       postVerify({
         body: {
-          phoneNum,
+          phoneNum: getValues('mobilePhone'),
           code: getValues('mobilePhoneVerifyCode'),
           verifyingType: 'FIND_PW',
         },
