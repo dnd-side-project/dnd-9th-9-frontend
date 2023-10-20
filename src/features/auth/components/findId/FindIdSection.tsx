@@ -14,6 +14,8 @@ import {useGetFindId} from '../../hooks/auth/useGetFindId';
 export const FindIdSection = ({
   getValues,
   onPressSignin,
+  onPressLogin,
+  onPressFindPassword,
 }: IFormSectionProps): React.JSX.Element => {
   const [isBottomSheetOpened, setIsBottomSheetOpened] = useState(false);
 
@@ -77,12 +79,7 @@ export const FindIdSection = ({
             }}
           />
         ) : (
-          <Button
-            text="회원가입 하기"
-            onPress={() => {
-              onPressSignin();
-            }}
-          />
+          <Button text="회원가입 하기" onPress={onPressSignin} />
         )}
       </FixedButtonWrapper>
 
@@ -94,13 +91,11 @@ export const FindIdSection = ({
         }}>
         <BottomSheet.Content>
           <StyleButtonContainer>
-            <StyledTextButton>
-              {/* TODO(@minimalKim): 비밀번호 찾기 스크린 추가 */}
+            <StyledTextButton onPress={onPressFindPassword}>
               <Text text="비밀번호 찾기" fontWeight="700" type="body2" />
             </StyledTextButton>
             <StyledHorizontalLine />
-            {/* TODO*(@minimalKim): 로그인 스크린 추가 (디자인 명세 필요) */}
-            <StyledTextButton>
+            <StyledTextButton onPress={onPressLogin}>
               <Text text="로그인하기" fontWeight="700" type="body2" />
             </StyledTextButton>
           </StyleButtonContainer>
