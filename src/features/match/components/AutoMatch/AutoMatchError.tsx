@@ -11,7 +11,7 @@ import {Text} from '../../../../components/Text';
 import {type MatchStackParamList} from '../../../../navigators';
 
 interface IAutoMatchErrorProps {
-  message?: string;
+  message: string;
 }
 
 export const AutoMatchError = ({
@@ -24,12 +24,7 @@ export const AutoMatchError = ({
     <StyledWrapper style={{justifyContent: 'center', alignItems: 'center'}}>
       <Image source={require('../../../../assets/images/logo.png')} />
       <Gap size="60px" />
-      <Text
-        type="body1"
-        textAlign="center"
-        fontWeight="700"
-        text={message ?? '알 수 없는 오류가 발생하였어요.'}
-      />
+      <Text type="body1" textAlign="center" fontWeight="700" text={message} />
       <View style={{position: 'absolute', bottom: 0, width: '100%'}}>
         <Button
           text="확인"

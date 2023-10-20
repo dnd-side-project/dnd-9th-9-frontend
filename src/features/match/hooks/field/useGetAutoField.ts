@@ -3,6 +3,7 @@ import {useQuery, type UseQueryResult} from '@tanstack/react-query';
 import {KEYS} from './keys';
 import {axios} from '../../../../lib/axios';
 import {sleep} from '../../../../utils/promise';
+import {type CustomAxiosError} from '../../../../utils/types';
 import {type IAutoFieldInfo} from '../../types';
 
 interface IProps {
@@ -26,7 +27,7 @@ const fetcher = async ({fieldType}: IProps): Promise<IAutoFieldInfo> => {
 
 export const useGetAutoField = ({
   fieldType,
-}: IProps): UseQueryResult<IAutoFieldInfo, Error> =>
+}: IProps): UseQueryResult<IAutoFieldInfo, CustomAxiosError> =>
   useQuery({
     queryKey: KEYS.auto(fieldType),
     queryFn: async () => await fetcher({fieldType}),
