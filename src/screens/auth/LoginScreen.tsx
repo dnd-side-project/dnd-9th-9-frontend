@@ -17,6 +17,7 @@ import {Icon} from '../../components/Icon';
 import {Text} from '../../components/Text';
 import {Textfield} from '../../components/Textfield/Textfield';
 import {usePostLogin} from '../../features/auth/hooks/auth';
+import Toast from '../../lib/toast';
 import {type RootStackParamList} from '../../navigators';
 
 // TODO(@minimalKim): 디자인 QA 시 validate 시점 확인 필요
@@ -47,8 +48,13 @@ export const LoginScreen = ({navigation}: Props): React.JSX.Element => {
   });
 
   const {mutate: postLogin} = usePostLogin({
-    onSuccess: () => {
-      navigation.navigate('Landing');
+    onSuccessCallback: () => {
+      navigation.navigate('Main');
+    },
+    onErrorCallback: error => {
+      Toast.show({
+        message: error.response?.data.message ?? '로그인에 실패하였습니다.',
+      });
     },
   });
 
