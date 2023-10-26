@@ -11,7 +11,7 @@ import {Gap} from '../../../../../components/Gap';
 import {Icon} from '../../../../../components/Icon';
 import {Text} from '../../../../../components/Text';
 import {Textfield} from '../../../../../components/Textfield/Textfield';
-import {type IFormSectionProps} from '../../../../../screens/auth/SignupScreen';
+import {type IFormSectionProps} from '../../../../../screens/auth/FindPasswordScreen';
 import {ValidateGraph} from '../../common/ValidateGraph';
 
 export const PasswordSection = ({
@@ -21,7 +21,9 @@ export const PasswordSection = ({
   getValues,
   setValue,
   formState,
-  onNext,
+  showLogin,
+  onSubmit,
+  onPressLogin,
 }: IFormSectionProps): React.JSX.Element => {
   const error = formState.errors.password;
 
@@ -31,6 +33,11 @@ export const PasswordSection = ({
   const [isConfirm, setIsConfirm] = useState(false);
   const [isConfirmSame, setIsConfirmSame] = useState(false);
 
+  const isErrorPassword =
+    getValues('password') == null ||
+    getValues('password').length === 0 ||
+    error?.message != null;
+
   const isErrorConfirmedPassword =
     getFieldState('confirmedPassword').isDirty && !isConfirmSame;
 
@@ -39,10 +46,6 @@ export const PasswordSection = ({
 
     if (isValid && !isConfirm) {
       setIsConfirm(true);
-    }
-
-    if (isConfirm && isConfirmSame) {
-      onNext();
     }
   };
 
@@ -56,7 +59,7 @@ export const PasswordSection = ({
     <StyledSection>
       <StyledFieldContainer>
         <Text
-          text={isConfirm ? '비밀번호 확인' : '비밀번호를 입력해 주세요'}
+          text={isConfirm ? '새로운 비밀번호 확인' : '비밀번호 재설정'}
           type="head3"
           fontWeight="600"
           style={{paddingTop: 32, paddingBottom: 42}}
@@ -153,15 +156,21 @@ export const PasswordSection = ({
       </StyledFieldContainer>
 
       <FixedButtonWrapper>
-        <Button
-          text="다음"
-          onPress={handlePressNext}
-          disabled={
-            getValues('password') == null ||
-            getValues('password').length === 0 ||
-            error?.message != null
-          }
-        />
+        {showLogin ? (
+          <Button text="로그인 하기" onPress={onPressLogin} />
+        ) : isConfirm ? (
+          <Button
+            text="확인"
+            onPress={onSubmit}
+            disabled={isErrorConfirmedPassword}
+          />
+        ) : (
+          <Button
+            text="다음"
+            onPress={handlePressNext}
+            disabled={isErrorPassword}
+          />
+        )}
       </FixedButtonWrapper>
     </StyledSection>
   );
