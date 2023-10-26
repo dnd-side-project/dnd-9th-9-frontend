@@ -8,12 +8,10 @@ import {MatchDetailMatchingScreen} from './matching';
 import {MatchDetailMemberScreen} from './member';
 import {MatchDetailProfileScreen} from './profile';
 import {MatchDetailRecordScreen} from './record';
+import {MatchDetailResultScreen} from './result';
 import {theme} from '../../../assets/styles/theme';
+import {type ITopTabScreen, TopTabNavigator} from '../../../components/Tab';
 import {Text} from '../../../components/Text';
-import {
-  type ITopTabScreen,
-  TopTabNavigator,
-} from '../../../components/TopTabNavigator';
 import {useGetFieldDetail} from '../../../features/match/hooks/field';
 import {type MatchStackParamList} from '../../../navigators/MatchNavigator';
 
@@ -37,10 +35,28 @@ export const MatchDetailScreen = (): React.JSX.Element => {
   // TODO: ERR 처리
   if (fieldDetailData === undefined) return <View></View>;
 
-  const getScreenByRule = (): ITopTabScreen[] => {
+  const getScreenByRoleAndStatus = (): ITopTabScreen[] => {
+    const fieldStatus = fieldDetailData?.fieldDto?.fieldStatus;
     const userRole = fieldDetailData?.fieldDto?.fieldRole;
 
     const screens = [];
+
+    if (fieldStatus === 'COMPLETED') {
+      return [
+        {
+          name: 'TeamProfile',
+          label: '프로필',
+          component: () => (
+            <MatchDetailProfileScreen fieldDetailData={fieldDetailData} />
+          ),
+        },
+        {
+          name: 'Result',
+          label: '매칭결과',
+          component: () => <MatchDetailResultScreen />,
+        },
+      ];
+    }
 
     if (userRole === 'MEMBER' || userRole === 'LEADER') {
       screens.push({
@@ -87,7 +103,7 @@ export const MatchDetailScreen = (): React.JSX.Element => {
     ];
   };
 
-  const screens = getScreenByRule();
+  const screens = getScreenByRoleAndStatus();
 
   return (
     <>
