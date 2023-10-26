@@ -1,11 +1,14 @@
 import React from 'react';
 
 import styled from '@emotion/native';
+import {useNavigation} from '@react-navigation/native';
+import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {StatusBar, TouchableOpacity, View} from 'react-native';
 
 import {alarmXmlData} from '../../../assets/svg';
 import {Icon} from '../../../components/Icon';
 import {Text} from '../../../components/Text';
+import {type HomeStackParamList} from '../../../navigators';
 import {useGetUserFieldProgress} from '../../match/hooks/userField';
 import {useGetMyProfileDetail} from '../../my/hooks/profile';
 
@@ -13,13 +16,19 @@ export const MainBanner = (): React.JSX.Element => {
   const {data: userFieldProgress} = useGetUserFieldProgress();
   const {data: myProfileDetail} = useGetMyProfileDetail();
 
+  const navigation =
+    useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+
   return (
     <StyledTopBanner>
       <StatusBar barStyle="light-content" />
 
       <View>
         <StyledIconWrapper>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Notification');
+            }}>
             <Icon svgXml={alarmXmlData} width={24} height={24} />
           </TouchableOpacity>
         </StyledIconWrapper>
