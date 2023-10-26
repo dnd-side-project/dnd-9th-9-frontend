@@ -12,7 +12,6 @@ const defaultModalInfo = {
   isVisible: false,
   title: '',
   subTitle: '',
-  handleConfirm: () => {},
 };
 
 export const MobilePhoneSection = (
@@ -27,9 +26,6 @@ export const MobilePhoneSection = (
       isVisible: true,
       title: `입력하신 전화번호로\n 인증번호가 발송되었어요.`,
       subTitle: '문자를 확인 후, 인증번호를 입력해 주세요.',
-      handleConfirm: () => {
-        setModalInfo(defaultModalInfo);
-      },
     });
   };
 
@@ -39,9 +35,6 @@ export const MobilePhoneSection = (
       title:
         errorMessage ?? `현재 전화번호 인증 서비스를\n 이용할 수 없습니다.`,
       subTitle: '잠시후 다시 시도해주세요.',
-      handleConfirm: () => {
-        setModalInfo(defaultModalInfo);
-      },
     });
   };
 
@@ -76,7 +69,9 @@ export const MobilePhoneSection = (
         visible={modalInfo.isVisible}
         title={modalInfo.title}
         subTitle={modalInfo.subTitle}
-        handleConfirm={modalInfo.handleConfirm}
+        handleConfirm={() => {
+          setModalInfo(defaultModalInfo);
+        }}
       />
     </StyledSection>
   );
