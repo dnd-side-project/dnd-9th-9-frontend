@@ -8,24 +8,41 @@ import {ConfirmModal} from '../../../../../components/Modal';
 import {Text} from '../../../../../components/Text';
 import {type IFormSectionProps} from '../../../../../screens/auth/FindPasswordScreen';
 
+const defaultModalInfo = {
+  isVisible: false,
+  title: '',
+  subTitle: '',
+  handleConfirm: () => {},
+};
+
 export const MobilePhoneSection = (
   props: IFormSectionProps,
 ): React.JSX.Element => {
   const [isVerifySection, setIsVerifySection] = useState(false);
 
-  const [isSuccessModalOpened, setIsSuccessModalOpened] = useState(false);
-  const [isFailureModalOpened, setIsFailureModalOpened] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [modalInfo, setModalInfo] = useState(defaultModalInfo);
 
   const handleSuccessSendCode = (): void => {
-    setIsSuccessModalOpened(true);
+    setModalInfo({
+      isVisible: true,
+      title: `입력하신 전화번호로\n 인증번호가 발송되었어요.`,
+      subTitle: '문자를 확인 후, 인증번호를 입력해 주세요.',
+      handleConfirm: () => {
+        setModalInfo(defaultModalInfo);
+      },
+    });
   };
 
   const handleFailSendCode = (errorMessage?: string): void => {
-    setIsFailureModalOpened(true);
-    setErrorMessage(
-      errorMessage ?? `현재 전화번호 인증 서비스를\n 이용할 수 없습니다.`,
-    );
+    setModalInfo({
+      isVisible: true,
+      title:
+        errorMessage ?? `현재 전화번호 인증 서비스를\n 이용할 수 없습니다.`,
+      subTitle: '잠시후 다시 시도해주세요.',
+      handleConfirm: () => {
+        setModalInfo(defaultModalInfo);
+      },
+    });
   };
 
   return (
@@ -56,20 +73,10 @@ export const MobilePhoneSection = (
       )}
 
       <ConfirmModal
-        visible={isSuccessModalOpened}
-        title={`입력하신 전화번호로\n 인증번호가 발송되었어요.`}
-        subTitle="문자를 확인 후, 인증번호를 입력해 주세요."
-        handleConfirm={() => {
-          setIsSuccessModalOpened(false);
-        }}
-      />
-      <ConfirmModal
-        visible={isFailureModalOpened}
-        title={errorMessage}
-        subTitle="잠시후 다시 시도해주세요"
-        handleConfirm={() => {
-          setIsFailureModalOpened(false);
-        }}
+        visible={modalInfo.isVisible}
+        title={modalInfo.title}
+        subTitle={modalInfo.subTitle}
+        handleConfirm={modalInfo.handleConfirm}
       />
     </StyledSection>
   );
