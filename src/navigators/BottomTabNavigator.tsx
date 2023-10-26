@@ -2,6 +2,7 @@ import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+import {HomeNavigator} from './HomeNavigator';
 import {MatchNavigator} from './MatchNavigator';
 import {RecordNavigator} from './RecordNavigator';
 import {theme} from '../assets/styles/theme';
@@ -13,11 +14,11 @@ import {
 } from '../assets/svg';
 import {Icon} from '../components/Icon';
 import {Text} from '../components/Text';
-import {HomeScreen} from '../screens/home';
 import {MyScreen} from '../screens/my';
 
 export type BottomTabStackParamList = {
   Home: undefined;
+  Notification: undefined;
   Records: undefined;
   Match: undefined;
   My: undefined;
@@ -49,7 +50,7 @@ export function BottomTabNavigator(): React.JSX.Element {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeNavigator}
         options={{
           headerShown: false,
           tabBarLabel: ({focused}) => (
