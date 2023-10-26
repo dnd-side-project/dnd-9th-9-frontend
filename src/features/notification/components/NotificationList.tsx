@@ -63,6 +63,7 @@ export const NotificationList = ({
       </StyledNotificationList>
 
       {isPressMoreVisible != null && (
+        // TODO(@minimalKim): 더보기 버튼 디자인 명세 필요
         <StyledMoreButton onPress={onPressMore}>
           <Text text="더보기" type="body3" fontWeight="600" color="gray-600" />
         </StyledMoreButton>
