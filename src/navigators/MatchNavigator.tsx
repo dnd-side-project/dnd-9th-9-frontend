@@ -10,7 +10,11 @@ import {
   type TStrength,
   type IField,
 } from '../features/match/types';
-import {MatchScreen} from '../screens/match';
+import {
+  MatchScreen,
+  AutoMatchScreen,
+  AutoMatchResultScreen,
+} from '../screens/match';
 import {
   CreateMatchInformationScreen,
   CreateMatchProfileScreen,
@@ -30,7 +34,7 @@ import {
   MatchDetailMemberDeleteScreen,
   MatchDetailMemberMoreScreen,
 } from '../screens/match/detail/member';
-import {AutoMatchScreen, MatchFilterScreen} from '../screens/match/list';
+import {MatchFilterScreen} from '../screens/match/list';
 
 export type MatchStackParamList = {
   MatchList: IFieldListPaginationParams;
@@ -41,6 +45,9 @@ export type MatchStackParamList = {
   TeamProfile: undefined;
   // 자동 매칭 화면
   AutoMatch: undefined;
+  AutoMatchResult: {
+    fieldType: 'DUEL' | 'TEAM_BATTLE';
+  };
   // 팀 상세 화면
   MatchDetail: {
     id: number;
@@ -129,6 +136,11 @@ export function MatchNavigator(): React.JSX.Element {
       <Stack.Screen
         name="AutoMatch"
         component={AutoMatchScreen}
+        options={{headerTitle: ''}}
+      />
+      <Stack.Screen
+        name="AutoMatchResult"
+        component={AutoMatchResultScreen}
         options={{headerTitle: ''}}
       />
       <Stack.Screen

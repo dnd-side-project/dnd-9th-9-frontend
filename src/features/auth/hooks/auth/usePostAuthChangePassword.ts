@@ -5,7 +5,10 @@ import {type CustomAxiosError} from '../../../../utils/types';
 
 interface IProps {
   body: {
+    confirmPassword: string;
+    newPassword: string;
     phoneNum: string;
+    uid: string;
   };
 }
 
@@ -16,17 +19,14 @@ interface IMutationOptions {
 
 const fetcher = async ({body}: IProps): Promise<string> =>
   await axios
-    .post('/verification/sign-up-code', body, {
+    .post(`/auth/change-pw`, body, {
       headers: {'Content-Type': 'application/json'},
     })
     .then(({data}) => data);
 
-/**
- * 해당 전화번호로 인증번호를 발송합니다.
- */
-export const usePostSendCode = (
+export const usePostAuthChangePassword = (
   options?: IMutationOptions,
-): UseMutationResult<string, Error, IProps> => {
+): UseMutationResult<string, CustomAxiosError, IProps> => {
   return useMutation({
     mutationFn: fetcher,
     onSuccess: options?.onSuccessCallback,

@@ -12,16 +12,20 @@ import {arrowLeftXmlData} from '../../assets/svg';
 import {Icon} from '../../components/Icon';
 import {Text} from '../../components/Text';
 import {
-  NameSection,
   MobilePhoneSection,
-  FindIdSection,
-} from '../../features/auth/components/findId';
+  IdSection,
+  PasswordSection,
+} from '../../features/auth/components/findPassword';
+import {
+  usePostAuthChangePassword,
+  usePostLogin,
+} from '../../features/auth/hooks/auth';
+import Toast from '../../lib/toast';
 import {type RootStackParamList} from '../../navigators';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'FindId'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'FindPassword'>;
 
 const validationSchema = z.object({
-  name: z.string().min(1, {message: '이름을 입력해주세요'}),
   uid: z
     .string()
     .min(6, {message: '6자 이상으로 입력해주세요'})
@@ -44,43 +48,54 @@ const validationSchema = z.object({
     .refine(value => /^\d+$/.test(value), {
       message: '잘못된 인증번호입니다. 인증번호는 숫자만 입력해 주세요.',
     }),
+  password: z
+    .string()
+    .min(8, {message: '비밀번호를 8글자 이상으로 입력해주세요'})
+    .max(16, {message: '비밀번호를 16글자 이하로 입력해주세요'})
+    .refine(value => /^(?=.*[a-zA-Z])(?=.*\d).+$/.test(value), {
+      message: '최소 1자 이상의 영문과 숫자를 포함해주세요',
+    }),
+  confirmedPassword: z.string(),
 });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 export interface IFormSectionProps extends UseFormReturn<ValidationSchema> {
+  showLogin: boolean;
   onNext: () => void;
-  onPressSignin: () => void;
+  onSubmit: () => void;
   onPressLogin: () => void;
-  onPressFindPassword: () => void;
 }
 
-const FIND_ID_INFORMATION_STEPS = [
+const FIND_PASSWORD_INFORMATION_STEPS = [
   {
-    info: '이름',
-    formSection: NameSection,
+    info: '아이디',
+    formSection: IdSection,
   },
   {
     info: '전화번호 인증',
     formSection: MobilePhoneSection,
   },
   {
-    info: '아이디 찾기',
-    formSection: FindIdSection,
+    info: '비밀번호 재설정',
+    formSection: PasswordSection,
   },
 ] as const;
 
-export function FindIdScreen({navigation}: Props): React.JSX.Element {
-  const findIdForm = useForm<ValidationSchema>({
+export function FindPasswordScreen({navigation}: Props): React.JSX.Element {
+  const findPasswordForm = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
 
   const [stepIndex, setStepIndex] = useState(0);
-  const currentStep = FIND_ID_INFORMATION_STEPS[stepIndex];
-  const stepLabel = `${stepIndex + 1}/${FIND_ID_INFORMATION_STEPS.length}`;
+  const currentStep = FIND_PASSWORD_INFORMATION_STEPS[stepIndex];
+  const stepLabel = `${stepIndex + 1}/${
+    FIND_PASSWORD_INFORMATION_STEPS.length
+  }`;
+  const [showLogin, setShowLogin] = useState(false);
 
   const handlePressNext = async (): Promise<void> => {
-    if (stepIndex === FIND_ID_INFORMATION_STEPS.length - 1) {
+    if (stepIndex === FIND_PASSWORD_INFORMATION_STEPS.length - 1) {
       return;
     }
     setStepIndex(index => index + 1);
@@ -94,16 +109,50 @@ export function FindIdScreen({navigation}: Props): React.JSX.Element {
     setStepIndex(index => index - 1);
   };
 
-  const handlePressSignin = (): void => {
-    navigation.replace('Signup');
+  const {mutate: postAuthChangePassword} = usePostAuthChangePassword({
+    onSuccessCallback: () => {
+      Toast.show({message: '비밀번호가 재설정되었습니다.'});
+      setShowLogin(true);
+    },
+    onErrorCallback: error => {
+      Toast.show({
+        message:
+          error.response?.data.message ?? '비밀번호 재설정에 실패하였습니다.',
+      });
+      navigation.popToTop();
+    },
+  });
+
+  const {mutate: postLogin} = usePostLogin({
+    onSuccessCallback: () => {
+      navigation.replace('Main');
+    },
+    onErrorCallback: error => {
+      Toast.show({
+        message: error.response?.data.message ?? '로그인에 실패하였습니다.',
+      });
+      navigation.popToTop();
+    },
+  });
+
+  const handlePressSubmit = async (): Promise<void> => {
+    postAuthChangePassword({
+      body: {
+        uid: findPasswordForm.getValues('uid'),
+        phoneNum: findPasswordForm.getValues('mobilePhone'),
+        newPassword: findPasswordForm.getValues('password'),
+        confirmPassword: findPasswordForm.getValues('confirmedPassword'),
+      },
+    });
   };
 
   const handlePressLogin = (): void => {
-    navigation.replace('Login');
-  };
-
-  const handlePressFindPassword = (): void => {
-    navigation.replace('FindId');
+    postLogin({
+      body: {
+        uid: findPasswordForm.getValues('uid'),
+        password: findPasswordForm.getValues('password'),
+      },
+    });
   };
 
   return (
@@ -116,11 +165,11 @@ export function FindIdScreen({navigation}: Props): React.JSX.Element {
       </StyledTopBar>
 
       <currentStep.formSection
+        showLogin={showLogin}
         onNext={handlePressNext}
-        onPressSignin={handlePressSignin}
+        onSubmit={handlePressSubmit}
         onPressLogin={handlePressLogin}
-        onPressFindPassword={handlePressFindPassword}
-        {...findIdForm}
+        {...findPasswordForm}
       />
     </SafeAreaView>
   );

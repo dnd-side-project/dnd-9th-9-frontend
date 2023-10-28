@@ -120,7 +120,7 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
                 <StyledTextButton
                   onPress={() => {
                     setShowBottomModal(false);
-                    // TODO(@minimalKim): 비밀번호 찾기 스크린 추가
+                    navigation.push('FindPassword');
                   }}>
                   <Text
                     text="비밀번호 찾기"
