@@ -12,12 +12,12 @@ interface IProps {
 
 const fetcher = async ({fieldType}: IProps): Promise<IAutoFieldInfo> => {
   try {
-    await sleep(500);
     const {data} = await axios.get(`/field/auto`, {
       params: {
         fieldType,
       },
     });
+    await sleep(500);
     return data;
   } catch (error) {
     await sleep(500);
