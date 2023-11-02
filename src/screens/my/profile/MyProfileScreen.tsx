@@ -4,16 +4,16 @@ import styled from '@emotion/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 
-import {theme} from '../../assets/styles/theme';
-import {penXmlData} from '../../assets/svg';
-import {Gap} from '../../components/Gap';
-import {Icon} from '../../components/Icon';
-import {Line} from '../../components/Line';
-import {TopBar} from '../../components/TopBar';
-import {SkillLevels} from '../../features/match/const';
-import {ProfileListItem} from '../../features/my/components/profile';
-import {useGetMyProfileDetail} from '../../features/my/hooks/profile';
-import {type MyStackParamList} from '../../navigators/MyNavigator';
+import {theme} from '../../../assets/styles/theme';
+import {penXmlData} from '../../../assets/svg';
+import {Gap} from '../../../components/Gap';
+import {Icon} from '../../../components/Icon';
+import {Line} from '../../../components/Line';
+import {TopBar} from '../../../components/TopBar';
+import {SkillLevels} from '../../../features/match/const';
+import {ProfileListItem} from '../../../features/my/components/profile';
+import {useGetMyProfileDetail} from '../../../features/my/hooks/profile';
+import {type MyStackParamList} from '../../../navigators/MyNavigator';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyProfile'>;
 
