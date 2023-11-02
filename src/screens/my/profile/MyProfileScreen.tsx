@@ -108,7 +108,15 @@ export function MyProfileScreen({navigation}: Props): React.JSX.Element {
                     ? `${myProfileDetail.calorieGoal}kcal`
                     : '목표 칼로리 없음'
                 }
-                onPress={myProfileDetail.isAppleLinked ? undefined : () => {}}
+                onPress={
+                  myProfileDetail.isAppleLinked
+                    ? undefined
+                    : () => {
+                        navigation.navigate('MyProfileModify', {
+                          type: 'calorieGoal',
+                        });
+                      }
+                }
               />
               {myProfileDetail.isAppleLinked && (
                 <Text

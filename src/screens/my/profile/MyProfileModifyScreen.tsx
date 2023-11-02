@@ -17,6 +17,7 @@ import {Gap} from '../../../components/Gap';
 import {Text} from '../../../components/Text';
 import {TopBar} from '../../../components/TopBar';
 import {
+  ModifyCalorieGoalSection,
   ModifyNameSection,
   ModifyWeightSection,
 } from '../../../features/my/components/profile/modify';
@@ -29,6 +30,10 @@ const validationSchema = z.object({
     .number()
     .gte(1, {message: '몸무게를 입력해주세요'})
     .lte(999, {message: '최대 입력 가능 몸무게는 999kg 입니다'}),
+  calorieGoal: z
+    .number()
+    .gte(1, {message: '목표 칼로리를 입력해주세요'})
+    .lte(9999, {message: '최대 입력 가능 칼로리는 9999kcal 입니다'}),
 });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
@@ -43,6 +48,7 @@ const MY_PROFILE_MODIFY_SECTIONS: Record<
 > = {
   name: ModifyNameSection,
   weight: ModifyWeightSection,
+  calorieGoal: ModifyCalorieGoalSection,
 } as const;
 
 export function MyProfileModifyScreen(): React.JSX.Element {
@@ -56,6 +62,7 @@ export function MyProfileModifyScreen(): React.JSX.Element {
     defaultValues: {
       name: myProfileDetail?.name,
       weight: myProfileDetail?.weight,
+      calorieGoal: myProfileDetail?.calorieGoal,
     },
   });
 
