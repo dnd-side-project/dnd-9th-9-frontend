@@ -69,13 +69,16 @@ export function MyProfileScreen({navigation}: Props): React.JSX.Element {
               <ProfileListItem
                 label="운동레벨"
                 value={SkillLevels[myProfileDetail.skillLevel]}
-                onPress={() => {}}
               />
               <Line size="sm" color="gray-200" />
               <ProfileListItem
                 label="목표 칼로리"
-                value={`${myProfileDetail.calorieGoal}kcal`}
-                onPress={() => {}}
+                value={
+                  myProfileDetail.isAppleLinked
+                    ? `${myProfileDetail.calorieGoal}kcal`
+                    : '목표 칼로리 없음'
+                }
+                onPress={myProfileDetail.isAppleLinked ? () => {} : undefined}
               />
             </StyledProfileList>
             <Gap size="60px" />

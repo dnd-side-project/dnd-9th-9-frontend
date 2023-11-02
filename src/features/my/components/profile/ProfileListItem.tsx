@@ -18,29 +18,48 @@ export const ProfileListItem = ({
   value,
   onPress,
 }: IProfileListItemProps): React.JSX.Element => {
+  const ProfileListItemComponent =
+    onPress != null ? StyledProfileListItemPressable : StyledProfileListItem;
+
   return (
-    <StyledProfileListItem onPress={onPress}>
+    <ProfileListItemComponent onPress={onPress}>
       <StyledLabelWrapper>
         <Text type="body3" fontWeight="bold" text={label} />
       </StyledLabelWrapper>
       <StyledValueWrapper>
         <Text type="body2" color="gray-800" text={value} />
-        <Icon
-          svgXml={arrowRightXmlData}
-          color={theme.palette.black}
-          width={30}
-        />
+        {onPress != null ? (
+          <Icon
+            svgXml={arrowRightXmlData}
+            color={theme.palette.black}
+            width={30}
+          />
+        ) : (
+          <StyledEmpty></StyledEmpty>
+        )}
       </StyledValueWrapper>
-    </StyledProfileListItem>
+    </ProfileListItemComponent>
   );
 };
 
-const StyledProfileListItem = styled.TouchableOpacity`
+const StyledProfileListItemPressable = styled.TouchableOpacity`
   padding: 20px 0 20px 8px;
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
+
+const StyledProfileListItem = styled.View`
+  padding: 20px 0 20px 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const StyledEmpty = styled.View`
+  height: 40px;
+`;
+
 const StyledValueWrapper = styled.View`
   display: flex;
   flex-direction: row;
