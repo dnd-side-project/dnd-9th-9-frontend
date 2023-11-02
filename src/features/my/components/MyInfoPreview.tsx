@@ -35,7 +35,11 @@ export const MyInfoPreview = (): React.JSX.Element => {
         <StyledTextContainer>
           <Text text={myProfileDetail.name} type="head3" fontWeight="bold" />
           <Text
-            text={`하루 목표 칼로리 ${myProfileDetail.calorieGoal}kcal`}
+            text={`하루 목표 칼로리 ${
+              myProfileDetail.calorieGoal === 0
+                ? '없음'
+                : `${myProfileDetail.calorieGoal}kcal`
+            }`}
             type="body3"
             fontWeight="bold"
             color="gray-600"
