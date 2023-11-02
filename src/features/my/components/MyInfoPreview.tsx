@@ -78,7 +78,7 @@ const StyledMyInfoPreviewPlaceholder = styled.View`
 `;
 
 const StyledProfilePlaceholder = styled.View`
-  background-color: ${({theme}) => theme.palette['gray-200']};
+  background-color: ${({theme}) => theme.palette['gray-300']};
   width: 70px;
   height: 70px;
   border-radius: 35px;
