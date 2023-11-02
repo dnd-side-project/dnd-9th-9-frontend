@@ -10,20 +10,22 @@ interface ITopBarProps {
   headerText?: string;
   showBackButton?: boolean;
   onPressBackButton?: () => void;
-  leftIcon?: () => React.JSX.Element;
+  leftComponent?: () => React.JSX.Element;
+  rightComponent?: () => React.JSX.Element;
 }
 
 export const TopBar = ({
   headerText,
   showBackButton = false,
   onPressBackButton,
-  leftIcon,
+  leftComponent,
+  rightComponent,
 }: ITopBarProps): React.JSX.Element => {
   return (
     <StyledTopBar>
       <StyledLeftWrapper>
-        {leftIcon != null ? (
-          leftIcon()
+        {leftComponent != null ? (
+          leftComponent()
         ) : showBackButton ? (
           <StyledBackButton onPress={onPressBackButton}>
             <Icon svgXml={arrowLeftXmlData} width={32} height={32} />
@@ -35,7 +37,7 @@ export const TopBar = ({
 
       <Text text={headerText ?? ''} type="body1" fontWeight="bold" />
 
-      <StyledRightWrapper></StyledRightWrapper>
+      <StyledRightWrapper>{rightComponent?.()}</StyledRightWrapper>
     </StyledTopBar>
   );
 };
@@ -46,6 +48,7 @@ const StyledTopBar = styled.View`
   align-items: center;
   flex-direction: row;
   justify-content: center;
+  background-color: ${({theme}) => theme.palette['gray-0']};
 `;
 
 const StyledBackButton = styled.TouchableOpacity`
