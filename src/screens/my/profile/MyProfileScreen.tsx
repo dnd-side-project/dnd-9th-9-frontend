@@ -9,6 +9,7 @@ import {penXmlData} from '../../../assets/svg';
 import {Gap} from '../../../components/Gap';
 import {Icon} from '../../../components/Icon';
 import {Line} from '../../../components/Line';
+import {Text} from '../../../components/Text';
 import {TopBar} from '../../../components/TopBar';
 import {SkillLevels} from '../../../features/match/const';
 import {ProfileListItem} from '../../../features/my/components/profile';
@@ -74,14 +75,21 @@ export function MyProfileScreen({navigation}: Props): React.JSX.Element {
               <ProfileListItem
                 label="목표 칼로리"
                 value={
-                  myProfileDetail.isAppleLinked
+                  myProfileDetail.calorieGoal !== 0
                     ? `${myProfileDetail.calorieGoal}kcal`
                     : '목표 칼로리 없음'
                 }
-                onPress={myProfileDetail.isAppleLinked ? () => {} : undefined}
+                onPress={myProfileDetail.isAppleLinked ? undefined : () => {}}
               />
+              {myProfileDetail.isAppleLinked && (
+                <Text
+                  type="caption"
+                  text="목표 칼로리는 애플 건강 앱에서만 등록, 수정할 수 있어요"
+                  color="gray-600"
+                />
+              )}
             </StyledProfileList>
-            <Gap size="60px" />
+            <Gap size="80px" />
           </ScrollView>
         </>
       ) : (
