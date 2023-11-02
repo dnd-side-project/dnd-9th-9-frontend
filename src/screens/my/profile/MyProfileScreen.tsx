@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import styled from '@emotion/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -20,6 +20,31 @@ type Props = NativeStackScreenProps<MyStackParamList, 'MyProfile'>;
 
 export function MyProfileScreen({navigation}: Props): React.JSX.Element {
   const {data: myProfileDetail, isSuccess} = useGetMyProfileDetail();
+
+  // TODO: 공통 hook 으로 분리
+  useEffect(() => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: 'none',
+      },
+      tabBarVisible: false,
+    });
+    return () =>
+      navigation.getParent()?.setOptions({
+        tabBarStyle: {
+          height: 80,
+          paddingTop: 10,
+          paddingBottom: 20,
+          paddingHorizontal: 16,
+          borderTopLeftRadius: 24,
+          borderTopRightRadius: 24,
+          borderWidth: 1,
+          borderColor: theme.palette['gray-50'],
+          position: 'absolute',
+        },
+        tabBarVisible: true,
+      });
+  }, [navigation]);
 
   return (
     <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}}>
