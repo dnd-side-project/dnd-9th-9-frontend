@@ -91,7 +91,9 @@ export function MyProfileScreen({navigation}: Props): React.JSX.Element {
               <ProfileListItem
                 label="몸무게"
                 value={`${myProfileDetail.weight}kg`}
-                onPress={() => {}}
+                onPress={() => {
+                  navigation.navigate('MyProfileModify', {type: 'weight'});
+                }}
               />
               <Line size="sm" color="gray-200" />
               <ProfileListItem

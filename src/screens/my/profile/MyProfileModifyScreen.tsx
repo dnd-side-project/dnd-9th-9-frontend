@@ -1,5 +1,6 @@
 import React from 'react';
 
+import styled from '@emotion/native';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {
   useNavigation,
@@ -12,9 +13,13 @@ import {SafeAreaView, TouchableOpacity} from 'react-native';
 import {z} from 'zod';
 
 import {theme} from '../../../assets/styles/theme';
+import {Gap} from '../../../components/Gap';
 import {Text} from '../../../components/Text';
 import {TopBar} from '../../../components/TopBar';
-import {ModifyNameSection} from '../../../features/my/components/profile/modify';
+import {
+  ModifyNameSection,
+  ModifyWeightSection,
+} from '../../../features/my/components/profile/modify';
 import {useGetMyProfileDetail} from '../../../features/my/hooks/profile';
 import {type MyStackParamList} from '../../../navigators/MyNavigator';
 
@@ -31,6 +36,14 @@ type ValidationSchema = z.infer<typeof validationSchema>;
 export type TMyProfileModifyScreenSectionType = keyof ValidationSchema;
 
 export interface IFormSectionProps extends UseFormReturn<ValidationSchema> {}
+
+const MY_PROFILE_MODIFY_SECTIONS: Record<
+  TMyProfileModifyScreenSectionType,
+  (props: IFormSectionProps) => React.JSX.Element
+> = {
+  name: ModifyNameSection,
+  weight: ModifyWeightSection,
+} as const;
 
 export function MyProfileModifyScreen(): React.JSX.Element {
   const navigation =
@@ -51,8 +64,10 @@ export function MyProfileModifyScreen(): React.JSX.Element {
     if (isValid) {
       navigation.pop();
     }
-    // TODO(@minimalKim): patch
+    // TODO(@minimalKim): type별 patch
   };
+
+  const SectionComponent = MY_PROFILE_MODIFY_SECTIONS[params.type];
 
   return (
     <>
@@ -72,7 +87,15 @@ export function MyProfileModifyScreen(): React.JSX.Element {
           </TouchableOpacity>
         )}
       />
-      <ModifyNameSection {...profileForm} />
+      <StyledContainer>
+        <Gap size="30px" />
+        <SectionComponent {...profileForm} />
+      </StyledContainer>
     </>
   );
 }
+
+const StyledContainer = styled.View`
+  background-color: ${({theme}) => theme.palette['gray-0']};
+  height: 100%;
+`;

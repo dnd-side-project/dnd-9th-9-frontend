@@ -54,5 +54,5 @@ const StyledSection = styled.View`
 `;
 
 const StyledFieldContainer = styled.View`
-  padding: 20px 16px;
+  padding: 0 16px;
 `;
