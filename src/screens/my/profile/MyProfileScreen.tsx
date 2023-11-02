@@ -58,7 +58,9 @@ export function MyProfileScreen({navigation}: Props): React.JSX.Element {
               <ProfileListItem
                 label="이름"
                 value={myProfileDetail.name}
-                onPress={() => {}}
+                onPress={() => {
+                  navigation.navigate('MyProfileModify', {type: 'name'});
+                }}
               />
               <Line size="sm" color="gray-200" />
               <ProfileListItem

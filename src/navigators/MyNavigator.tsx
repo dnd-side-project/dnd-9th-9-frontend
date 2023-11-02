@@ -2,12 +2,19 @@ import React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {MyProfileScreen, MyScreen} from '../screens/my';
+import {
+  MyProfileModifyScreen,
+  MyProfileScreen,
+  MyScreen,
+  type TMyProfileModifyScreenSectionType,
+} from '../screens/my';
 
 export type MyStackParamList = {
   MyMain: undefined;
   MyProfile: undefined;
-  MyProfileModify: undefined;
+  MyProfileModify: {
+    type: TMyProfileModifyScreenSectionType;
+  };
   Setting: undefined;
   SettingNotification: undefined;
   SettingSocialSns: undefined;
@@ -29,6 +36,13 @@ export function MyNavigator(): React.JSX.Element {
       <Stack.Screen
         name="MyProfile"
         component={MyProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="MyProfileModify"
+        component={MyProfileModifyScreen}
         options={{
           headerShown: false,
         }}
