@@ -64,9 +64,7 @@ export function SettingScreen(): React.JSX.Element {
             {/* TODO(@minimalKim): 앱 빌드 시 버전 기록 연동 */}
             <Text text="1.0" color="blue-400" fontWeight="bold" />
           </StyledHorizontal>
-          {
-            // TODO(@minimalKim): config API 생성 및 최신 버전 비교 필요
-          }
+          {/*  TODO(@minimalKim): config API 생성 및 최신 버전 비교 필요 */}
         </StyledSettingListItem>
 
         <Line size="sm" color="gray-200" />
