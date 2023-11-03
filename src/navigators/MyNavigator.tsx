@@ -8,6 +8,7 @@ import {
   MyScreen,
   type TMyProfileModifyScreenSectionType,
 } from '../screens/my';
+import {SettingResignationScreen, SettingScreen} from '../screens/my/setting';
 
 export type MyStackParamList = {
   MyMain: undefined;
@@ -43,6 +44,20 @@ export function MyNavigator(): React.JSX.Element {
       <Stack.Screen
         name="MyProfileModify"
         component={MyProfileModifyScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Setting"
+        component={SettingScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SettingResignation"
+        component={SettingResignationScreen}
         options={{
           headerShown: false,
         }}
