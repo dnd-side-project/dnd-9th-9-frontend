@@ -4,6 +4,8 @@
 
 #import "RCTAppleHealthKit.h"
 
+#import "RNSplashScreen.h"  // here
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -18,7 +20,11 @@
   /* Add Background initializer for HealthKit  */
   [[RCTAppleHealthKit new] initializeBackgroundObservers:bridge];
 
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+  [super application:application didFinishLaunchingWithOptions:launchOptions];
+  
+  [RNSplashScreen show];
+  
+  return YES;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
