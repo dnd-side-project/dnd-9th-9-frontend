@@ -4,7 +4,7 @@
 
 #import "RCTAppleHealthKit.h"
 
-#import "RNSplashScreen.h"  // here
+#import "RNSplashScreen.h"
 
 @implementation AppDelegate
 
