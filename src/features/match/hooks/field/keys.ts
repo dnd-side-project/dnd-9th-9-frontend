@@ -69,4 +69,5 @@ export const KEYS = {
     size: number,
   ) =>
     [...KEYS.detail(id), 'entry-battle', {fieldDirection, page, size}] as const,
+  detailResult: (id: number) => [...KEYS.detail(id), 'result'] as const,
 };

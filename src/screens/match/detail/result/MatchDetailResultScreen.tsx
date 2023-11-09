@@ -10,6 +10,7 @@ import {
   MatchDetailResultAnalyzeTab,
   MatchDetailResultRateCard,
 } from '../../../../features/match/components';
+import {useGetFieldDetailResult} from '../../../../features/match/hooks/field';
 import {
   useGetTeamworkIsRatingDone,
   usePostTeamworkRate,
@@ -24,6 +25,8 @@ export const MatchDetailResultScreen = ({
   fieldId,
 }: IMatchDetailResultScreenProps): React.JSX.Element => {
   const [currentRate, setCurrentRate] = useState(0);
+
+  const {data: resultData} = useGetFieldDetailResult({id: fieldId});
 
   const {data: isTeamWorkRatingDone} = useGetTeamworkIsRatingDone({
     fieldId,
@@ -40,36 +43,8 @@ export const MatchDetailResultScreen = ({
   });
 
   // TODO: 예외처리
-  if (isTeamWorkRatingDone === undefined) return <></>;
-
-  const data = {
-    away: {
-      goalAchievedCount: 0,
-      name: 'string',
-      profileImg: 'string',
-      totalBurnedCalorie: 0,
-      totalExerciseTimeMinute: 0,
-      totalRecordCount: 0,
-      totalScore: 0,
-    },
-    elementWiseWin: {
-      burnedCalorie: 'DRAW',
-      exerciseTimeMinute: 'DRAW',
-      goalAchievedCount: 'DRAW',
-      recordCount: 'DRAW',
-    },
-    home: {
-      goalAchievedCount: 0,
-      name: 'string',
-      profileImg: 'string',
-      totalBurnedCalorie: 0,
-      totalExerciseTimeMinute: 0,
-      totalRecordCount: 0,
-      totalScore: 0,
-    },
-    period: 'ONE_WEEK',
-    winStatus: 'DRAW',
-  };
+  if (isTeamWorkRatingDone === undefined || resultData === undefined)
+    return <></>;
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.palette['gray-0']}}>
@@ -86,25 +61,25 @@ export const MatchDetailResultScreen = ({
         />
         {isTeamWorkRatingDone ? (
           <MatchDetailResultCard
-            ourTeamImage={data.home.profileImg}
-            awayTeamImage={data.away.profileImg}
-            ourTeamName={data.home.name}
-            awayTeamName={data.away.name}
-            ourScore={data.home.totalScore}
-            awayScore={data.away.totalScore}
-            period={'ONE_WEEK'}
-            winStatus={'DRAW'}
+            ourTeamImage={resultData.home.profileImg}
+            awayTeamImage={resultData.away.profileImg}
+            ourTeamName={resultData.home.name}
+            awayTeamName={resultData.away.name}
+            ourScore={resultData.home.totalScore}
+            awayScore={resultData.away.totalScore}
+            period={resultData.period}
+            winStatus={resultData.winStatus}
           />
         ) : (
           <MatchDetailResultRateCard
-            ourTeamImage={data.home.profileImg}
-            awayTeamImage={data.away.profileImg}
-            ourTeamName={data.home.name}
-            awayTeamName={data.away.name}
-            ourScore={data.home.totalScore}
-            awayScore={data.away.totalScore}
-            period={'ONE_WEEK'}
-            winStatus={'DRAW'}
+            ourTeamImage={resultData.home.profileImg}
+            awayTeamImage={resultData.away.profileImg}
+            ourTeamName={resultData.home.name}
+            awayTeamName={resultData.away.name}
+            ourScore={resultData.home.totalScore}
+            awayScore={resultData.away.totalScore}
+            period={resultData.period}
+            winStatus={resultData.winStatus}
             currentRate={currentRate}
             onPressRate={setCurrentRate}
           />
@@ -121,14 +96,9 @@ export const MatchDetailResultScreen = ({
           }}
         />
         <MatchDetailResultAnalyzeTab
-          ourTeamName={data.home.name}
-          awayTeamName={data.away.name}
-          elementWiseWin={{
-            burnedCalorie: 'DRAW',
-            exerciseTimeMinute: 'DRAW',
-            goalAchievedCount: 'DRAW',
-            recordCount: 'DRAW',
-          }}
+          ourTeamName={resultData.home.name}
+          awayTeamName={resultData.away.name}
+          elementWiseWin={resultData.elementWiseWin}
         />
       </ScrollView>
 
