@@ -7,10 +7,7 @@ import {RecordsTabScreen} from './RecordsTabScreen';
 import {SummaryTabScreen} from './SummaryTabScreen';
 import {theme} from '../../assets/styles/theme';
 import {Button} from '../../components/Button';
-import {
-  type ITopTabScreen,
-  TopTabNavigator,
-} from '../../components/TopTabNavigator';
+import {type ITopTabScreen, TopTabNavigator} from '../../components/Tab';
 import {type RecordStackParamList} from '../../navigators/RecordNavigator';
 
 type Props = NativeStackScreenProps<RecordStackParamList, 'RecordMain'>;
