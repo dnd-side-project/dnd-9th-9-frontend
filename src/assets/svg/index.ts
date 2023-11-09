@@ -248,6 +248,13 @@ const googleLogoXmlData = `
 </svg>
 `;
 
+const penXmlData = `
+<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+  <path d="M11.5 3.5003L15.5 7.5003M2 17.0003H6L16.5 6.5003C17.0304 5.96987 17.3284 5.25045 17.3284 4.5003C17.3284 3.75016 17.0304 3.03074 16.5 2.5003C15.9696 1.96987 15.2501 1.67188 14.5 1.67188C13.7499 1.67187 13.0304 1.96987 12.5 2.5003L2 13.0003V17.0003Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+`;
+
 export {
   lockXmlData,
   filterXmlData,
@@ -278,4 +285,5 @@ export {
   appleLogoXmlData,
   kakaoLogoXmlData,
   googleLogoXmlData,
+  penXmlData,
 };
