@@ -53,7 +53,7 @@ export const MatchDetailScreen = (): React.JSX.Element => {
         {
           name: 'Result',
           label: '매칭결과',
-          component: () => <MatchDetailResultScreen />,
+          component: () => <MatchDetailResultScreen fieldId={id} />,
         },
       ];
     }
