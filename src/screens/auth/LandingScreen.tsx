@@ -31,7 +31,7 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
 
   const {mutate: postRefreshAccessToken} = usePostRefreshAccessToken({
     onSuccessCallback: () => {
-      navigation.navigate('Main');
+      navigation.replace('Main');
     },
   });
 
