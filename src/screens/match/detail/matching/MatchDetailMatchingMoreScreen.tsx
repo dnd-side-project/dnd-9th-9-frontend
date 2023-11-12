@@ -7,7 +7,6 @@ import {
 } from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaView, TouchableOpacity, View} from 'react-native';
-import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
 import {Button} from '../../../../components/Button';
@@ -22,6 +21,7 @@ import {
   useGetInfiniteFieldEntryBattleDetail,
   usePostFieldEntryAccept,
 } from '../../../../features/match/hooks/fieldEntry';
+import Toast from '../../../../lib/toast';
 import {type MatchStackParamList} from '../../../../navigators';
 
 type TMatchDetailMatchingMoreRouteProps = RouteProp<
@@ -51,27 +51,21 @@ export const MatchDetailMatchingMoreScreen = (): React.JSX.Element => {
 
   const {mutate: deleteFieldEntrySent} = useDeleteFieldEntry({
     onSuccessCallback: () => {
-      Toast.show('매칭 신청이 취소되었습니다.', Toast.SHORT, {
-        backgroundColor: '#000000c5',
-      });
+      const message = '매칭 신청이 취소되었습니다.';
+      Toast.show({message});
     },
   });
 
   const {mutate: postAcceptFieldEntry} = usePostFieldEntryAccept({
     onSuccessCallback: () => {
-      Toast.show('매칭이 시작되었습니다.', Toast.SHORT, {
-        backgroundColor: '#000000c5',
-      });
+      const message = '매칭이 시작되었습니다.';
+      Toast.show({message});
       navigation.pop();
     },
     onErrorCallback: error => {
-      Toast.show(
-        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
-        Toast.SHORT,
-        {
-          backgroundColor: '#000000c5',
-        },
-      );
+      const message =
+        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.';
+      Toast.show({message});
     },
   });
 

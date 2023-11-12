@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 
 import {useRoute, type RouteProp} from '@react-navigation/native';
 import {SafeAreaView, ScrollView, View} from 'react-native';
-import Toast from 'react-native-simple-toast';
 
 import {Button} from '../../../../components/Button';
 import {CreateMatchProfileSection} from '../../../../features/match/components/CreateMatchProfile';
 import {usePostFieldProfile} from '../../../../features/match/hooks/field';
 import {type ICreateField} from '../../../../features/match/types';
+import Toast from '../../../../lib/toast';
 import {type MatchStackParamList} from '../../../../navigators';
 
 type TUpdateTeamProfileProps = RouteProp<MatchStackParamList, 'UpdateProfile'>;
@@ -17,18 +17,13 @@ export const UpdateTeamProfileScreen = (): React.JSX.Element => {
 
   const {mutateAsync: patchFieldProfile} = usePostFieldProfile({
     onSuccessCallback: () => {
-      Toast.show('팀 프로필을 수정하였습니다.', Toast.SHORT, {
-        backgroundColor: '#000000c5',
-      });
+      const message = '팀 프로필을 수정하였습니다.';
+      Toast.show({message});
     },
     onErrorCallback: error => {
-      Toast.show(
-        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
-        Toast.SHORT,
-        {
-          backgroundColor: '#000000c5',
-        },
-      );
+      const message =
+        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.';
+      Toast.show({message});
     },
   });
 
