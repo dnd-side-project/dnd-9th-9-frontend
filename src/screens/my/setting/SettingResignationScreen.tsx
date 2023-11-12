@@ -1,25 +1,53 @@
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 
 import styled from '@emotion/native';
 import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {SafeAreaView, View} from 'react-native';
+import {SafeAreaView} from 'react-native';
 
 import {theme} from '../../../assets/styles/theme';
-import {fireScoreXmlData} from '../../../assets/svg';
+import {checkXmlData} from '../../../assets/svg';
+import {CheckBox} from '../../../components/CheckBox';
 import {Gap} from '../../../components/Gap';
 import {Icon} from '../../../components/Icon';
-import {Line} from '../../../components/Line';
 import {Text} from '../../../components/Text';
 import {TopBar} from '../../../components/TopBar';
-import {useGetMyProfileDetail} from '../../../features/my/hooks/profile';
+import {ResignationAchievementCard} from '../../../features/my/components';
 import {type MyStackParamList} from '../../../navigators/MyNavigator';
+
+interface ITerms {
+  personalInfo: boolean;
+  id: boolean;
+}
+
+type TTerm = keyof ITerms;
 
 export function SettingResignationScreen(): React.JSX.Element {
   const navigation =
     useNavigation<NativeStackNavigationProp<MyStackParamList>>();
 
-  const {data: myProfileDetail} = useGetMyProfileDetail();
+  const [terms, setTerms] = useState<ITerms>({
+    personalInfo: false,
+    id: false,
+  });
+
+  const setTerm = (termId: TTerm, isChecked: boolean): void => {
+    setTerms(terms => ({...terms, [termId]: isChecked}));
+  };
+
+  const setAllTerms = (value: boolean): void => {
+    setTerms(prevTerms => {
+      const newTerms = {...prevTerms};
+      (Object.keys(newTerms) as Array<keyof typeof newTerms>).forEach(key => {
+        newTerms[key] = value;
+      });
+      return newTerms;
+    });
+  };
+
+  const isAllTermsChecked = useMemo(() => {
+    return Object.values(terms).every(isChecked => isChecked);
+  }, [terms]);
 
   return (
     <>
@@ -32,87 +60,34 @@ export function SettingResignationScreen(): React.JSX.Element {
         }}
       />
       <StyledContainer>
-        <StyledCard>
-          <StyledHorizontal>
-            {myProfileDetail?.profileImg != null ? (
-              <StyledProfileImage source={{uri: myProfileDetail.profileImg}} />
-            ) : (
-              <StyledProfileImagePlaceholder />
-            )}
-            <Gap size="16px" />
-            <View>
-              <Text
-                text={`그동안 ${myProfileDetail?.name ?? '회원'}님의 활동`}
-                color="gray-700"
-                type="body1"
-                fontWeight="600"
-              />
-              <Gap size="8px" />
-              <StyledHorizontal>
-                <Icon
-                  svgXml={fireScoreXmlData}
-                  height={20}
-                  width={20}
-                  color={theme.palette['main-400']}
-                />
-                <Text
-                  text={myProfileDetail?.teamworkRate.toString() ?? '0'}
-                  color="gray-700"
-                  type="body2"
-                  fontWeight="800"
-                />
-                <Text text="불꽃" color="gray-700" type="body2" />
-              </StyledHorizontal>
-            </View>
-          </StyledHorizontal>
+        <Gap size={'10px'} />
+        <ResignationAchievementCard />
 
-          <Gap size="18px" />
-          <Line size="xs" color="gray-300" />
-          <Gap size="18px" />
+        <StyledHorizontal>
+          <CheckBox
+            isCheck={isAllTermsChecked}
+            label="안내사항을 확인하고 회원탈퇴에 동의해주세요"
+            onPress={() => {
+              setAllTerms(!isAllTermsChecked);
+            }}
+          />
+        </StyledHorizontal>
 
-          <View style={{gap: 8}}>
-            <StyledHorizontal style={{justifyContent: 'space-between'}}>
-              <Text text="활동 일수" type="body2" color="gray-700" />
-              <StyledHorizontal style={{gap: 2}}>
-                {/* TODO(@minimalKim): 모든 활동일수 갯수 API 요청 */}
-                <Text
-                  text={'24'}
-                  type="body2"
-                  color="gray-700"
-                  fontWeight="700"
-                />
-                <Text text="일" type="body2" color="gray-700" />
-              </StyledHorizontal>
-            </StyledHorizontal>
-            <StyledHorizontal style={{justifyContent: 'space-between'}}>
-              <Text text="운동기록" type="body2" color="gray-700" />
-              {/* TODO(@minimalKim): 모든 운동기록 갯수 API 요청 */}
-              <StyledHorizontal style={{gap: 2}}>
-                <Text
-                  text={'24'}
-                  type="body2"
-                  color="gray-700"
-                  fontWeight="700"
-                />
-                <Text text="회" type="body2" color="gray-700" />
-              </StyledHorizontal>
-            </StyledHorizontal>
-            <StyledHorizontal style={{justifyContent: 'space-between'}}>
-              {/* TODO(@minimalKim): /user-field/completed 사용 */}
-              <Text text="매칭" type="body2" color="gray-700" />
-              <StyledHorizontal style={{gap: 2}}>
-                <Text
-                  text={'24'}
-                  type="body2"
-                  color="gray-700"
-                  fontWeight="700"
-                />
-                <Text text="회" type="body2" color="gray-700" />
-              </StyledHorizontal>
-            </StyledHorizontal>
-            {/* NOTE: 뱃시 MVP 제외 */}
-          </View>
-        </StyledCard>
+        <StyledHorizontal>
+          <CheckBox
+            isCheck={terms.personalInfo}
+            onPress={() => {
+              setTerm('personalInfo', !terms.personalInfo);
+            }}
+          />
+          <Text text="그동안 회원님의 활동, 개인 정보와 설정이 삭제돼요." />
+        </StyledHorizontal>
+
+        <Icon svgXml={checkXmlData} />
+        <StyledHorizontal>
+          <CheckBox isCheck={terms.id} />
+          <Text text="ID가 삭제돼요." />
+        </StyledHorizontal>
       </StyledContainer>
     </>
   );
@@ -128,24 +103,4 @@ const StyledHorizontal = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 4px;
-`;
-
-const StyledCard = styled.View`
-  padding: 20px 24px;
-  border-radius: 22px;
-  border: 1px solid ${({theme}) => theme.palette['gray-300']};
-`;
-
-const StyledProfileImage = styled.Image`
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-`;
-
-const StyledProfileImagePlaceholder = styled.View`
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  background-color: ${({theme}) => theme.palette['gray-300']};
 `;
