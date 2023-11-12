@@ -1,6 +1,9 @@
-import Axios from 'axios';
+import Axios, {type AxiosResponse} from 'axios';
 
 import {asyncStorage, ASYNC_STORAGE_KEYS} from './asyncStorage';
+import {requestPostAuthRefresh} from '../features/auth/hooks/auth';
+import {appNavigationRef} from '../navigators';
+import {type CustomAxiosError} from '../utils/types';
 
 // TODO: env 관련 설정 추가
 export const API_URL = '/api';
@@ -45,9 +48,52 @@ axios.interceptors.request.use(async config => {
 axios.interceptors.response.use(undefined, async error => {
   if (Axios.isAxiosError(error)) {
     const statusCode = error.response?.status;
-    if (statusCode === 401 || statusCode === 403) {
-      // TODO: 재로그인
+    if (statusCode === 401) {
+      void handle401Error(error);
     }
   }
   return await Promise.reject(error);
 });
+
+const handle401Error = async (
+  error: CustomAxiosError,
+): Promise<AxiosResponse<any, any> | undefined> => {
+  switch (error.code) {
+    case 'J-001':
+    case 'J-003': {
+      // 유효하지 않은 (잘못된) JWT 토큰 (J-001)
+      // 지원하지 않는 JWT 토큰 (J-003)
+      // - 재로그인
+      if (appNavigationRef.isReady()) {
+        appNavigationRef.navigate('Login');
+      }
+      break;
+    }
+    case 'J-002': {
+      // 만료된 토큰(J-002)
+      // - 토큰 재발급
+      const refreshToken = await asyncStorage.get<string>(
+        ASYNC_STORAGE_KEYS.AUTH_JWT_REFRESH_TOKEN,
+      );
+
+      if (refreshToken != null) {
+        const {accessToken} = await requestPostAuthRefresh({
+          body: {
+            refreshToken,
+          },
+        });
+
+        await asyncStorage.set<string>(
+          ASYNC_STORAGE_KEYS.AUTH_JWT_ACCESS_TOKEN,
+          accessToken,
+        );
+
+        if (error.config != null) {
+          error.config.headers.Authorization = `Bearer ${accessToken}`;
+          return await axios(error.config);
+        }
+      }
+      break;
+    }
+  }
+};

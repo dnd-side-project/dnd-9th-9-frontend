@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styled from '@emotion/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -13,19 +13,45 @@ import {BottomSheet} from '../../components/BottomSheet';
 import {Button} from '../../components/Button';
 import {Icon} from '../../components/Icon';
 import {Text} from '../../components/Text';
+import {usePostRefreshAccessToken} from '../../features/auth/hooks/auth';
+import {asyncStorage} from '../../lib/asyncStorage';
 import {type RootStackParamList} from '../../navigators';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Landing'>;
 
 export function LandingScreen({navigation}: Props): React.JSX.Element {
   const [showBottomModal, setShowBottomModal] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isSelectedLogin, setIsSelectedLogin] = useState(false);
 
   const getSnsButtonLabel = (sns: string): string => {
     return `${sns === 'Apple' ? `${sns}로` : sns} ${
-      isLogin ? '로그인' : '계속하기'
+      isSelectedLogin ? '로그인' : '계속하기'
     }`;
   };
+
+  const {mutate: postRefreshAccessToken} = usePostRefreshAccessToken({
+    onSuccessCallback: () => {
+      navigation.replace('Main');
+    },
+  });
+
+  const refreshAccessToken = async (): Promise<void> => {
+    const refreshToken = await asyncStorage.get<string>(
+      'auth-jwt-refresh-token',
+    );
+
+    if (refreshToken != null) {
+      postRefreshAccessToken({
+        body: {
+          refreshToken,
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    void refreshAccessToken();
+  }, []);
 
   return (
     <StyledSafeAreaView>
@@ -40,7 +66,7 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
           style={{borderRadius: 16}}
           onPress={() => {
             setShowBottomModal(true);
-            setIsLogin(true);
+            setIsSelectedLogin(true);
           }}
         />
         <Button
@@ -52,7 +78,7 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
           }}
           onPress={() => {
             setShowBottomModal(true);
-            setIsLogin(false);
+            setIsSelectedLogin(false);
           }}
         />
       </StyledButtonContainer>
@@ -102,7 +128,7 @@ export function LandingScreen({navigation}: Props): React.JSX.Element {
               </StyledSnsButton>
             </StyledSnsButtonContainer>
 
-            {isLogin ? (
+            {isSelectedLogin ? (
               <StyledHorizontalView>
                 <StyledTextButton
                   onPress={() => {

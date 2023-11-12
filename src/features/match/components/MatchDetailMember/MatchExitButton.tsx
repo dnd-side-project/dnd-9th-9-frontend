@@ -3,10 +3,10 @@ import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {TouchableOpacity} from 'react-native';
-import Toast from 'react-native-simple-toast';
 
 import {ConfirmModal} from '../../../../components/Modal';
 import {Tag} from '../../../../components/Tag';
+import Toast from '../../../../lib/toast';
 import {type MatchStackParamList} from '../../../../navigators';
 import {useDeleteUserFieldExit} from '../../hooks/userField/useDeleteUserFieldExit';
 
@@ -28,9 +28,8 @@ export const MatchExitButton = ({
 
   const {mutate: exitField} = useDeleteUserFieldExit({
     onSuccessCallback: () => {
-      Toast.show('팀에서 나갔습니다.', Toast.SHORT, {
-        backgroundColor: '#000000c5',
-      });
+      const message = '팀에서 나갔습니다.';
+      Toast.show({message});
       navigation.navigate('MatchList', {
         page: 0,
         size: 10,
