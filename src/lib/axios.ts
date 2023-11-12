@@ -64,7 +64,9 @@ const handle401Error = async (
       // 유효하지 않은 (잘못된) JWT 토큰 (J-001)
       // 지원하지 않는 JWT 토큰 (J-003)
       // - 재로그인
-      appNavigationRef.navigate('Login');
+      if (appNavigationRef.isReady()) {
+        appNavigationRef.navigate('Login');
+      }
       break;
     }
     case 'J-002': {
