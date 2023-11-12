@@ -8,7 +8,6 @@ import {
 } from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
-import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
 import {Line} from '../../../../components/Line';
@@ -19,6 +18,7 @@ import {
   useGetFieldDetail,
   useDeleteField,
 } from '../../../../features/match/hooks/field';
+import Toast from '../../../../lib/toast';
 import {type MatchStackParamList} from '../../../../navigators';
 
 type TMatchDetailProfileSettingRouteProps = RouteProp<
@@ -36,9 +36,9 @@ export const MatchDetailProfileSettingScreen = (): React.JSX.Element => {
 
   const {mutate: deleteField} = useDeleteField({
     onSuccessCallback: () => {
-      Toast.show('팀을 삭제하였습니다.', Toast.SHORT, {
-        backgroundColor: '#000000c5',
-      });
+      const message = '팀을 삭제하였습니다.';
+      Toast.show({message});
+
       navigation.navigate('MatchList', {
         page: 0,
         size: 10,
@@ -52,13 +52,9 @@ export const MatchDetailProfileSettingScreen = (): React.JSX.Element => {
       });
     },
     onErrorCallback: error => {
-      Toast.show(
-        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
-        Toast.SHORT,
-        {
-          backgroundColor: '#000000c5',
-        },
-      );
+      const message =
+        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.';
+      Toast.show({message});
     },
   });
 

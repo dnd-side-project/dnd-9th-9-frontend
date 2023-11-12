@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 
 import {type RouteProp, useRoute} from '@react-navigation/native';
 import {SafeAreaView, ScrollView, View} from 'react-native';
-import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
 import {Button} from '../../../../components/Button';
 import {MatchMemberList} from '../../../../features/match/components/MatchDetailMember';
 import {useGetUserFieldList} from '../../../../features/match/hooks/userField';
 import {useDeleteUserFieldEject} from '../../../../features/match/hooks/userField/useDeleteUserFieldEject';
+import Toast from '../../../../lib/toast';
 import {type MatchStackParamList} from '../../../../navigators/MatchNavigator';
 
 export const MatchDetailMemberDeleteScreen = (): React.JSX.Element => {
@@ -22,18 +22,13 @@ export const MatchDetailMemberDeleteScreen = (): React.JSX.Element => {
   // TODO: 팀원 삭제 이후 토스트 안내 및 navigation pop
   const {mutate: deleteUserFieldEject} = useDeleteUserFieldEject({
     onSuccessCallback: () => {
-      Toast.show('팀원이 삭제 되었습니다.', Toast.SHORT, {
-        backgroundColor: '#000000c5',
-      });
+      const message = '팀원이 삭제 되었습니다.';
+      Toast.show({message});
     },
     onErrorCallback: error => {
-      Toast.show(
-        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.',
-        Toast.SHORT,
-        {
-          backgroundColor: '#000000c5',
-        },
-      );
+      const message =
+        error?.response?.data?.message ?? '알 수 없는 오류가 발생하였습니다.';
+      Toast.show({message});
     },
   });
 
