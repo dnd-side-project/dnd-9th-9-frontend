@@ -164,8 +164,8 @@ const checkXmlData = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height=
 
 const checkLinedXmlData = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
   <g clip-path="url(#clip0_135_4801)">
-  <path d="M2 5.65723L5.13208 8.7893" stroke="#DFDFDF" stroke-width="1.55663" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M5.37305 9.03027L11.0298 3.37348" stroke="#DFDFDF" stroke-width="1.55663" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M2 5.65723L5.13208 8.7893" stroke="currentColor" stroke-width="1.55663" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M5.37305 9.03027L11.0298 3.37348" stroke="currentColor" stroke-width="1.55663" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <defs>
   <clipPath id="clip0_135_4801">
