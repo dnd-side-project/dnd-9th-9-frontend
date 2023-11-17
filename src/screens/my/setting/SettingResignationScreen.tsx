@@ -100,7 +100,9 @@ export function SettingResignationScreen(): React.JSX.Element {
             text="탈퇴하기"
             variant="tertiary"
             disabled={!isAllTermsChecked}
-            onPress={function (): void {}}
+            onPress={() => {
+              // TODO(@minimalKim): 탈퇴 API 연동 및 다시 온보딩 화면으로 이동
+            }}
           />
         </FixedButtonWrapper>
       </StyledContainer>
