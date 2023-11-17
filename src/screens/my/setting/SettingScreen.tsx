@@ -40,14 +40,22 @@ export function SettingScreen(): React.JSX.Element {
       />
       <StyledContainer>
         <Gap size="30px" />
-        <StyledSettingListItem>
-          <Text text="연결된 계정" />
+        <StyledSettingListItemPressable
+          onPress={() => {
+            navigation.navigate('SettingConnectedAccount');
+          }}>
+          <Text text="연결된 계정" color="gray-900" fontWeight="600" />
           <StyledHorizontal>
             <Text color="gray-800" type="body3" text={linkedSnsLabel} />
+            <Icon
+              svgXml={arrowRightXmlData}
+              width={30}
+              color={theme.palette.black}
+            />
           </StyledHorizontal>
-        </StyledSettingListItem>
+        </StyledSettingListItemPressable>
         <StyledSettingListItemPressable>
-          <Text text="알림 설정" />
+          <Text text="알림 설정" color="gray-900" fontWeight="600" />
           <Icon
             svgXml={arrowRightXmlData}
             width={30}
@@ -55,12 +63,33 @@ export function SettingScreen(): React.JSX.Element {
           />
         </StyledSettingListItemPressable>
 
-        {/*
-         * NOTE: 고객센터 -> 앱스토어, 이메일로 대체
-         */}
+        <Line size="sm" color="gray-200" />
+
+        <StyledSettingListItemPressable
+          onPress={() => {
+            // TODO(@minimalKim): 이메일 띄우기
+          }}>
+          <Text text="고객센터" color="gray-900" fontWeight="600" />
+          <Icon
+            svgXml={arrowRightXmlData}
+            width={30}
+            color={theme.palette.black}
+          />
+        </StyledSettingListItemPressable>
+        <StyledSettingListItemPressable
+          onPress={() => {
+            // TODO(@minimalKim): 이용약관 페이지 이동
+          }}>
+          <Text text="이용약관" color="gray-900" fontWeight="600" />
+          <Icon
+            svgXml={arrowRightXmlData}
+            width={30}
+            color={theme.palette.black}
+          />
+        </StyledSettingListItemPressable>
         <StyledSettingListItem>
           <StyledHorizontal>
-            <Text text="버전" />
+            <Text text="버전" color="gray-900" fontWeight="600" />
             {/* TODO(@minimalKim): 앱 빌드 시 버전 기록 연동 */}
             <Text text="1.0" color="blue-400" fontWeight="bold" />
           </StyledHorizontal>
