@@ -7,7 +7,6 @@ import {SafeAreaView} from 'react-native';
 
 import {theme} from '../../../assets/styles/theme';
 import {arrowRightXmlData} from '../../../assets/svg';
-import {Gap} from '../../../components/Gap';
 import {Icon} from '../../../components/Icon';
 import {Line} from '../../../components/Line';
 import {Text} from '../../../components/Text';
@@ -39,7 +38,6 @@ export function SettingScreen(): React.JSX.Element {
         }}
       />
       <StyledContainer>
-        <Gap size="30px" />
         <StyledSettingListItemPressable
           onPress={() => {
             navigation.navigate('SettingConnectedAccount');
@@ -100,7 +98,7 @@ export function SettingScreen(): React.JSX.Element {
 
         <StyledSettingListItemPressable
           onPress={() => {
-            navigation.navigate('SettingResignation');
+            // TODO(@minimalKim): 로그아웃 API 연동
           }}>
           <Text text="로그아웃" color="error-dark" />
           <Icon
