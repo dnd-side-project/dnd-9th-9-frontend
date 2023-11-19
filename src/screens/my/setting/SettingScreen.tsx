@@ -11,13 +11,18 @@ import {Icon} from '../../../components/Icon';
 import {Line} from '../../../components/Line';
 import {Text} from '../../../components/Text';
 import {TopBar} from '../../../components/TopBar';
+import {useGetLogout} from '../../../features/auth/hooks/auth/useGetLogout';
 import {LOGIN_TYPE} from '../../../features/my/const';
 import {useGetMyProfileDetail} from '../../../features/my/hooks/profile';
+import {type RootStackParamList} from '../../../navigators';
 import {type MyStackParamList} from '../../../navigators/MyNavigator';
 
 export function SettingScreen(): React.JSX.Element {
-  const navigation =
+  const myNavigation =
     useNavigation<NativeStackNavigationProp<MyStackParamList>>();
+
+  const appNavigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const {data: myProfileDetail} = useGetMyProfileDetail();
 
@@ -27,6 +32,20 @@ export function SettingScreen(): React.JSX.Element {
       : '';
   }, []);
 
+  const {refetch: getLogout} = useGetLogout({
+    options: {
+      enabled: false,
+      onSuccessCallback: () => {
+        appNavigation.popToTop();
+        appNavigation.navigate('Landing');
+      },
+    },
+  });
+
+  const handlePressLogout = (): void => {
+    void getLogout();
+  };
+
   return (
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
@@ -34,13 +53,13 @@ export function SettingScreen(): React.JSX.Element {
         headerText="설정"
         showBackButton
         onPressBackButton={() => {
-          navigation.pop();
+          myNavigation.pop();
         }}
       />
       <StyledContainer>
         <StyledSettingListItemPressable
           onPress={() => {
-            navigation.navigate('SettingConnectedAccount');
+            myNavigation.navigate('SettingConnectedAccount');
           }}>
           <Text text="연결된 계정" color="gray-900" fontWeight="600" />
           <StyledHorizontal>
@@ -96,10 +115,7 @@ export function SettingScreen(): React.JSX.Element {
 
         <Line size="sm" color="gray-200" />
 
-        <StyledSettingListItemPressable
-          onPress={() => {
-            // TODO(@minimalKim): 로그아웃 API 연동
-          }}>
+        <StyledSettingListItemPressable onPress={handlePressLogout}>
           <Text text="로그아웃" color="error-dark" />
           <Icon
             svgXml={arrowRightXmlData}
