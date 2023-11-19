@@ -10,11 +10,14 @@ import {Line} from '../../../components/Line';
 import {Text} from '../../../components/Text';
 import {TopBar} from '../../../components/TopBar';
 import {ConnectedAccount} from '../../../features/my/components';
+import {useGetMyProfileDetail} from '../../../features/my/hooks/profile';
 import {type MyStackParamList} from '../../../navigators/MyNavigator';
 
 export const SettingConnectedAccount = (): React.JSX.Element => {
   const navigation =
     useNavigation<NativeStackNavigationProp<MyStackParamList>>();
+
+  const {data: myProfileDetail} = useGetMyProfileDetail();
 
   return (
     <>
@@ -28,7 +31,9 @@ export const SettingConnectedAccount = (): React.JSX.Element => {
       />
 
       <StyledContainer>
-        <ConnectedAccount loginType={'APPLE'} />
+        {myProfileDetail != null && (
+          <ConnectedAccount loginType={myProfileDetail?.loginType} />
+        )}
 
         <Line size="sm" color="gray-200" />
 
