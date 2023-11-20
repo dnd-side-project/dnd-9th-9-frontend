@@ -5,6 +5,7 @@ import {ScrollView} from 'react-native';
 import {MyMatchApplicationScreen} from './MyMatchApplicationScreen';
 import {MyMatchCompleteScreen} from './MyMatchCompleteScreen';
 import {MyMatchProgressScreen} from './MyMatchProgressScreen';
+import {MyMatchRecruitingScreen} from './MyMatchRecruitingScreen';
 import {theme} from '../../../assets/styles/theme';
 import {MyMatchStatusFilter} from '../../../features/match/components/MyMatch/MyMatchStatusFilter';
 import {type TMyMatchStatus} from '../../../features/match/types';
@@ -18,6 +19,7 @@ export const MyMatchListScreen = ({
 }: IMyMatchListScreenProps): React.JSX.Element => {
   const getMyMatchScreen = {
     APPLICATION: <MyMatchApplicationScreen />,
+    RECRUITING: <MyMatchRecruitingScreen />,
     PROGRESS: <MyMatchProgressScreen />,
     COMPLETE: <MyMatchCompleteScreen />,
   };

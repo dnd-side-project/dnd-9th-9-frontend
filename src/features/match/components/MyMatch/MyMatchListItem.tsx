@@ -20,6 +20,7 @@ interface IMyMatchListItemProps {
   name: string;
   period: TPeriod;
   skillLevel: TSkillLevel;
+  isLeader?: boolean;
 }
 
 export const MyMatchListItem = ({
@@ -30,6 +31,7 @@ export const MyMatchListItem = ({
   name,
   period,
   skillLevel,
+  isLeader = false,
 }: IMyMatchListItemProps): React.JSX.Element => {
   const navigation =
     useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
@@ -62,18 +64,31 @@ export const MyMatchListItem = ({
                 borderColor="main-400"
               />
             )}
-            <Tag
-              type="sm"
-              color="gray-0"
-              backgroundColor="gray-700"
-              text={
-                isFinish
-                  ? `팀원 모집완료 ${currentSize}/${maxSize}`
-                  : `팀원 모집 중 ${currentSize}/${maxSize}`
-              }
-              hasBorder={false}
-              borderColor={'main-400'}
-            />
+            {fieldType !== 'DUEL' && (
+              <Tag
+                type="sm"
+                color="gray-0"
+                backgroundColor="gray-700"
+                text={
+                  isFinish
+                    ? `팀원 모집완료 ${currentSize}/${maxSize}`
+                    : `팀원 모집 중 ${currentSize}/${maxSize}`
+                }
+                hasBorder={false}
+                borderColor={'main-400'}
+              />
+            )}
+
+            {isLeader && (
+              <Tag
+                type="sm"
+                color="gray-0"
+                backgroundColor="main-300"
+                text="방장"
+                hasBorder={false}
+                borderColor={'main-400'}
+              />
+            )}
           </View>
           <Gap size="8px" />
 
