@@ -1,14 +1,16 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import styled from '@emotion/native';
 import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
+import email from 'react-native-email';
 
 import {theme} from '../../../assets/styles/theme';
 import {arrowRightXmlData} from '../../../assets/svg';
 import {Icon} from '../../../components/Icon';
 import {Line} from '../../../components/Line';
+import {ConfirmModal} from '../../../components/Modal';
 import {Text} from '../../../components/Text';
 import {TopBar} from '../../../components/TopBar';
 import {useGetLogout} from '../../../features/auth/hooks/auth/useGetLogout';
@@ -44,6 +46,29 @@ export function SettingScreen(): React.JSX.Element {
 
   const handlePressLogout = (): void => {
     void getLogout();
+  };
+
+  const [modal, setModal] = useState({
+    visible: false,
+    title: '메일 서비스 접근 불가',
+    subTitle: `앱스토어 또는 minimalkim.dev@gmail.com
+    메일로 문의해주세요.`,
+  });
+
+  const toggleModal = (visible: boolean): void => {
+    setModal(modal => ({...modal, visible}));
+  };
+
+  // NOTE: iOS 시뮬레이터에서 미동작, 실제 기기에서만 동작
+  const handlePressCS = (): void => {
+    // TODO(@minimalKim): 서비스용 메일 추가 필요
+    const to = ['minimalkim.dev@gmail.com'];
+    email(to, {
+      subject: '[매치업] 서비스 관련 문의',
+      body: '서비스를 이용하면서 발생한 문제를 작성해주세요.',
+    }).catch(() => {
+      toggleModal(true);
+    });
   };
 
   return (
@@ -82,10 +107,7 @@ export function SettingScreen(): React.JSX.Element {
 
         <Line size="sm" color="gray-200" />
 
-        <StyledSettingListItemPressable
-          onPress={() => {
-            // TODO(@minimalKim): 이메일 띄우기
-          }}>
+        <StyledSettingListItemPressable onPress={handlePressCS}>
           <Text text="고객센터" color="gray-900" fontWeight="600" />
           <Icon
             svgXml={arrowRightXmlData}
@@ -123,6 +145,13 @@ export function SettingScreen(): React.JSX.Element {
             color={theme.palette.black}
           />
         </StyledSettingListItemPressable>
+
+        <ConfirmModal
+          {...modal}
+          handleConfirm={() => {
+            toggleModal(false);
+          }}
+        />
       </StyledContainer>
     </>
   );
