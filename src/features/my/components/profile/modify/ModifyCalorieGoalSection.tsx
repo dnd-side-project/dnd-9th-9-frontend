@@ -29,7 +29,7 @@ export const ModifyCalorieGoalSection = ({
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <Textfield
-              label="칼로리 목표"
+              label="목표 칼로리"
               keyboardType="numeric"
               placeholder="300kcal"
               isError={error != null}

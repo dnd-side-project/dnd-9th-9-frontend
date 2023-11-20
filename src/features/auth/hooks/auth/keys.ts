@@ -5,4 +5,5 @@ export const KEYS = {
   idAvailable: (uid: string) => [...KEYS.all, 'id-available', {uid}] as const,
   findId: ({name, phoneNum}: IUseGetAuthIdAvailableParams) =>
     [...KEYS.all, 'find-id', {name, phoneNum}] as const,
+  logout: () => [...KEYS.all, 'logout'],
 };

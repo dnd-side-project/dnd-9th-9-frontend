@@ -1,8 +1,9 @@
 import {type TSkillLevel} from '../../match/types';
+import {type LOGIN_TYPE} from '../const';
 
 export type TGender = 'FEMALE' | 'MALE';
 
-export type TLoginType = 'APPLE' | 'GOOGLE' | 'KAKAO' | 'MATCH_UP';
+export type TLoginType = keyof typeof LOGIN_TYPE;
 
 export interface IProfileDetail {
   age: string;

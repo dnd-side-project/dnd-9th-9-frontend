@@ -4,8 +4,13 @@ import styled from '@emotion/native';
 
 import {type theme} from '../../assets/styles/theme';
 
+const SIZE = {
+  xs: '1px',
+  sm: '2px',
+  lg: '14px',
+} as const;
 export interface ILineProps {
-  size: 'sm' | 'lg';
+  size: keyof typeof SIZE;
   color?: keyof typeof theme.palette;
 }
 
@@ -22,6 +27,6 @@ export const Line = ({
 
 const StyledLine = styled.View<IStyledLine>`
   background-color: ${({theme, color}) => theme.palette[color]};
-  height: ${props => (props.size === 'sm' ? '2px' : '14px')};
+  height: ${props => SIZE[props.size]};
   width: 100%;
 `;

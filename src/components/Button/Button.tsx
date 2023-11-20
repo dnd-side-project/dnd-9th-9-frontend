@@ -6,7 +6,7 @@ import {type theme} from '../../assets/styles/theme';
 import {Text} from '../Text';
 
 type TButtonSize = 'sm' | 'md' | 'lg';
-type TButtonVariant = 'primary' | 'secondary';
+type TButtonVariant = 'primary' | 'secondary' | 'tertiary';
 
 export interface IButtonProps {
   disabled?: boolean;
@@ -43,6 +43,10 @@ const variantStyles: Record<
   secondary: {
     backgroundColor: 'gray-50',
     color: 'black',
+  },
+  tertiary: {
+    backgroundColor: 'gray-800',
+    color: 'gray-0',
   },
 };
 
