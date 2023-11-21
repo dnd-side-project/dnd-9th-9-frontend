@@ -55,8 +55,8 @@ export function SettingScreen(): React.JSX.Element {
     메일로 문의해주세요.`,
   });
 
-  const toggleModal = (visible: boolean): void => {
-    setModal(modal => ({...modal, visible}));
+  const toggleModal = (visible?: boolean): void => {
+    setModal(modal => ({...modal, visible: visible ?? !modal.visible}));
   };
 
   // NOTE: iOS 시뮬레이터에서 미동작, 실제 기기에서만 동작
