@@ -5,9 +5,10 @@ import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaView, StatusBar, TouchableOpacity} from 'react-native';
 
 import {theme} from '../../assets/styles/theme';
+import {Line} from '../../components/Line';
 import {Text} from '../../components/Text';
 import {TopBar} from '../../components/TopBar';
-import {MyInfoPreview} from '../../features/my/components';
+import {MyInfoPreview, TeamworkRateSection} from '../../features/my/components';
 import {type MyStackParamList} from '../../navigators/MyNavigator';
 
 export function MyScreen(): React.JSX.Element {
@@ -28,6 +29,10 @@ export function MyScreen(): React.JSX.Element {
         )}
       />
       <MyInfoPreview />
+
+      <Line size="sm" color="gray-50" />
+
+      <TeamworkRateSection />
     </SafeAreaView>
   );
 }
