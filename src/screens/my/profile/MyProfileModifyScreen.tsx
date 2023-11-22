@@ -21,7 +21,10 @@ import {
   ModifyNameSection,
   ModifyWeightSection,
 } from '../../../features/my/components/profile/modify';
-import {useGetMyProfileDetail} from '../../../features/my/hooks/profile';
+import {
+  useGetMyProfileDetail,
+  usePatchMyProfile,
+} from '../../../features/my/hooks/profile';
 import {type MyStackParamList} from '../../../navigators/MyNavigator';
 
 const validationSchema = z.object({
@@ -66,12 +69,20 @@ export function MyProfileModifyScreen(): React.JSX.Element {
     },
   });
 
+  const {mutate: patchMyProfile} = usePatchMyProfile();
+
   const handleTopBarSave = async (): Promise<void> => {
     const isValid = await profileForm.trigger(params.type);
     if (isValid) {
       navigation.pop();
     }
-    // TODO(@minimalKim): type별 patch
+
+    patchMyProfile({
+      body: {
+        [params.type]: profileForm.getValues(params.type),
+        deletePrevImg: false,
+      },
+    });
   };
 
   const SectionComponent = MY_PROFILE_MODIFY_SECTIONS[params.type];
