@@ -5,12 +5,12 @@ import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Image} from 'react-native';
 
-import {theme} from '../../../assets/styles/theme';
-import {arrowRightXmlData} from '../../../assets/svg';
-import {Icon} from '../../../components/Icon';
-import {Text} from '../../../components/Text';
-import {type MyStackParamList} from '../../../navigators/MyNavigator';
-import {useGetMyProfileDetail} from '../hooks/profile';
+import {theme} from '../../../../assets/styles/theme';
+import {arrowRightXmlData} from '../../../../assets/svg';
+import {Icon} from '../../../../components/Icon';
+import {Text} from '../../../../components/Text';
+import {type MyStackParamList} from '../../../../navigators/MyNavigator';
+import {useGetMyProfileDetail} from '../../hooks/profile';
 
 export const MyInfoPreview = (): React.JSX.Element => {
   const {data: myProfileDetail, isSuccess} = useGetMyProfileDetail();
