@@ -6,10 +6,7 @@ import {SafeAreaView} from 'react-native';
 import {MatchListScreen} from './list';
 import {MyMatchListScreen} from './my';
 import {theme} from '../../assets/styles/theme';
-import {
-  type ITopTabScreen,
-  TopTabNavigator,
-} from '../../components/TopTabNavigator';
+import {type ITopTabScreen, TopTabNavigator} from '../../components/Tab';
 import {type MatchStackParamList} from '../../navigators';
 
 type TMatchListScreenRouteProps = RouteProp<MatchStackParamList, 'MatchList'>;
