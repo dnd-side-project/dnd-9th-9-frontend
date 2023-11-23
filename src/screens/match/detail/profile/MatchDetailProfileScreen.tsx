@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 
 import {SafeAreaView, ScrollView} from 'react-native';
-import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
 import {Button} from '../../../../components/Button';
@@ -17,6 +16,7 @@ import {
 } from '../../../../features/match/hooks/fieldEntry';
 import {useGetUserFieldList} from '../../../../features/match/hooks/userField';
 import {type IFieldDetailInfo} from '../../../../features/match/types';
+import Toast from '../../../../lib/toast';
 
 interface IMatchDetailProfileScreenProps {
   fieldDetailData: IFieldDetailInfo;
@@ -38,9 +38,8 @@ export const MatchDetailProfileScreen = ({
 
   const {mutate: mutateFieldEntryTeam} = usePostFieldEntryTeam({
     onSuccessCallback: () => {
-      Toast.show('팀원 신청이 완료되었습니다.', Toast.SHORT, {
-        backgroundColor: '#000000c5',
-      });
+      const message = '팀원 신청이 완료되었습니다.';
+      Toast.show({message});
     },
     onErrorCallback: error => {
       setModalInfo({
@@ -53,9 +52,8 @@ export const MatchDetailProfileScreen = ({
 
   const {mutate: mutateFieldEntryBattle} = usePostFieldEntryBattle({
     onSuccessCallback: () => {
-      Toast.show('매칭 신청이 완료되었습니다.', Toast.SHORT, {
-        backgroundColor: '#000000c5',
-      });
+      const message = '매칭 신청이 완료되었습니다.';
+      Toast.show({message});
     },
     onErrorCallback: error => {
       setModalInfo({

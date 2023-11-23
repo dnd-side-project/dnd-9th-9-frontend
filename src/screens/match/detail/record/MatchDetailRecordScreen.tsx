@@ -4,7 +4,6 @@ import styled from '@emotion/native';
 import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaView, ScrollView} from 'react-native';
-import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
 import {NavigateButton} from '../../../../components/Button';
@@ -18,6 +17,7 @@ import {WinStatus} from '../../../../features/match/const';
 import {useGetInfiniteFieldRecord} from '../../../../features/match/hooks/field/useGetInfiniteFieldRecord';
 import {type IField, type TFieldType} from '../../../../features/match/types';
 import {dayjs} from '../../../../lib/dayjs';
+import Toast from '../../../../lib/toast';
 import {type MatchStackParamList} from '../../../../navigators';
 
 interface IMatchDetailRecordScreenProps {
@@ -72,9 +72,9 @@ export const MatchDetailRecordScreen = ({
 
   const handleTodaySummary = (type: 'MY' | 'ASSIGN'): void => {
     if (fieldStatus === 'RECRUITING') {
-      Toast.show('매칭을 먼저 시작해주세요.', Toast.SHORT, {
-        backgroundColor: '#000000c5',
-      });
+      const message = '매칭을 먼저 시작해주세요.';
+      Toast.show({message});
+
       return;
     }
     if (type === 'MY') {

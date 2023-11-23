@@ -6,14 +6,14 @@ import {type CustomAxiosError} from '../../../../utils/types';
 import {type IUserFieldMyMatch} from '../../types';
 
 const fetcher = async (): Promise<IUserFieldMyMatch[]> =>
-  await axios.get('/user-field/progress').then(({data}) => data);
+  await axios.get('/user-field/recruiting').then(({data}) => data);
 
-export const useGetUserFieldProgress = (): UseQueryResult<
+export const useGetUserFieldRecruiting = (): UseQueryResult<
   IUserFieldMyMatch[],
   CustomAxiosError
 > =>
   useQuery({
-    queryKey: KEYS.progress(),
+    queryKey: KEYS.recruiting(),
     queryFn: async () => await fetcher(),
     initialData: [],
   });

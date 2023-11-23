@@ -5,12 +5,12 @@ import {View} from 'react-native';
 
 import {MyMatchListItem} from './MyMatchListItem';
 import {Text} from '../../../../components/Text';
-import {type TFieldType, type IField} from '../../types';
+import {type TFieldType, type IUserFieldMyMatch} from '../../types';
 
 interface IMyMatchListProps {
-  type: 'APPLICATION' | 'PROGRESS' | 'COMPLETE';
+  type: 'APPLICATION' | 'RECRUITING' | 'PROGRESS' | 'COMPLETE';
   fieldEntryType: TFieldType;
-  fieldEntryData?: IField[];
+  fieldEntryData?: IUserFieldMyMatch[];
 }
 
 export const MyMatchList = ({
@@ -20,6 +20,7 @@ export const MyMatchList = ({
 }: IMyMatchListProps): React.JSX.Element => {
   const noDataMessage = {
     APPLICATION: '신청 내역이 존재하지 않습니다.',
+    RECRUITING: '진행전인 매칭이 존재하지 않습니다',
     PROGRESS: '진행중인 매칭이 존재하지 않습니다.',
     COMPLETE: '매칭 완료한 내역이 존재하지 않습니다.',
   };
@@ -29,7 +30,16 @@ export const MyMatchList = ({
       {fieldEntryData.length > 0 ? (
         fieldEntryData.map(
           (
-            {currentSize, fieldType, id, maxSize, name, period, skillLevel},
+            {
+              currentSize,
+              fieldType,
+              id,
+              maxSize,
+              name,
+              period,
+              skillLevel,
+              leader,
+            },
             idx,
           ) => (
             <MyMatchListItem
@@ -41,6 +51,7 @@ export const MyMatchList = ({
               name={name}
               period={period}
               skillLevel={skillLevel}
+              isLeader={leader}
               // profileImg=""
             />
           ),

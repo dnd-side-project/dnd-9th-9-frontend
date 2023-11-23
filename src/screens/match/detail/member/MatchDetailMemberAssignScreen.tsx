@@ -7,13 +7,13 @@ import {
 } from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaView, ScrollView, View} from 'react-native';
-import Toast from 'react-native-simple-toast';
 
 import {theme} from '../../../../assets/styles/theme';
 import {Button} from '../../../../components/Button';
 import {MatchMemberList} from '../../../../features/match/components/MatchDetailMember';
 import {usePatchChangeLeader} from '../../../../features/match/hooks/field/usePatchChangeLeader';
 import {useGetUserFieldList} from '../../../../features/match/hooks/userField';
+import Toast from '../../../../lib/toast';
 import {type MatchStackParamList} from '../../../../navigators/MatchNavigator';
 
 export const MatchDetailMemberAssignScreen = (): React.JSX.Element => {
@@ -31,9 +31,9 @@ export const MatchDetailMemberAssignScreen = (): React.JSX.Element => {
 
   const {mutate: patchChangeLeader} = usePatchChangeLeader({
     onSuccessCallback: () => {
-      Toast.show('방장이 변경 되었습니다.', Toast.SHORT, {
-        backgroundColor: '#000000c5',
-      });
+      const message = '방장이 변경 되었습니다.';
+      Toast.show({message});
+
       navigation.navigate('MatchList', {
         page: 0,
         size: 10,
@@ -47,13 +47,9 @@ export const MatchDetailMemberAssignScreen = (): React.JSX.Element => {
       });
     },
     onErrorCallback: error => {
-      Toast.show(
-        error?.response?.data.message ?? '알 수 없는 오류가 발생하였습니다.',
-        Toast.SHORT,
-        {
-          backgroundColor: '#000000c5',
-        },
-      );
+      const message =
+        error?.response?.data.message ?? '알 수 없는 오류가 발생하였습니다.';
+      Toast.show({message});
     },
   });
 
