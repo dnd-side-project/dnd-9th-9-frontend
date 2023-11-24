@@ -36,7 +36,7 @@ export const TeamworkRateSection = (): React.JSX.Element => {
             fontWeight="700"
             color="gray-700"
           />
-          <Text text="/5.0" type="body2" fontWeight="700" color="gray-500" />
+          <Text text="/5" type="body2" fontWeight="700" color="gray-500" />
         </StyledHorizontal>
 
         <Gap size="8px" />
