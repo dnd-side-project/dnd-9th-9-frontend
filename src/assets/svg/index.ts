@@ -280,6 +280,14 @@ const fireScoreXmlData = `
 </svg>
 `;
 
+const questionXmlData = `
+<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="9" cy="9" r="7.5" stroke="currentColor"/>
+<path d="M9 13L9 12" stroke="currentColor"/>
+<path d="M9 11V11C9 10.3527 9.22031 9.72461 9.62469 9.21913L10.5944 8.00696C10.857 7.67879 11 7.27104 11 6.85078V6.85078C11 5.82862 10.1714 5 9.14922 5H9C7.89543 5 7 5.89543 7 7V7" stroke="currentColor"/>
+</svg>
+`;
+
 export {
   lockXmlData,
   filterXmlData,
@@ -314,4 +322,5 @@ export {
   matchupLogoXmlData,
   penXmlData,
   fireScoreXmlData,
+  questionXmlData,
 };
