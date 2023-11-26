@@ -5,6 +5,7 @@ import {
   type TSkillLevel,
   type TStrength,
   type TMyMatchStatus,
+  type TWinStatus,
 } from '.';
 
 export interface IFieldListPaginationParams extends IFieldListParams {
@@ -50,4 +51,34 @@ export interface IFieldListInfo {
   length: number;
   fieldsInfos: IField[];
   totalCount: number;
+}
+
+interface IBadge {
+  image: string;
+  name: string;
+}
+
+interface IResult {
+  goalAchievedCount: number;
+  name: string;
+  profileImg: string;
+  totalBurnedCalorie: number;
+  totalExerciseTimeMinute: number;
+  totalRecordCount: number;
+  totalScore: number;
+}
+
+export interface IFieldResult {
+  away: IResult;
+  badgeList: IBadge[];
+  elementWiseWin: {
+    burnedCalorie: TWinStatus;
+    exerciseTimeMinute: TWinStatus;
+    goalAchievedCount: TWinStatus;
+    recordCount: TWinStatus;
+  };
+  home: IResult;
+  period: TPeriod;
+  teamworkRate: number;
+  winStatus: TWinStatus;
 }
