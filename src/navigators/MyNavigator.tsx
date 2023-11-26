@@ -6,6 +6,7 @@ import {
   MyProfileModifyScreen,
   MyProfileScreen,
   MyScreen,
+  TeamWorkRateInfo,
   type TMyProfileModifyScreenSectionType,
 } from '../screens/my';
 import {
@@ -24,6 +25,7 @@ export type MyStackParamList = {
   SettingNotification: undefined;
   SettingConnectedAccount: undefined;
   SettingResignation: undefined;
+  TeamWorkRateInfo: undefined;
 };
 
 const Stack = createNativeStackNavigator<MyStackParamList>();
@@ -73,6 +75,7 @@ export function MyNavigator(): React.JSX.Element {
           headerShown: false,
         }}
       />
+      <Stack.Screen name="TeamWorkRateInfo" component={TeamWorkRateInfo} />
     </Stack.Navigator>
   );
 }
