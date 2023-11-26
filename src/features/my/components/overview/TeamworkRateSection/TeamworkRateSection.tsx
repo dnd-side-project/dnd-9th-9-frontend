@@ -1,17 +1,26 @@
 import React from 'react';
 
 import styled from '@emotion/native';
+import {useNavigation} from '@react-navigation/native';
+import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {TouchableOpacity} from 'react-native';
 
 import {TeamworkRateFlameGroup} from './TeamworkRateFlameGroup';
+import {theme} from '../../../../../assets/styles/theme';
+import {questionXmlData} from '../../../../../assets/svg';
 import {Gap} from '../../../../../components/Gap';
+import {Icon} from '../../../../../components/Icon';
 import {Text} from '../../../../../components/Text';
+import {type MyStackParamList} from '../../../../../navigators/MyNavigator';
 import {getFlameData} from '../../../const';
 import {useGetMyProfileDetail} from '../../../hooks/profile';
 
 export const TeamworkRateSection = (): React.JSX.Element => {
   const {data: myProfileDetail} = useGetMyProfileDetail();
   const {title, subTitle} = getFlameData(myProfileDetail?.teamworkRate ?? 0);
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<MyStackParamList>>();
 
   return (
     <StyledTeamworkRateSection>
@@ -26,6 +35,16 @@ export const TeamworkRateSection = (): React.JSX.Element => {
       <Gap size="10px" />
 
       <StyledCard>
+        <StyledIconWrapper
+          onPress={() => {
+            navigation.navigate('TeamWorkRateInfo');
+          }}>
+          <Icon
+            svgXml={questionXmlData}
+            height={18}
+            color={theme.palette['gray-400']}
+          />
+        </StyledIconWrapper>
         <TeamworkRateFlameGroup rate={myProfileDetail?.teamworkRate ?? 0} />
 
         <Gap size="8px" />
@@ -64,4 +83,10 @@ const StyledCard = styled.View`
   background-color: ${({theme}) => theme.palette['gray-50']};
   justify-content: center;
   align-items: center;
+`;
+
+const StyledIconWrapper = styled.TouchableOpacity`
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `;
