@@ -289,7 +289,7 @@ const rateFireXmlData = `
     <clipPath id="clip0_758_16189">
       <rect width="48" height="48" fill="white"/>
     </clipPath>
-  </defs>`
+  </defs>`;
 
 const fireScoreXmlData = `
 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="17" viewBox="0 0 14 17" fill="none">
