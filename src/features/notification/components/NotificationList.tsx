@@ -36,7 +36,7 @@ export const NotificationList = ({
     return groupedData;
   }, [notifications]);
 
-  return (
+  return notifications.length !== 0 ? (
     <StyledContainer>
       <StyledNotificationList>
         {Object.entries(groupedNotificationsByDate).map(
@@ -69,6 +69,15 @@ export const NotificationList = ({
         </StyledMoreButton>
       )}
     </StyledContainer>
+  ) : (
+    <StyledNoContentsWrapper>
+      <Text
+        type="body2"
+        color="gray-400"
+        fontWeight="600"
+        text="알림이 존재하지 않습니다."
+      />
+    </StyledNoContentsWrapper>
   );
 };
 
@@ -97,4 +106,11 @@ const StyledMoreButton = styled.TouchableOpacity`
   background-color: ${({theme}) => theme.palette['gray-100']};
   padding: 16px 60px;
   margin: 20px 0;
+`;
+
+const StyledNoContentsWrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+  min-height: 120px;
+  margin: 0px auto 30px auto;
 `;
