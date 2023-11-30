@@ -15,7 +15,7 @@ export const TeamWorkRateInfo = (): React.JSX.Element => {
     <>
       <SafeAreaView />
       <StyledScrollView>
-        <StyledVertical style={{padding: 18}}>
+        <StyledVertical style={{padding: 18, paddingTop: 30}}>
           <StyledVertical gap={8}>
             <StyledHorizontal gap={8}>
               <Icon
@@ -80,7 +80,9 @@ export const TeamWorkRateInfo = (): React.JSX.Element => {
               </StyledDescription>
             </StyledVertical>
           </StyledVertical>
-          <Gap size="30px" />
+          <Gap size="40px" />
+
+          {/* <View style={{height: 48, width: 48, backgroundColor: 'red'}} /> */}
 
           <StyledVertical gap={8}>
             <StyledHorizontal gap={8}>
@@ -102,7 +104,7 @@ export const TeamWorkRateInfo = (): React.JSX.Element => {
               lineHeight="22.4px"
             />
           </StyledVertical>
-          <Gap size="30px" />
+          <Gap size="40px" />
 
           <StyledVertical gap={28}>
             <StyledHorizontal gap={8}>

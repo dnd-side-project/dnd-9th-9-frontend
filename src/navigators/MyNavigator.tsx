@@ -2,6 +2,7 @@ import React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import {HeaderBackButton, HeaderTitle} from '../components/Header';
 import {
   MyProfileModifyScreen,
   MyProfileScreen,
@@ -32,7 +33,12 @@ const Stack = createNativeStackNavigator<MyStackParamList>();
 
 export function MyNavigator(): React.JSX.Element {
   return (
-    <Stack.Navigator initialRouteName="MyMain">
+    <Stack.Navigator
+      initialRouteName="MyMain"
+      screenOptions={{
+        headerBackTitleVisible: false,
+        headerShadowVisible: false,
+      }}>
       <Stack.Screen
         name="MyMain"
         component={MyScreen}
@@ -75,7 +81,14 @@ export function MyNavigator(): React.JSX.Element {
           headerShown: false,
         }}
       />
-      <Stack.Screen name="TeamWorkRateInfo" component={TeamWorkRateInfo} />
+      <Stack.Screen
+        name="TeamWorkRateInfo"
+        component={TeamWorkRateInfo}
+        options={{
+          headerLeft: () => <HeaderBackButton />,
+          headerTitle: () => <HeaderTitle title="불꽃 히스토리" />,
+        }}
+      />
     </Stack.Navigator>
   );
 }
