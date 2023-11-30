@@ -6,3 +6,4 @@ export * from './useGetFieldCount';
 export * from './usePatchFieldInformation';
 export * from './usePostFieldProfile';
 export * from './useDeleteField';
+export * from './useGetFieldDetailResult';
