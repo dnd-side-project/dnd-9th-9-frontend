@@ -1,7 +1,12 @@
 import React from 'react';
 
+import {type RouteProp, useRoute} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {TouchableOpacity} from 'react-native';
 
+import {detailAlarmXmlData} from '../assets/svg';
+import {HeaderBackButton, HeaderTitle} from '../components/Header';
+import {Icon} from '../components/Icon';
 import {
   type TUserRole,
   type IFieldListPaginationParams,
@@ -38,18 +43,17 @@ import {MatchFilterScreen} from '../screens/match/list';
 
 export type MatchStackParamList = {
   MatchList: IFieldListPaginationParams;
-  // 필터 화면
   MatchFilter: IFieldListParams;
-  // 팀 생성 화면
   TeamInformation: undefined;
   TeamProfile: undefined;
-  // 자동 매칭 화면
   AutoMatch: undefined;
   AutoMatchResult: {
     fieldType: 'DUEL' | 'TEAM_BATTLE';
   };
-  // 팀 상세 화면
   MatchDetail: {
+    id: number;
+  };
+  MatchDetailAlarm: {
     id: number;
   };
   MatchDetailProfileSetting: {
@@ -102,7 +106,14 @@ const Stack = createNativeStackNavigator<MatchStackParamList>();
 
 export function MatchNavigator(): React.JSX.Element {
   return (
-    <Stack.Navigator initialRouteName="MatchList">
+    <Stack.Navigator
+      initialRouteName="MatchList"
+      screenOptions={{
+        headerBackTitleVisible: false,
+        headerShadowVisible: false,
+        headerTitle: () => <HeaderTitle />,
+        headerLeft: () => <HeaderBackButton />,
+      }}>
       <Stack.Screen
         name="MatchList"
         component={MatchScreen}
@@ -122,66 +133,83 @@ export function MatchNavigator(): React.JSX.Element {
           matchStatus: 'APPLICATION',
         }}
       />
-      <Stack.Screen name="MatchFilter" component={MatchFilterScreen} />
+      <Stack.Screen
+        name="MatchFilter"
+        component={MatchFilterScreen}
+        options={{
+          headerTitle: () => <HeaderTitle title="매칭 필터" />,
+        }}
+      />
       <Stack.Screen
         name="TeamInformation"
         component={CreateMatchInformationScreen}
-        options={{headerTitle: '팀 정보 입력'}}
+        options={{
+          headerTitle: () => <HeaderTitle title="팀 정보 입력" />,
+        }}
       />
       <Stack.Screen
         name="TeamProfile"
         component={CreateMatchProfileScreen}
-        options={{headerTitle: '팀 프로필', headerBackTitleVisible: false}}
+        options={{
+          headerTitle: () => <HeaderTitle title="팀 프로필" />,
+        }}
       />
-      <Stack.Screen
-        name="AutoMatch"
-        component={AutoMatchScreen}
-        options={{headerTitle: ''}}
-      />
-      <Stack.Screen
-        name="AutoMatchResult"
-        component={AutoMatchResultScreen}
-        options={{headerTitle: ''}}
-      />
+      <Stack.Screen name="AutoMatch" component={AutoMatchScreen} />
+      <Stack.Screen name="AutoMatchResult" component={AutoMatchResultScreen} />
       <Stack.Screen
         name="MatchDetail"
         component={MatchDetailScreen}
-        options={{headerTitle: ''}}
+        options={{
+          headerRight: () => {
+            const {params} =
+              useRoute<RouteProp<MatchStackParamList, 'MatchDetail'>>();
+
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  // TODO(@chajuhui123) : 알림 상세 화면으로 연동
+                  console.log(params.id);
+                }}
+                style={{marginRight: 4}}>
+                <Icon svgXml={detailAlarmXmlData} width={24} height={24} />
+              </TouchableOpacity>
+            );
+          },
+        }}
       />
       <Stack.Screen
         name="MatchDetailProfileSetting"
         component={MatchDetailProfileSettingScreen}
-        options={{headerTitle: ''}}
       />
       <Stack.Screen
         name="UpdateInformation"
         component={UpdateTeamInformationScreen}
-        options={{headerTitle: '팀 정보 수정'}}
+        options={{
+          headerTitle: () => <HeaderTitle title="팀 정보 수정" />,
+        }}
       />
       <Stack.Screen
         name="UpdateProfile"
         component={UpdateTeamProfileScreen}
-        options={{headerTitle: '팀 프로필 수정'}}
+        options={{
+          headerTitle: () => <HeaderTitle title="팀 프로필 수정" />,
+        }}
       />
       <Stack.Screen
         name="MatchDetailRecordDetail"
         component={MatchDetailRecordDetailScreen}
-        options={{headerTitle: ''}}
       />
       <Stack.Screen
         name="MatchDetailRecordSummary"
         component={MatchDetailRecordSummaryScreen}
-        options={{headerTitle: ''}}
       />
       <Stack.Screen
         name="MatchDetailMatchingMore"
         component={MatchDetailMatchingMoreScreen}
-        options={{headerTitle: ''}}
       />
       <Stack.Screen
         name="MatchDetailMemberMore"
         component={MatchDetailMemberMoreScreen}
-        options={{headerTitle: ''}}
         initialParams={{
           type: 'REQUEST',
         }}
@@ -189,17 +217,14 @@ export function MatchNavigator(): React.JSX.Element {
       <Stack.Screen
         name="MatchDetailMemberRequestAccept"
         component={MatchDetailMemberRequestAcceptScreen}
-        options={{headerTitle: ''}}
       />
       <Stack.Screen
         name="MatchDetailMemberAssign"
         component={MatchDetailMemberAssignScreen}
-        options={{headerTitle: ''}}
       />
       <Stack.Screen
         name="MatchDetailMemberDelete"
         component={MatchDetailMemberDeleteScreen}
-        options={{headerTitle: ''}}
       />
     </Stack.Navigator>
   );
