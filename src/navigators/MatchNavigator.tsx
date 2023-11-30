@@ -1,12 +1,20 @@
 import React from 'react';
 
-import {type RouteProp, useRoute} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  type RouteProp,
+  useRoute,
+  useNavigation,
+} from '@react-navigation/native';
+import {
+  type NativeStackNavigationProp,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 import {TouchableOpacity} from 'react-native';
 
 import {detailAlarmXmlData} from '../assets/svg';
 import {HeaderBackButton, HeaderTitle} from '../components/Header';
 import {Icon} from '../components/Icon';
+import {useGetFieldDetail} from '../features/match/hooks/field';
 import {
   type TUserRole,
   type IFieldListPaginationParams,
@@ -26,6 +34,7 @@ import {
 } from '../screens/match/create';
 import {
   MatchDetailScreen,
+  MatchDetailNotificationScreen,
   MatchDetailMatchingMoreScreen,
   MatchDetailRecordDetailScreen,
   MatchDetailMemberRequestAcceptScreen,
@@ -53,7 +62,7 @@ export type MatchStackParamList = {
   MatchDetail: {
     id: number;
   };
-  MatchDetailAlarm: {
+  MatchDetailNotification: {
     id: number;
   };
   MatchDetailProfileSetting: {
@@ -105,6 +114,9 @@ export type MatchStackParamList = {
 const Stack = createNativeStackNavigator<MatchStackParamList>();
 
 export function MatchNavigator(): React.JSX.Element {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
+
   return (
     <Stack.Navigator
       initialRouteName="MatchList"
@@ -161,20 +173,38 @@ export function MatchNavigator(): React.JSX.Element {
         component={MatchDetailScreen}
         options={{
           headerRight: () => {
-            const {params} =
+            const route =
               useRoute<RouteProp<MatchStackParamList, 'MatchDetail'>>();
+            const id = route.params.id;
 
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  // TODO(@chajuhui123) : 알림 상세 화면으로 연동
-                  console.log(params.id);
-                }}
-                style={{marginRight: 4}}>
-                <Icon svgXml={detailAlarmXmlData} width={24} height={24} />
-              </TouchableOpacity>
-            );
+            const {data: fieldDetailData} = useGetFieldDetail({
+              id,
+            });
+
+            const userRole = fieldDetailData?.fieldDto?.fieldRole;
+            const isMatchMember =
+              userRole === 'LEADER' || userRole === 'MEMBER';
+
+            if (isMatchMember)
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('MatchDetailNotification', {
+                      id,
+                    });
+                  }}
+                  style={{marginRight: 4}}>
+                  <Icon svgXml={detailAlarmXmlData} width={24} height={24} />
+                </TouchableOpacity>
+              );
           },
+        }}
+      />
+      <Stack.Screen
+        name="MatchDetailNotification"
+        component={MatchDetailNotificationScreen}
+        options={{
+          headerTitle: () => <HeaderTitle title="알림" />,
         }}
       />
       <Stack.Screen
