@@ -114,11 +114,15 @@ export const MatchMemberList = ({
             isSettingMode={isSettingMode}
             memberInfo={memberInfo}
             isCheck={checkedMember.includes(
-              type === 'REQUEST' ? memberInfo?.entryId : memberInfo?.id,
+              type === 'REQUEST'
+                ? (memberInfo as ITeamEntry)?.entryId
+                : (memberInfo as IUserField)?.id,
             )}
             onPressCheckBox={() => {
               onPressCheckMember(
-                type === 'REQUEST' ? memberInfo?.entryId : memberInfo?.id,
+                type === 'REQUEST'
+                  ? (memberInfo as ITeamEntry)?.entryId
+                  : (memberInfo as IUserField)?.id,
               );
             }}
           />
