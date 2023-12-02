@@ -1,2 +1,2 @@
-export * from './MyInfoPreview';
+export * from './overview';
 export * from './setting';
