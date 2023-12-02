@@ -15,22 +15,31 @@ export const MatchDetailMemberMoreScreen = (): React.JSX.Element => {
 
   const {id, type, userRole} = route.params;
 
-  const {data: userFieldData} =
-    type === 'MEMBER'
-      ? useGetUserFieldList({id})
-      : useGetFieldEntryTeam({id, size: 10, page: 0});
+  const {data: userFieldData} = useGetUserFieldList({id});
+  const {data: fieldEntryData} = useGetFieldEntryTeam({id, size: 10, page: 0});
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.palette['gray-0']}}>
       <ScrollView>
-        <MatchMemberList
-          id={id}
-          userRole={userRole}
-          type={type}
-          isSummary={false}
-          members={userFieldData}
-          onPressMore={() => {}}
-        />
+        {type === 'MEMBER' ? (
+          <MatchMemberList
+            id={id}
+            userRole={userRole}
+            type={type}
+            isSummary={false}
+            members={userFieldData}
+            onPressMore={() => {}}
+          />
+        ) : (
+          <MatchMemberList
+            id={id}
+            userRole={userRole}
+            type={type}
+            isSummary={false}
+            members={fieldEntryData?.pages.map(page => page.teamEntries).flat()}
+            onPressMore={() => {}}
+          />
+        )}
       </ScrollView>
     </SafeAreaView>
   );

@@ -52,7 +52,7 @@ export const MatchDetailMemberRequestAcceptScreen = (): React.JSX.Element => {
           type="REQUEST"
           isSummary={false}
           isSettingMode={true}
-          members={userFieldData}
+          members={userFieldData?.pages.map(page => page.teamEntries).flat()}
           checkedMember={checkedMember}
           onPressCheckMember={handleCheckMember}
         />
