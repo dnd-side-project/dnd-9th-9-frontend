@@ -1,7 +1,10 @@
 import React from 'react';
 
 import styled from '@emotion/native';
+import {useNavigation} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native';
 
+import {theme} from '../../assets/styles/theme';
 import {arrowLeftXmlData} from '../../assets/svg';
 import {Icon} from '../Icon';
 import {Text} from '../Text';
@@ -21,24 +24,34 @@ export const TopBar = ({
   leftComponent,
   rightComponent,
 }: ITopBarProps): React.JSX.Element => {
+  const navigation = useNavigation();
+
+  const handlePressBackButton = (): void => {
+    onPressBackButton?.();
+    navigation.goBack();
+  };
+
   return (
-    <StyledTopBar>
-      <StyledLeftWrapper>
-        {leftComponent != null ? (
-          leftComponent()
-        ) : showBackButton ? (
-          <StyledBackButton onPress={onPressBackButton}>
-            <Icon svgXml={arrowLeftXmlData} width={32} height={32} />
-          </StyledBackButton>
-        ) : (
-          <></>
-        )}
-      </StyledLeftWrapper>
+    <>
+      <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
+      <StyledTopBar>
+        <StyledLeftWrapper>
+          {leftComponent != null ? (
+            leftComponent()
+          ) : showBackButton ? (
+            <StyledBackButton onPress={handlePressBackButton}>
+              <Icon svgXml={arrowLeftXmlData} width={32} height={32} />
+            </StyledBackButton>
+          ) : (
+            <></>
+          )}
+        </StyledLeftWrapper>
 
-      <Text text={headerText ?? ''} type="body1" fontWeight="bold" />
+        <Text text={headerText ?? ''} type="body1" fontWeight="bold" />
 
-      <StyledRightWrapper>{rightComponent?.()}</StyledRightWrapper>
-    </StyledTopBar>
+        <StyledRightWrapper>{rightComponent?.()}</StyledRightWrapper>
+      </StyledTopBar>
+    </>
   );
 };
 

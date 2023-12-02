@@ -9,7 +9,7 @@ import {
 } from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {type UseFormReturn, useForm} from 'react-hook-form';
-import {SafeAreaView, TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {z} from 'zod';
 
 import {theme} from '../../../assets/styles/theme';
@@ -78,13 +78,10 @@ export function MyProfileModifyScreen(): React.JSX.Element {
 
   return (
     <>
-      <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
+      <View style={{backgroundColor: theme.palette['gray-0']}} />
       <TopBar
         headerText="프로필 편집"
         showBackButton
-        onPressBackButton={() => {
-          navigation.pop();
-        }}
         rightComponent={() => (
           <TouchableOpacity
             onPress={() => {
