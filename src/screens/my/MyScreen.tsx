@@ -2,7 +2,7 @@ import React from 'react';
 
 import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {View, StatusBar, TouchableOpacity} from 'react-native';
+import {SafeAreaView, StatusBar, TouchableOpacity} from 'react-native';
 
 import {theme} from '../../assets/styles/theme';
 import {Line} from '../../components/Line';
@@ -16,7 +16,7 @@ export function MyScreen(): React.JSX.Element {
     useNavigation<NativeStackNavigationProp<MyStackParamList>>();
 
   return (
-    <View style={{backgroundColor: theme.palette['gray-0'], flex: 1}}>
+    <SafeAreaView style={{backgroundColor: theme.palette['gray-0'], flex: 1}}>
       <StatusBar barStyle="dark-content" />
       <TopBar
         rightComponent={() => (
@@ -33,6 +33,6 @@ export function MyScreen(): React.JSX.Element {
       <Line size="sm" color="gray-50" />
 
       <TeamworkRateSection />
-    </View>
+    </SafeAreaView>
   );
 }
