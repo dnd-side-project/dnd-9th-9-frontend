@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/native';
+import {SafeAreaView} from 'react-native';
 
 import {theme} from '../../assets/styles/theme';
 import {fireScoreXmlData} from '../../assets/svg';
@@ -13,6 +14,7 @@ import {FLAMES} from '../../features/my/const';
 export const TeamWorkRateInfo = (): React.JSX.Element => {
   return (
     <>
+      <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
       <TopBar showBackButton headerText="불꽃 히스토리" />
       <StyledScrollView>
         <StyledVertical style={{padding: 18, paddingTop: 30}}>
