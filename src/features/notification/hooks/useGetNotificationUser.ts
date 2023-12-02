@@ -18,7 +18,7 @@ type TGetNotificationUserResponse = INotificationResponse<IHomeNotification>;
 const fetcher = async (
   params: IGetNotificationUserParams,
 ): Promise<TGetNotificationUserResponse> =>
-  await axios.get('/notification/user', {params});
+  await axios.get('/notification/user', {params}).then(({data}) => data);
 
 export const useGetNotificationUser = (
   params: IGetNotificationUserParams,
