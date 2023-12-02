@@ -1,9 +1,7 @@
 import React, {useMemo, useState} from 'react';
 
 import styled from '@emotion/native';
-import {useNavigation} from '@react-navigation/native';
-import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native';
+import {View} from 'react-native';
 
 import {theme} from '../../../assets/styles/theme';
 import {Button} from '../../../components/Button';
@@ -12,7 +10,6 @@ import {LinedCheckBox} from '../../../components/CheckBox/LinedCheckBox';
 import {Gap} from '../../../components/Gap';
 import {TopBar} from '../../../components/TopBar';
 import {ResignationAchievementCard} from '../../../features/my/components';
-import {type MyStackParamList} from '../../../navigators/MyNavigator';
 
 interface ITerms {
   personalInfo: boolean;
@@ -22,9 +19,6 @@ interface ITerms {
 type TTerm = keyof ITerms;
 
 export function SettingResignationScreen(): React.JSX.Element {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<MyStackParamList>>();
-
   const [terms, setTerms] = useState<ITerms>({
     personalInfo: false,
     id: false,
@@ -50,14 +44,8 @@ export function SettingResignationScreen(): React.JSX.Element {
 
   return (
     <>
-      <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
-      <TopBar
-        headerText="회원탈퇴"
-        showBackButton
-        onPressBackButton={() => {
-          navigation.pop();
-        }}
-      />
+      <View style={{backgroundColor: theme.palette['gray-0']}} />
+      <TopBar headerText="회원탈퇴" showBackButton />
       <StyledContainer>
         <StyledContentsSection>
           <Gap size={'10px'} />

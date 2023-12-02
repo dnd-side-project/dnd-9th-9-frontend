@@ -3,7 +3,7 @@ import React from 'react';
 import styled from '@emotion/native';
 import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native';
+import {View} from 'react-native';
 
 import {theme} from '../../../assets/styles/theme';
 import {Line} from '../../../components/Line';
@@ -21,14 +21,8 @@ export const SettingConnectedAccount = (): React.JSX.Element => {
 
   return (
     <>
-      <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
-      <TopBar
-        showBackButton
-        onPressBackButton={() => {
-          navigation.pop();
-        }}
-        headerText="연결된 계정"
-      />
+      <View style={{backgroundColor: theme.palette['gray-0']}} />
+      <TopBar showBackButton headerText="연결된 계정" />
 
       <StyledContainer>
         {myProfileDetail != null && (

@@ -3,7 +3,7 @@ import React, {useMemo, useState} from 'react';
 import styled from '@emotion/native';
 import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native';
+import {View} from 'react-native';
 import email from 'react-native-email';
 
 import {theme} from '../../../assets/styles/theme';
@@ -73,14 +73,8 @@ export function SettingScreen(): React.JSX.Element {
 
   return (
     <>
-      <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
-      <TopBar
-        headerText="설정"
-        showBackButton
-        onPressBackButton={() => {
-          myNavigation.pop();
-        }}
-      />
+      <View style={{backgroundColor: theme.palette['gray-0']}} />
+      <TopBar headerText="설정" showBackButton />
       <StyledContainer>
         <StyledSettingListItemPressable
           onPress={() => {
