@@ -2,7 +2,6 @@ import React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {HeaderBackButton, HeaderTitle} from '../components/Header';
 import {
   MyProfileModifyScreen,
   MyProfileScreen,
@@ -85,8 +84,7 @@ export function MyNavigator(): React.JSX.Element {
         name="TeamWorkRateInfo"
         component={TeamWorkRateInfo}
         options={{
-          headerLeft: () => <HeaderBackButton />,
-          headerTitle: () => <HeaderTitle title="불꽃 히스토리" />,
+          headerShown: false,
         }}
       />
     </Stack.Navigator>
