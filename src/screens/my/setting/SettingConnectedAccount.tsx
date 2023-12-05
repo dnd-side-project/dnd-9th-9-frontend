@@ -22,13 +22,7 @@ export const SettingConnectedAccount = (): React.JSX.Element => {
   return (
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
-      <TopBar
-        showBackButton
-        onPressBackButton={() => {
-          navigation.pop();
-        }}
-        headerText="연결된 계정"
-      />
+      <TopBar showBackButton headerText="연결된 계정" />
 
       <StyledContainer>
         {myProfileDetail != null && (

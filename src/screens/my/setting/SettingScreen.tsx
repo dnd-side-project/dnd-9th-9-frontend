@@ -74,13 +74,7 @@ export function SettingScreen(): React.JSX.Element {
   return (
     <>
       <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
-      <TopBar
-        headerText="설정"
-        showBackButton
-        onPressBackButton={() => {
-          myNavigation.pop();
-        }}
-      />
+      <TopBar headerText="설정" showBackButton />
       <StyledContainer>
         <StyledSettingListItemPressable
           onPress={() => {

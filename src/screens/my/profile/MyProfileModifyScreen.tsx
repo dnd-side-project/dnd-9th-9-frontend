@@ -82,9 +82,6 @@ export function MyProfileModifyScreen(): React.JSX.Element {
       <TopBar
         headerText="프로필 편집"
         showBackButton
-        onPressBackButton={() => {
-          navigation.pop();
-        }}
         rightComponent={() => (
           <TouchableOpacity
             onPress={() => {

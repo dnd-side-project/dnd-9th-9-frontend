@@ -8,12 +8,14 @@ import {fireScoreXmlData} from '../../assets/svg';
 import {Gap} from '../../components/Gap';
 import {Icon} from '../../components/Icon';
 import {Text} from '../../components/Text';
+import {TopBar} from '../../components/TopBar';
 import {FLAMES} from '../../features/my/const';
 
 export const TeamWorkRateInfo = (): React.JSX.Element => {
   return (
     <>
-      <SafeAreaView />
+      <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
+      <TopBar showBackButton headerText="불꽃 히스토리" />
       <StyledScrollView>
         <StyledVertical style={{padding: 18, paddingTop: 30}}>
           <StyledVertical gap={8}>

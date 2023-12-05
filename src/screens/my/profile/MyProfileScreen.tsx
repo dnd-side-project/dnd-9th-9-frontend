@@ -50,13 +50,7 @@ export function MyProfileScreen({navigation}: Props): React.JSX.Element {
     <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}}>
       {isSuccess ? (
         <>
-          <TopBar
-            headerText="프로필 편집"
-            showBackButton
-            onPressBackButton={() => {
-              navigation.pop();
-            }}
-          />
+          <TopBar headerText="프로필 편집" showBackButton />
 
           <ScrollView>
             <StyledProfileSection>

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/native';
+import {useNavigation} from '@react-navigation/native';
 
 import {arrowLeftXmlData} from '../../assets/svg';
 import {Icon} from '../Icon';
@@ -21,13 +22,19 @@ export const TopBar = ({
   leftComponent,
   rightComponent,
 }: ITopBarProps): React.JSX.Element => {
+  const navigation = useNavigation();
+
+  const handlePressBackButton = (): void => {
+    onPressBackButton?.();
+    navigation.goBack();
+  };
   return (
     <StyledTopBar>
       <StyledLeftWrapper>
         {leftComponent != null ? (
           leftComponent()
         ) : showBackButton ? (
-          <StyledBackButton onPress={onPressBackButton}>
+          <StyledBackButton onPress={handlePressBackButton}>
             <Icon svgXml={arrowLeftXmlData} width={32} height={32} />
           </StyledBackButton>
         ) : (
