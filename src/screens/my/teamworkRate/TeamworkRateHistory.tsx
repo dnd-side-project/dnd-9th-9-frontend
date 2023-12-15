@@ -4,10 +4,63 @@ import styled from '@emotion/native';
 import {SafeAreaView, TouchableOpacity} from 'react-native';
 
 import {theme} from '../../../assets/styles/theme';
+import {Gap} from '../../../components/Gap';
 import {Text} from '../../../components/Text';
 import {TopBar} from '../../../components/TopBar';
+import {TeamworkRateHistoryCard} from '../../../features/my/components/teamworkRate';
+import {type ITeamworkRateHistory} from '../../../features/my/types';
+import {dayjs} from '../../../lib/dayjs';
 
 export const TeamworkRateHistory = (): React.JSX.Element => {
+  const dummy: ITeamworkRateHistory[] = [
+    {
+      endDate: '2023-12-15',
+      fieldType: 'DUEL',
+      myFieldName: 'string',
+      opponentName: '김마르',
+      period: 'ONE_WEEK',
+      teamworkRate: 4,
+      winStatus: 'WIN',
+    },
+    {
+      endDate: '2023-12-15',
+      fieldType: 'TEAM_BATTLE',
+      myFieldName: '작심삼년',
+      opponentName: '가보자고',
+      period: 'ONE_WEEK',
+      teamworkRate: 3,
+      winStatus: 'DRAW',
+    },
+    {
+      endDate: '2023-12-14',
+      fieldType: 'TEAM_BATTLE',
+      myFieldName: '작심삼년',
+      opponentName: '가보자고',
+      period: 'ONE_WEEK',
+      teamworkRate: 2,
+      winStatus: 'LOSE',
+    },
+    {
+      endDate: '2023-12-13',
+      fieldType: 'TEAM',
+      myFieldName: '작심삼년',
+      opponentName: '가보자고',
+      period: 'ONE_WEEK',
+      teamworkRate: 1,
+      winStatus: 'DRAW',
+    },
+  ];
+
+  const isDateLabelVisible = (
+    currentItem: ITeamworkRateHistory,
+    previousItem?: ITeamworkRateHistory,
+  ): boolean => {
+    if (previousItem == null) {
+      return true;
+    }
+    return currentItem.endDate !== previousItem.endDate;
+  };
+
   return (
     <>
       <>
@@ -27,7 +80,29 @@ export const TeamworkRateHistory = (): React.JSX.Element => {
             <Text text="매칭 없는 팀" type="body3" color="gray-400" />
           </TouchableOpacity>
         </StyledTabContainer>
-        <StyledScrollView></StyledScrollView>
+
+        <StyledScrollView>
+          <StyledCardContainer>
+            {dummy.map((history, idx, historyList) => (
+              <>
+                {isDateLabelVisible(history, historyList[idx - 1]) && (
+                  <>
+                    <Gap size="16px" />
+                    <Text
+                      text={dayjs(history.endDate).format('MM월 DD일')}
+                      color="gray-400"
+                    />
+                    <Gap size="8px" />
+                  </>
+                )}
+                <TeamworkRateHistoryCard
+                  key={idx}
+                  teamworkRateHistory={history}
+                />
+              </>
+            ))}
+          </StyledCardContainer>
+        </StyledScrollView>
       </>
     </>
   );
@@ -45,4 +120,10 @@ const StyledTabContainer = styled.View`
 
 const StyledScrollView = styled.ScrollView`
   background-color: ${({theme}) => theme.palette['gray-0']};
+`;
+
+const StyledCardContainer = styled.View`
+  display: flex;
+  gap: 12px;
+  padding: 0 20px 20px 20px;
 `;
