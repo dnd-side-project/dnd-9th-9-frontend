@@ -58,7 +58,7 @@ axios.interceptors.response.use(undefined, async error => {
 const handle401Error = async (
   error: CustomAxiosError,
 ): Promise<AxiosResponse<any, any> | undefined> => {
-  switch (error.code) {
+  switch (error.response?.data.code) {
     case 'J-001':
     case 'J-003': {
       // 유효하지 않은 (잘못된) JWT 토큰 (J-001)
