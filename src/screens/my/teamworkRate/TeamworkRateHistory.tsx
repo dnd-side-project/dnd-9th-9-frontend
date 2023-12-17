@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/native';
-import {SafeAreaView, TouchableOpacity} from 'react-native';
+import {FlatList, SafeAreaView, TouchableOpacity} from 'react-native';
 
 import {theme} from '../../../assets/styles/theme';
 import {Gap} from '../../../components/Gap';
@@ -51,14 +51,31 @@ export const TeamworkRateHistory = (): React.JSX.Element => {
     },
   ];
 
-  const isDateLabelVisible = (
-    currentItem: ITeamworkRateHistory,
-    previousItem?: ITeamworkRateHistory,
-  ): boolean => {
-    if (previousItem == null) {
-      return true;
-    }
-    return currentItem.endDate !== previousItem.endDate;
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: ITeamworkRateHistory;
+    index: number;
+  }): React.JSX.Element => {
+    const isDateLabelVisible =
+      index === 0 || item.endDate !== dummy[index - 1].endDate;
+    return (
+      <>
+        {isDateLabelVisible && (
+          <>
+            <Gap size="16px" />
+            <Text
+              text={dayjs(item.endDate).format('MM월 DD일')}
+              color="gray-400"
+            />
+            <Gap size="8px" />
+          </>
+        )}
+        <TeamworkRateHistoryCard teamworkRateHistory={item} />
+        <Gap size="12px" />
+      </>
+    );
   };
 
   return (
@@ -83,24 +100,13 @@ export const TeamworkRateHistory = (): React.JSX.Element => {
 
         <StyledScrollView>
           <StyledCardContainer>
-            {dummy.map((history, idx, historyList) => (
-              <>
-                {isDateLabelVisible(history, historyList[idx - 1]) && (
-                  <>
-                    <Gap size="16px" />
-                    <Text
-                      text={dayjs(history.endDate).format('MM월 DD일')}
-                      color="gray-400"
-                    />
-                    <Gap size="8px" />
-                  </>
-                )}
-                <TeamworkRateHistoryCard
-                  key={idx}
-                  teamworkRateHistory={history}
-                />
-              </>
-            ))}
+            <FlatList
+              data={dummy}
+              renderItem={renderItem}
+              // TODO(@minimalKim): history item id 프로퍼티 백엔드에 추가 요청
+              keyExtractor={(_, index) => index.toString()}
+              contentContainerStyle={{padding: 20}}
+            />
           </StyledCardContainer>
         </StyledScrollView>
       </>
@@ -124,6 +130,4 @@ const StyledScrollView = styled.ScrollView`
 
 const StyledCardContainer = styled.View`
   display: flex;
-  gap: 12px;
-  padding: 0 20px 20px 20px;
 `;
