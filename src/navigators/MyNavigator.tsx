@@ -6,7 +6,8 @@ import {
   MyProfileModifyScreen,
   MyProfileScreen,
   MyScreen,
-  TeamWorkRateInfo,
+  TeamworkRateInfo,
+  TeamworkRateHistory,
   type TMyProfileModifyScreenSectionType,
 } from '../screens/my';
 import {
@@ -25,7 +26,8 @@ export type MyStackParamList = {
   SettingNotification: undefined;
   SettingConnectedAccount: undefined;
   SettingResignation: undefined;
-  TeamWorkRateInfo: undefined;
+  TeamworkRateInfo: undefined;
+  TeamworkRateHistory: undefined;
 };
 
 const Stack = createNativeStackNavigator<MyStackParamList>();
@@ -81,8 +83,15 @@ export function MyNavigator(): React.JSX.Element {
         }}
       />
       <Stack.Screen
-        name="TeamWorkRateInfo"
-        component={TeamWorkRateInfo}
+        name="TeamworkRateInfo"
+        component={TeamworkRateInfo}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="TeamworkRateHistory"
+        component={TeamworkRateHistory}
         options={{
           headerShown: false,
         }}
