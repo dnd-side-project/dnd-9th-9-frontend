@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 
 import styled from '@emotion/native';
+import {FlatList} from 'react-native';
 
 import {NotificationListItem} from './NotificationListItem';
 import {Text} from '../../../components/Text';
@@ -36,30 +37,38 @@ export const NotificationList = ({
     return groupedData;
   }, [notifications]);
 
+  const renderItem = ({
+    item: [date, notifications],
+  }: {
+    item: [string, INotification[]];
+  }): React.JSX.Element => {
+    return (
+      <>
+        <StyledNotificationDate>
+          <Text color="gray-400" text={dayjs(date).format('M월D일')} />
+        </StyledNotificationDate>
+
+        {notifications.map((notification, i) => (
+          <NotificationListItem
+            key={`${notification.id}-${i}`}
+            isRead={notification.isRead}
+            isLast={notifications.length - 1 === i}
+            content="test"
+            onPress={() => {
+              onPressNotification?.(notification);
+            }}
+          />
+        ))}
+      </>
+    );
+  };
+
   return notifications.length !== 0 ? (
     <StyledContainer>
       <StyledNotificationList>
-        {Object.entries(groupedNotificationsByDate).map(
-          ([date, notifications]) => (
-            <>
-              <StyledNotificationDate>
-                <Text color="gray-400" text={dayjs(date).format('M월D일')} />
-              </StyledNotificationDate>
-
-              {notifications.map((notification, i) => (
-                <NotificationListItem
-                  key={`${notification.id}-${i}`}
-                  isRead={notification.isRead}
-                  isLast={notifications.length - 1 === i}
-                  content="test"
-                  onPress={() => {
-                    onPressNotification?.(notification);
-                  }}
-                />
-              ))}
-            </>
-          ),
-        )}
+        <FlatList
+          data={Object.entries(groupedNotificationsByDate)}
+          renderItem={renderItem}></FlatList>
       </StyledNotificationList>
 
       {isPressMoreVisible != null && (
@@ -88,7 +97,6 @@ const StyledContainer = styled.View`
 
 const StyledNotificationList = styled.View`
   display: flex;
-  align-items: center;
   width: 100%;
 `;
 

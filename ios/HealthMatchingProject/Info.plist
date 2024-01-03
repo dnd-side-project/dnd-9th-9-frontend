@@ -35,14 +35,30 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
 	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
 	<string>Read and understand clinical health data.</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Read and understand health data.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Share workout data with other apps.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>사용자의 프로필 및 메모 이미지 접근을 위해 사용합니다.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>사용자의 프로필 및 메모 이미지 업로드를 위해 사용합니다.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Pretendard-Black.ttf</string>
+		<string>Pretendard-Bold.ttf</string>
+		<string>Pretendard-ExtraBold.ttf</string>
+		<string>Pretendard-ExtraLight.ttf</string>
+		<string>Pretendard-Light.ttf</string>
+		<string>Pretendard-Medium.ttf</string>
+		<string>Pretendard-Regular.ttf</string>
+		<string>Pretendard-SemiBold.ttf</string>
+		<string>Pretendard-Thin.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -57,22 +73,14 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Pretendard-Black.ttf</string>
-		<string>Pretendard-Bold.ttf</string>
-		<string>Pretendard-ExtraBold.ttf</string>
-		<string>Pretendard-ExtraLight.ttf</string>
-		<string>Pretendard-Light.ttf</string>
-		<string>Pretendard-Medium.ttf</string>
-		<string>Pretendard-Regular.ttf</string>
-		<string>Pretendard-SemiBold.ttf</string>
-		<string>Pretendard-Thin.ttf</string>
-	</array>
 </dict>
 </plist>

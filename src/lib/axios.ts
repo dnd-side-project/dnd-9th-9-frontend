@@ -1,3 +1,4 @@
+import {MATCH_UP_API_URL} from '@env';
 import Axios, {type AxiosResponse} from 'axios';
 
 import {asyncStorage, ASYNC_STORAGE_KEYS} from './asyncStorage';
@@ -5,11 +6,8 @@ import {requestPostAuthRefresh} from '../features/auth/hooks/auth';
 import {appNavigationRef} from '../navigators';
 import {type CustomAxiosError} from '../utils/types';
 
-// TODO: env 관련 설정 추가
-export const API_URL = '/api';
-
 export const axios = Axios.create({
-  baseURL: API_URL,
+  baseURL: MATCH_UP_API_URL,
   headers: {
     'content-type': 'application/json',
   },
@@ -58,7 +56,7 @@ axios.interceptors.response.use(undefined, async error => {
 const handle401Error = async (
   error: CustomAxiosError,
 ): Promise<AxiosResponse<any, any> | undefined> => {
-  switch (error.code) {
+  switch (error.response?.data.code) {
     case 'J-001':
     case 'J-003': {
       // 유효하지 않은 (잘못된) JWT 토큰 (J-001)
