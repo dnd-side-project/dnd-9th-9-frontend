@@ -10,6 +10,7 @@ import {z} from 'zod';
 
 import {arrowLeftXmlData} from '../../assets/svg';
 import {Icon} from '../../components/Icon';
+import {KeyboardHidePressArea} from '../../components/KeyboardHidePressArea';
 import {Text} from '../../components/Text';
 import {
   NameSection,
@@ -107,22 +108,24 @@ export function FindIdScreen({navigation}: Props): React.JSX.Element {
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
-      <StyledTopBar>
-        <TouchableOpacity onPress={handlePressPrev}>
-          <Icon svgXml={arrowLeftXmlData} height={32} width={32} />
-        </TouchableOpacity>
-        <Text type="head4" text={stepLabel} color="gray-500" />
-      </StyledTopBar>
+    <KeyboardHidePressArea>
+      <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
+        <StyledTopBar>
+          <TouchableOpacity onPress={handlePressPrev}>
+            <Icon svgXml={arrowLeftXmlData} height={32} width={32} />
+          </TouchableOpacity>
+          <Text type="head4" text={stepLabel} color="gray-500" />
+        </StyledTopBar>
 
-      <currentStep.formSection
-        onNext={handlePressNext}
-        onPressSignin={handlePressSignin}
-        onPressLogin={handlePressLogin}
-        onPressFindPassword={handlePressFindPassword}
-        {...findIdForm}
-      />
-    </SafeAreaView>
+        <currentStep.formSection
+          onNext={handlePressNext}
+          onPressSignin={handlePressSignin}
+          onPressLogin={handlePressLogin}
+          onPressFindPassword={handlePressFindPassword}
+          {...findIdForm}
+        />
+      </SafeAreaView>
+    </KeyboardHidePressArea>
   );
 }
 

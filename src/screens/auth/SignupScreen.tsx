@@ -11,6 +11,7 @@ import {z} from 'zod';
 
 import {arrowLeftXmlData} from '../../assets/svg';
 import {Icon} from '../../components/Icon';
+import {KeyboardHidePressArea} from '../../components/KeyboardHidePressArea';
 import {ConfirmModal} from '../../components/Modal';
 import {Text} from '../../components/Text';
 import {
@@ -199,27 +200,29 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
-      <StyledTopBar>
-        <TouchableOpacity onPress={handlePressPrev}>
-          <Icon svgXml={arrowLeftXmlData} height={32} width={32} />
-        </TouchableOpacity>
-        <Text type="head4" text={stepLabel} color="gray-500" />
-      </StyledTopBar>
+    <KeyboardHidePressArea>
+      <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
+        <StyledTopBar>
+          <TouchableOpacity onPress={handlePressPrev}>
+            <Icon svgXml={arrowLeftXmlData} height={32} width={32} />
+          </TouchableOpacity>
+          <Text type="head4" text={stepLabel} color="gray-500" />
+        </StyledTopBar>
 
-      <ConfirmModal
-        visible={showErrorModal}
-        title={'회원가입에 실패했습니다'}
-        subTitle={
-          postSignupError?.message ??
-          postLoginError?.message ??
-          '다시 시도해주세요'
-        }
-        handleConfirm={handlePressConfirmError}
-      />
+        <ConfirmModal
+          visible={showErrorModal}
+          title={'회원가입에 실패했습니다'}
+          subTitle={
+            postSignupError?.message ??
+            postLoginError?.message ??
+            '다시 시도해주세요'
+          }
+          handleConfirm={handlePressConfirmError}
+        />
 
-      <currentStep.formSection onNext={handlePressNext} {...signupForm} />
-    </SafeAreaView>
+        <currentStep.formSection onNext={handlePressNext} {...signupForm} />
+      </SafeAreaView>
+    </KeyboardHidePressArea>
   );
 }
 
