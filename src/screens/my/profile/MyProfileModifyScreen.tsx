@@ -14,6 +14,7 @@ import {z} from 'zod';
 
 import {theme} from '../../../assets/styles/theme';
 import {Gap} from '../../../components/Gap';
+import {KeyboardHidePressArea} from '../../../components/KeyboardHidePressArea';
 import {Text} from '../../../components/Text';
 import {TopBar} from '../../../components/TopBar';
 import {
@@ -77,25 +78,26 @@ export function MyProfileModifyScreen(): React.JSX.Element {
   const SectionComponent = MY_PROFILE_MODIFY_SECTIONS[params.type];
 
   return (
-    <>
-      <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
-      <TopBar
-        headerText="프로필 편집"
-        showBackButton
-        rightComponent={() => (
-          <TouchableOpacity
-            onPress={() => {
-              void handleTopBarSave();
-            }}>
-            <Text text="저장" type="body1" color="gray-700" />
-          </TouchableOpacity>
-        )}
-      />
-      <StyledContainer>
-        <Gap size="30px" />
-        <SectionComponent {...profileForm} />
-      </StyledContainer>
-    </>
+    <KeyboardHidePressArea>
+      <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}}>
+        <TopBar
+          headerText="프로필 편집"
+          showBackButton
+          rightComponent={() => (
+            <TouchableOpacity
+              onPress={() => {
+                void handleTopBarSave();
+              }}>
+              <Text text="저장" type="body1" color="gray-700" />
+            </TouchableOpacity>
+          )}
+        />
+        <StyledContainer>
+          <Gap size="30px" />
+          <SectionComponent {...profileForm} />
+        </StyledContainer>
+      </SafeAreaView>
+    </KeyboardHidePressArea>
   );
 }
 

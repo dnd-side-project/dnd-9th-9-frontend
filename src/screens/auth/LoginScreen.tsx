@@ -14,6 +14,7 @@ import {
 } from '../../assets/svg';
 import {Button} from '../../components/Button';
 import {Icon} from '../../components/Icon';
+import {KeyboardHidePressArea} from '../../components/KeyboardHidePressArea';
 import {Text} from '../../components/Text';
 import {Textfield} from '../../components/Textfield/Textfield';
 import {usePostLogin} from '../../features/auth/hooks/auth';
@@ -72,114 +73,118 @@ export const LoginScreen = ({navigation}: Props): React.JSX.Element => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        backgroundColor: 'white',
-        flex: 1,
-      }}>
-      <StyledTopBar>
-        <StyledBackButton
-          onPress={() => {
-            navigation.pop();
-          }}>
-          <Icon svgXml={arrowLeftXmlData} height={32} width={32} />
-        </StyledBackButton>
-      </StyledTopBar>
-
-      <StyledSection>
-        <Text text="일반 로그인" type="head3" fontWeight="600" />
-
-        <StyledFieldContainer>
-          <Controller
-            control={control}
-            name="uid"
-            rules={{
-              required: '아이디를 입력해주세요',
-            }}
-            render={({field: {onChange, onBlur, value}}) => (
-              <Textfield
-                label="아이디"
-                textContentType="nickname"
-                isError={formState.errors.uid != null}
-                value={value}
-                errorMessage={formState.errors.uid?.message}
-                onBlur={onBlur}
-                onChangeText={onChange}
-              />
-            )}
-          />
-
-          <Controller
-            control={control}
-            name="password"
-            rules={{
-              required: '비밀번호를 입력해주세요',
-            }}
-            render={({field: {onChange, onBlur, value}}) => (
-              <Textfield
-                label="비밀번호"
-                placeholder="영문, 숫자를 포함하여 입력해주세요."
-                textContentType="password"
-                secureTextEntry={isSecureTextEntry}
-                maxLength={16}
-                value={value}
-                isError={formState.errors.password != null}
-                errorMessage={formState.errors.password?.message}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                rightElement={() => (
-                  <Pressable
-                    onPress={() => {
-                      setIsSecureTextEntry(prev => !prev);
-                    }}>
-                    <Icon
-                      svgXml={
-                        isSecureTextEntry ? eyeClosedXmlData : eyeOpenedXmlData
-                      }
-                    />
-                  </Pressable>
-                )}
-              />
-            )}
-          />
-        </StyledFieldContainer>
-        <ButtonWrapper>
-          <Button
-            text="로그인하기"
-            disabled={!formState.isValid}
-            style={{borderRadius: 12}}
+    <KeyboardHidePressArea>
+      <SafeAreaView
+        style={{
+          backgroundColor: 'white',
+          flex: 1,
+        }}>
+        <StyledTopBar>
+          <StyledBackButton
             onPress={() => {
-              void handlePressSubmit();
-            }}
-          />
-          <StyledHorizontalView>
-            <StyledTextButton
+              navigation.pop();
+            }}>
+            <Icon svgXml={arrowLeftXmlData} height={32} width={32} />
+          </StyledBackButton>
+        </StyledTopBar>
+
+        <StyledSection>
+          <Text text="일반 로그인" type="head3" fontWeight="600" />
+
+          <StyledFieldContainer>
+            <Controller
+              control={control}
+              name="uid"
+              rules={{
+                required: '아이디를 입력해주세요',
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <Textfield
+                  label="아이디"
+                  textContentType="nickname"
+                  isError={formState.errors.uid != null}
+                  value={value}
+                  errorMessage={formState.errors.uid?.message}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                />
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="password"
+              rules={{
+                required: '비밀번호를 입력해주세요',
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <Textfield
+                  label="비밀번호"
+                  placeholder="영문, 숫자를 포함하여 입력해주세요."
+                  textContentType="password"
+                  secureTextEntry={isSecureTextEntry}
+                  maxLength={16}
+                  value={value}
+                  isError={formState.errors.password != null}
+                  errorMessage={formState.errors.password?.message}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  rightElement={() => (
+                    <Pressable
+                      onPress={() => {
+                        setIsSecureTextEntry(prev => !prev);
+                      }}>
+                      <Icon
+                        svgXml={
+                          isSecureTextEntry
+                            ? eyeClosedXmlData
+                            : eyeOpenedXmlData
+                        }
+                      />
+                    </Pressable>
+                  )}
+                />
+              )}
+            />
+          </StyledFieldContainer>
+          <ButtonWrapper>
+            <Button
+              text="로그인하기"
+              disabled={!formState.isValid}
+              style={{borderRadius: 12}}
               onPress={() => {
-                navigation.push('FindId');
-              }}>
-              <Text
-                text="아이디 찾기"
-                type="body2"
-                color="gray-600"
-                fontWeight="500"
-              />
-            </StyledTextButton>
-            <Text text="|" type="body2" color="gray-600" fontWeight="500" />
-            <StyledTextButton
-              onPress={() => {
-                navigation.push('FindPassword');
-              }}>
-              <Text
-                text="비밀번호 찾기"
-                type="body2"
-                color="gray-600"
-                fontWeight="500"
-              />
-            </StyledTextButton>
-          </StyledHorizontalView>
-        </ButtonWrapper>
-      </StyledSection>
-    </SafeAreaView>
+                void handlePressSubmit();
+              }}
+            />
+            <StyledHorizontalView>
+              <StyledTextButton
+                onPress={() => {
+                  navigation.push('FindId');
+                }}>
+                <Text
+                  text="아이디 찾기"
+                  type="body2"
+                  color="gray-600"
+                  fontWeight="500"
+                />
+              </StyledTextButton>
+              <Text text="|" type="body2" color="gray-600" fontWeight="500" />
+              <StyledTextButton
+                onPress={() => {
+                  navigation.push('FindPassword');
+                }}>
+                <Text
+                  text="비밀번호 찾기"
+                  type="body2"
+                  color="gray-600"
+                  fontWeight="500"
+                />
+              </StyledTextButton>
+            </StyledHorizontalView>
+          </ButtonWrapper>
+        </StyledSection>
+      </SafeAreaView>
+    </KeyboardHidePressArea>
   );
 };
 
