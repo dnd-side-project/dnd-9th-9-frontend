@@ -38,8 +38,7 @@ export function SettingScreen(): React.JSX.Element {
     options: {
       enabled: false,
       onSuccessCallback: () => {
-        appNavigation.popToTop();
-        appNavigation.navigate('Landing');
+        appNavigation.replace('Landing');
       },
     },
   });
