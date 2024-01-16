@@ -1,6 +1,8 @@
 import React, {useMemo, useState} from 'react';
 
 import styled from '@emotion/native';
+import {useNavigation} from '@react-navigation/native';
+import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
 
 import {theme} from '../../../assets/styles/theme';
@@ -10,6 +12,8 @@ import {LinedCheckBox} from '../../../components/CheckBox/LinedCheckBox';
 import {Gap} from '../../../components/Gap';
 import {TopBar} from '../../../components/TopBar';
 import {ResignationAchievementCard} from '../../../features/my/components';
+import {useGetMyWithdraw} from '../../../features/my/hooks/profile';
+import {type RootStackParamList} from '../../../navigators';
 
 interface ITerms {
   personalInfo: boolean;
@@ -41,6 +45,18 @@ export function SettingResignationScreen(): React.JSX.Element {
   const isAllTermsChecked = useMemo(() => {
     return Object.values(terms).every(isChecked => isChecked);
   }, [terms]);
+
+  const appNavigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  const {refetch: withdraw} = useGetMyWithdraw({
+    options: {
+      enabled: false,
+      onSuccessCallback: () => {
+        appNavigation.replace('Landing');
+      },
+    },
+  });
 
   return (
     <>
@@ -89,7 +105,7 @@ export function SettingResignationScreen(): React.JSX.Element {
             variant="tertiary"
             disabled={!isAllTermsChecked}
             onPress={() => {
-              // TODO(@minimalKim): 탈퇴 API 연동 및 다시 온보딩 화면으로 이동
+              void withdraw();
             }}
           />
         </FixedButtonWrapper>

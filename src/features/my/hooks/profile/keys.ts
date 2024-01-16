@@ -3,4 +3,5 @@ export const KEYS = {
 
   profileDetail: () => [...KEYS.all, 'profile-detail'] as const,
   onboardProfile: () => [...KEYS.all, 'onboard-profile'] as const,
+  withdraw: () => [...KEYS.all, 'withdraw'] as const,
 };
