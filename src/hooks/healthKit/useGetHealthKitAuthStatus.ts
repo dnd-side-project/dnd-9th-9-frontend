@@ -6,18 +6,30 @@ import {
   HealthStatusCode,
   type HealthKitPermissions,
   type HealthStatusResult,
+  defaultPermissions,
 } from '../../lib/AppleHealthKit';
 
 interface IHealthStatusResult extends HealthStatusResult {
   isAllLinked: boolean;
 }
 
+interface IProps {
+  permissions?: HealthKitPermissions;
+  options?: {
+    enabled?: boolean;
+  };
+}
+
 export const useGetHealthKitAuthStatus = (
-  permissions?: HealthKitPermissions,
+  {permissions, options}: IProps = {
+    permissions: defaultPermissions,
+    options: {enabled: true},
+  },
 ): UseQueryResult<IHealthStatusResult, Error> =>
   useQuery({
     queryKey: KEYS.auth(permissions),
     queryFn: async () => await getAuthStatus(permissions),
+    enabled: options?.enabled,
     initialData: {
       permissions: {
         read: [],
@@ -27,7 +39,7 @@ export const useGetHealthKitAuthStatus = (
     select: healthKitAuthStatus => {
       const isAllLinked = Object.values(healthKitAuthStatus.permissions)
         .flat()
-        .every(permission => permission === HealthStatusCode.SharingAuthorized);
+        .every(permission => permission !== HealthStatusCode.NotDetermined);
       return {...healthKitAuthStatus, isAllLinked};
     },
   });
