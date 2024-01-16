@@ -25,9 +25,9 @@ export const useGetHealthKitAuthStatus = (
       },
     },
     select: healthKitAuthStatus => {
-      const isAllLinked = !Object.values(healthKitAuthStatus.permissions)
+      const isAllLinked = Object.values(healthKitAuthStatus.permissions)
         .flat()
-        .some(permission => permission === HealthStatusCode.NotDetermined);
+        .every(permission => permission === HealthStatusCode.SharingAuthorized);
       return {...healthKitAuthStatus, isAllLinked};
     },
   });
