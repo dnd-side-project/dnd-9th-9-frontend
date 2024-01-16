@@ -4,7 +4,6 @@ import styled from '@emotion/native';
 import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {TouchableOpacity, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {alarmXmlData} from '../../../assets/svg';
 import {Icon} from '../../../components/Icon';
@@ -21,7 +20,7 @@ export const MainBanner = (): React.JSX.Element => {
     useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
   return (
-    <SafeAreaView>
+    <View>
       <StyledTopBanner>
         <View>
           <StyledIconWrapper>
@@ -56,7 +55,7 @@ export const MainBanner = (): React.JSX.Element => {
           source={require('../../../assets/images/main-character-image.png')}
         />
       </StyledTopBanner>
-    </SafeAreaView>
+    </View>
   );
 };
 

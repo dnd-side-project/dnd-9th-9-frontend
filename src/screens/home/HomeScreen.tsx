@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
-import {ScrollView} from 'react-native';
+import {SafeAreaView, ScrollView} from 'react-native';
 
 import {theme} from '../../assets/styles/theme';
 import {
@@ -16,11 +16,13 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'HomeMain'>;
 
 export function HomeScreen({navigation}: Props): React.JSX.Element {
   return (
-    <ScrollView style={{backgroundColor: theme.palette['gray-0']}}>
-      <MainBanner />
-      <TodayCalorieSection />
-      <MatchPreviewSection />
-      <CurrentWorkoutSection />
-    </ScrollView>
+    <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}}>
+      <ScrollView>
+        <MainBanner />
+        <TodayCalorieSection />
+        <MatchPreviewSection />
+        <CurrentWorkoutSection />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
