@@ -26,7 +26,7 @@ export const ExpectedBurnedCaloriesSection = ({
   useEffect(() => {
     if (burnedCalorie === undefined) return;
     setWorkoutForm('energyBurned', burnedCalorie);
-  }, [workoutType, durationMinute]);
+  }, [burnedCalorie]);
 
   return (
     <StyledExpectedBurnedCaloriesSection>
