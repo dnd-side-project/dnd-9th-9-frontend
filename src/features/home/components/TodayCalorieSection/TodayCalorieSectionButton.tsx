@@ -15,16 +15,9 @@ export const TodayCalorieSectionButton = (): React.JSX.Element => {
 
   const {data: healthKitAuthStatus} = useGetHealthKitAuthStatus();
 
-  // const {mutate: initHealthKit} = useInitHealthKit();
-
-  const StyledResetContainer =
-    healthKitAuthStatus?.isAllLinked ?? false
-      ? StyledResetButton
-      : StyledResetText;
-
   return (
-    <StyledResetContainer
-      disabled={healthKitAuthStatus?.isAllLinked ?? false}
+    <StyledResetButton
+      disabled={!(healthKitAuthStatus?.isAllLinked ?? false)}
       onPress={() => {
         if (healthKitAuthStatus?.isAllLinked ?? false) {
           void refetchBurnedCalorieGoal();
@@ -44,17 +37,11 @@ export const TodayCalorieSectionButton = (): React.JSX.Element => {
         fontWeight="600"
         color="gray-600"
       />
-    </StyledResetContainer>
+    </StyledResetButton>
   );
 };
 
 const StyledResetButton = styled.TouchableOpacity`
-  border-radius: 12.449px;
-  background: #f0f0f5;
-  padding: 8px 11px;
-`;
-
-const StyledResetText = styled.View`
   border-radius: 12.449px;
   background: #f0f0f5;
   padding: 8px 11px;
