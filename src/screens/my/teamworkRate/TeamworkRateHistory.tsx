@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import styled from '@emotion/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -8,6 +8,7 @@ import {theme} from '../../../assets/styles/theme';
 import {Gap} from '../../../components/Gap';
 import {Text} from '../../../components/Text';
 import {TopBar} from '../../../components/TopBar';
+import {type TFieldType} from '../../../features/match/types';
 import {TeamworkRateHistoryCard} from '../../../features/my/components/teamworkRate';
 import {useGetTeamworkRateHistory} from '../../../features/my/hooks/teamworkRate';
 import {type ITeamworkRateHistory} from '../../../features/my/types';
@@ -56,8 +57,12 @@ export const TeamworkRateHistory = ({navigation}: Props): React.JSX.Element => {
   //   },
   // ];
 
-  const {data} = useGetTeamworkRateHistory({
-    fieldType: 'DUEL',
+  const [selectedFieldType, setSelectedFieldType] = useState<
+    'ALL' | TFieldType
+  >('ALL');
+
+  const {data, hasNextPage, fetchNextPage} = useGetTeamworkRateHistory({
+    fieldType: selectedFieldType === 'ALL' ? undefined : selectedFieldType,
     page: 0,
     size: 10,
   });
@@ -123,17 +128,47 @@ export const TeamworkRateHistory = ({navigation}: Props): React.JSX.Element => {
         <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
         <TopBar showBackButton headerText="불꽃 히스토리" />
         <StyledTabContainer>
-          <TouchableOpacity>
-            <Text text="전쳬보기" type="body3" color="gray-400" />
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedFieldType('ALL');
+            }}>
+            <Text
+              text="전체보기"
+              type="body3"
+              color={selectedFieldType === 'ALL' ? 'gray-600' : 'gray-400'}
+            />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Text text="1:1 매칭" type="body3" color="gray-400" />
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedFieldType('DUEL');
+            }}>
+            <Text
+              text="1:1 매칭"
+              type="body3"
+              color={selectedFieldType === 'DUEL' ? 'gray-600' : 'gray-400'}
+            />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Text text="팀 매칭" type="body3" color="gray-400" />
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedFieldType('TEAM_BATTLE');
+            }}>
+            <Text
+              text="팀 매칭"
+              type="body3"
+              color={
+                selectedFieldType === 'TEAM_BATTLE' ? 'gray-600' : 'gray-400'
+              }
+            />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Text text="매칭 없는 팀" type="body3" color="gray-400" />
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedFieldType('TEAM');
+            }}>
+            <Text
+              text="매칭 없는 팀"
+              type="body3"
+              color={selectedFieldType === 'TEAM' ? 'gray-600' : 'gray-400'}
+            />
           </TouchableOpacity>
         </StyledTabContainer>
 
@@ -148,17 +183,19 @@ export const TeamworkRateHistory = ({navigation}: Props): React.JSX.Element => {
                 contentContainerStyle={{padding: 20}}
                 ListFooterComponent={
                   <View style={{display: 'flex', alignItems: 'center'}}>
-                    <StyledMoreButton
-                      onPress={() => {
-                        // TODO(@minimalKim): 추가 로드
-                      }}>
-                      <Text
-                        text="더보기"
-                        type="body3"
-                        fontWeight="600"
-                        color="gray-600"
-                      />
-                    </StyledMoreButton>
+                    {(hasNextPage ?? false) && (
+                      <StyledMoreButton
+                        onPress={() => {
+                          void fetchNextPage();
+                        }}>
+                        <Text
+                          text="더보기"
+                          type="body3"
+                          fontWeight="600"
+                          color="gray-600"
+                        />
+                      </StyledMoreButton>
+                    )}
                     <View style={{height: 150}} />
                   </View>
                 }

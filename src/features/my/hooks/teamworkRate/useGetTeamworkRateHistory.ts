@@ -9,7 +9,7 @@ import {type TFieldType} from '../../../match/types';
 import {type ITeamworkRateHistory} from '../../types';
 
 export interface IGetTeamworkRateHistoryParams {
-  fieldType: TFieldType;
+  fieldType?: TFieldType;
   page: number;
   size: number;
 }
@@ -31,7 +31,7 @@ export const useGetTeamworkRateHistory = (
   params: IGetTeamworkRateHistoryParams,
 ): UseInfiniteQueryResult<TGetNotificationUserResponse, Error> =>
   useInfiniteQuery({
-    queryKey: KEYS.teamworkRateHistory(),
+    queryKey: KEYS.teamworkRateHistory(params),
     queryFn: async ({pageParam = 1}) =>
       await fetcher({...params, page: pageParam}),
     getNextPageParam: lastPage =>
