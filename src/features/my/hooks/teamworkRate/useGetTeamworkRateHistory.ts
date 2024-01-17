@@ -34,6 +34,7 @@ export const useGetTeamworkRateHistory = (
     queryKey: KEYS.teamworkRateHistory(),
     queryFn: async ({pageParam = 1}) =>
       await fetcher({...params, page: pageParam}),
-    getNextPageParam: lastPage => lastPage.isLastPage,
+    getNextPageParam: lastPage =>
+      lastPage.isLastPage ? null : lastPage.currentPage + 1,
     cacheTime: 0,
   });
