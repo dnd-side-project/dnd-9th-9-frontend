@@ -76,6 +76,7 @@ export const SendCodeSection = ({
               label="전화번호"
               placeholder="010 1234 5678"
               textContentType="telephoneNumber"
+              keyboardType="number-pad"
               isError={error != null}
               value={numberFormatter(value)}
               onBlur={onBlur}

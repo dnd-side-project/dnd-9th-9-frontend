@@ -124,7 +124,7 @@ export const VerifySection = ({
             <Textfield
               label="인증번호"
               placeholder="숫자로 된 인증번호 6자리를 입력해 주세요"
-              textContentType="telephoneNumber"
+              keyboardType="number-pad"
               isError={error != null || timer === 0 || isErrorPostVerify}
               isValid={isVerify}
               value={value}

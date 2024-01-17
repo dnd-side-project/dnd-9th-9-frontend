@@ -4,6 +4,7 @@ import styled from '@emotion/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
 
+import {KeyboardHidePressArea} from '../../components/KeyboardHidePressArea';
 import {Text} from '../../components/Text';
 import {PhysicalInfoForm} from '../../features/auth/components/signup';
 import {type TGender} from '../../features/my/types';
@@ -24,23 +25,25 @@ export const PhysicalInfoScreen = ({navigation}: Props): React.JSX.Element => {
   const {data: gender} = useGetBiologicalSex();
 
   return (
-    <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
-      <StyledTopBar>
-        <Text type="head4" text="[필수]" />
-      </StyledTopBar>
+    <KeyboardHidePressArea>
+      <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
+        <StyledTopBar>
+          <Text type="head4" text="[필수]" />
+        </StyledTopBar>
 
-      <PhysicalInfoForm
-        defaultWeight={weight != null ? Math.floor(weight) : undefined}
-        defaultHeight={
-          height != null ? Math.floor(height) : undefined ?? undefined
-        }
-        defaultGender={gender as TGender}
-        isAllLinked={healthKitAuthStatus?.isAllLinked ?? false}
-        onNext={() => {
-          navigation.push('Main');
-        }}
-      />
-    </SafeAreaView>
+        <PhysicalInfoForm
+          defaultWeight={weight != null ? Math.floor(weight) : undefined}
+          defaultHeight={
+            height != null ? Math.floor(height) : undefined ?? undefined
+          }
+          defaultGender={gender as TGender}
+          isAllLinked={healthKitAuthStatus?.isAllLinked ?? false}
+          onNext={() => {
+            navigation.push('Main');
+          }}
+        />
+      </SafeAreaView>
+    </KeyboardHidePressArea>
   );
 };
 
