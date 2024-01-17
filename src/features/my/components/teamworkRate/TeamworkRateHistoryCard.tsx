@@ -88,6 +88,12 @@ export const TeamworkRateHistoryCard = ({
     LOSE: 'sub-400',
   };
 
+  const flameColor: Record<TWinStatus, TPalette> = {
+    DRAW: 'gray-600',
+    WIN: 'main-400',
+    LOSE: 'error-light',
+  };
+
   const {title, descriptionComponent: Description} =
     generateMatchText(teamworkRateHistory);
 
@@ -107,11 +113,20 @@ export const TeamworkRateHistoryCard = ({
 
       <Description />
 
-      <StyledHorizontal style={{justifyContent: 'flex-end'}}>
+      <StyledHorizontal style={{justifyContent: 'flex-end', gap: 10}}>
+        <Text
+          type="body1"
+          fontWeight="700"
+          text={`${teamworkRateHistory.teamworkRate}불꽃 ${
+            // TODO(@minimalKim): LOSE일 경우 차감 맞는지 백엔드 데이터 확인 필요
+            teamworkRateHistory.winStatus === 'LOSE' ? '차감' : '획득'
+          }`}
+          color={flameColor[teamworkRateHistory.winStatus]}
+        />
         <TeamworkRateFlameGroup
           size="sm"
           rate={teamworkRateHistory.teamworkRate}
-          color={theme.palette['main-400']}
+          color={theme.palette[flameColor[teamworkRateHistory.winStatus]]}
         />
       </StyledHorizontal>
     </StyledTeamworkRateHistoryCard>
