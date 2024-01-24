@@ -27,7 +27,10 @@ export const TeamworkRateSection = (): React.JSX.Element => {
       <StyledHorizontal style={{justifyContent: 'space-between'}}>
         <Text text="나의 불꽃 레벨" type="head4" color="gray-950" />
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('TeamworkRateHistory');
+          }}>
           <Text text="불꽃 히스토리" type="body3" color="gray-600" />
         </TouchableOpacity>
       </StyledHorizontal>
@@ -37,7 +40,7 @@ export const TeamworkRateSection = (): React.JSX.Element => {
       <StyledCard>
         <StyledIconWrapper
           onPress={() => {
-            navigation.navigate('TeamWorkRateInfo');
+            navigation.navigate('TeamworkRateInfo');
           }}>
           <Icon
             svgXml={questionXmlData}
