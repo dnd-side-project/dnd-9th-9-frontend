@@ -2,18 +2,17 @@ import React from 'react';
 
 import styled from '@emotion/native';
 
-import {Gap} from '../../../components/Gap';
-import {Text} from '../../../components/Text';
-import {dayjs} from '../../../lib/dayjs';
-import {useGetBurnedCalorieGoal} from '../../record/hooks/exercise';
+import {TodayCalorieSectionButton} from './TodayCalorieSectionButton';
+import {Gap} from '../../../../components/Gap';
+import {Text} from '../../../../components/Text';
+import {dayjs} from '../../../../lib/dayjs';
+import {useGetBurnedCalorieGoal} from '../../../record/hooks/exercise';
 
 export const TodayCalorieSection = (): React.JSX.Element => {
   const today = dayjs().format('YYYY-MM-DD');
-
-  const {data: burnedCalorieGoal, refetch: refetchBurnedCalorieGoal} =
-    useGetBurnedCalorieGoal({
-      date: today,
-    });
+  const {data: burnedCalorieGoal} = useGetBurnedCalorieGoal({
+    date: today,
+  });
 
   const achievementPercent = (
     ((burnedCalorieGoal?.burnedCalorie ?? 0) /
@@ -44,17 +43,7 @@ export const TodayCalorieSection = (): React.JSX.Element => {
           fontWeight="700"
           color="gray-700"
         />
-        <StyledResetButton
-          onPress={() => {
-            void refetchBurnedCalorieGoal();
-          }}>
-          <Text
-            text="새로고침"
-            type="caption"
-            fontWeight="600"
-            color="gray-600"
-          />
-        </StyledResetButton>
+        <TodayCalorieSectionButton />
       </StyledCalorieContainer>
 
       <StyledGraphWrapper>
@@ -82,12 +71,6 @@ const StyledCalorieContainer = styled.View`
   align-items: flex-end;
   justify-content: space-between;
   margin-top: 2px;
-`;
-
-const StyledResetButton = styled.TouchableOpacity`
-  border-radius: 12.449px;
-  background: #f0f0f5;
-  padding: 8px 11px;
 `;
 
 const StyledGraphWrapper = styled.View`

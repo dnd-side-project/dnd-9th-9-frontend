@@ -3,7 +3,7 @@ import React from 'react';
 import styled from '@emotion/native';
 import {useNavigation} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {StatusBar, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 
 import {alarmXmlData} from '../../../assets/svg';
 import {Icon} from '../../../components/Icon';
@@ -20,42 +20,42 @@ export const MainBanner = (): React.JSX.Element => {
     useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
   return (
-    <StyledTopBanner>
-      <StatusBar barStyle="light-content" />
+    <View>
+      <StyledTopBanner>
+        <View>
+          <StyledIconWrapper>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Notification');
+              }}>
+              <Icon svgXml={alarmXmlData} width={24} height={24} />
+            </TouchableOpacity>
+          </StyledIconWrapper>
 
-      <View>
-        <StyledIconWrapper>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Notification');
-            }}>
-            <Icon svgXml={alarmXmlData} width={24} height={24} />
-          </TouchableOpacity>
-        </StyledIconWrapper>
+          {myProfileDetail != null && (
+            <Text
+              type="head3"
+              color={'gray-0'}
+              lineHeight="33.6px"
+              fontWeight="700"
+              text={`${myProfileDetail?.name} 님, \n오늘도 목표를 향해 \n달려볼까요?🔥`}
+            />
+          )}
+        </View>
 
-        {myProfileDetail != null && (
+        {userFieldProgress != null && (
           <Text
-            type="head3"
-            color={'gray-0'}
-            lineHeight="33.6px"
-            fontWeight="700"
-            text={`${myProfileDetail?.name} 님, \n오늘도 목표를 향해 \n달려볼까요?🔥`}
+            type="body3"
+            color="gray-600"
+            fontWeight="600"
+            text={`현재 진행 중인 매칭 ${userFieldProgress.length}개`}
           />
         )}
-      </View>
-
-      {userFieldProgress != null && (
-        <Text
-          type="body3"
-          color="gray-600"
-          fontWeight="600"
-          text={`현재 진행 중인 매칭 ${userFieldProgress.length}개`}
+        <StyledImage
+          source={require('../../../assets/images/main-character-image.png')}
         />
-      )}
-      <StyledImage
-        source={require('../../../assets/images/main-character-image.png')}
-      />
-    </StyledTopBanner>
+      </StyledTopBanner>
+    </View>
   );
 };
 

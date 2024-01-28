@@ -1,10 +1,16 @@
 import React from 'react';
 
 import styled from '@emotion/native';
+import {useNavigation} from '@react-navigation/native';
+import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import {Text} from '../../../../components/Text';
+import {type MatchStackParamList} from '../../../../navigators';
 
 export const NoMatching = (): React.JSX.Element => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<MatchStackParamList>>();
+
   return (
     <StyledNoMatchingContainer>
       <Text
@@ -13,7 +19,20 @@ export const NoMatching = (): React.JSX.Element => {
         color="gray-600"
         type="body3"
       />
-      <StyledMatchingButton>
+      <StyledMatchingButton
+        onPress={() => {
+          navigation.navigate('MatchList', {
+            page: 0,
+            size: 10,
+            fieldType: 'DUEL',
+            goal: [],
+            memberCount: null,
+            period: [],
+            skillLevel: [],
+            strength: [],
+            keyword: '',
+          });
+        }}>
         <Text
           text="매칭 상대 찾아보기"
           type="body3"

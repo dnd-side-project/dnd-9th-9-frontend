@@ -69,7 +69,12 @@ export const WorkoutActivityTypeModal = ({
                   onPress={() => {
                     setSelectedWorkoutType(workoutType);
                   }}>
-                  <CheckBox isCheck={workoutType === selectedWorkoutType} />
+                  <CheckBox
+                    isCheck={workoutType === selectedWorkoutType}
+                    onPress={() => {
+                      setSelectedWorkoutType(workoutType);
+                    }}
+                  />
                   <Text
                     text={label}
                     type="body2"

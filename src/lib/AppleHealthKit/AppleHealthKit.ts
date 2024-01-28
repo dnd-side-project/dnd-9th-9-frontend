@@ -74,7 +74,10 @@ export const getLatestHeight = async (): Promise<
       if (error != null) {
         resolve({value: null});
       } else {
-        resolve(results);
+        resolve({
+          ...results,
+          value: results.value * 2.54, // inch to cm
+        });
       }
     });
   });
@@ -90,7 +93,7 @@ export const getLatestWeight = async (): Promise<
           // NOTE: data 없을 경우 error 발생
           resolve({value: null});
         } else {
-          resolve(results);
+          resolve({...results, value: results.value / 1000}); // gram to kilogram
         }
       },
     );

@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from '@emotion/native';
 import {type NativeStackScreenProps} from '@react-navigation/native-stack';
-import {SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
+import {SafeAreaView, ScrollView, View} from 'react-native';
 
 import {theme} from '../../assets/styles/theme';
 import {Text} from '../../components/Text';
@@ -29,8 +29,7 @@ export function NotificationScreen({navigation}: Props): React.JSX.Element {
 
   return (
     <>
-      <StatusBar barStyle="default" />
-      <SafeAreaView />
+      <SafeAreaView style={{backgroundColor: theme.palette['gray-0']}} />
       <StyledTopBar>
         <StyledTopBarButton
           onPress={() => {

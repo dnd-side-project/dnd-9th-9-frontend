@@ -15,7 +15,7 @@ interface IProps {
 
 const fetcher = async ({body}: IProps): Promise<string> =>
   await axios
-    .post(`/users/my/onboard-profile`, body, {
+    .patch(`/users/my/onboard-profile`, body, {
       headers: {'Content-Type': 'application/json'},
     })
     .then(({data}) => data);

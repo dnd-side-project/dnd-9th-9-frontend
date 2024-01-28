@@ -11,7 +11,7 @@ interface IProps {
 
 const fetcher = async ({durationMinute, sports}: IProps): Promise<number> =>
   await axios
-    .get(`/exercise/my-summary`, {
+    .get(`/exercise/expected-burned-calorie`, {
       params: {
         durationMinute,
         sports,

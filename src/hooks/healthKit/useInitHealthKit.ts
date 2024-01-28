@@ -7,7 +7,14 @@ import {
 } from '../../lib/AppleHealthKit';
 import {queryClient} from '../../lib/react-query';
 
-export const useInitHealthKit = (): UseMutationResult<
+interface IProps {
+  options?: {
+    onSuccessCallback?: () => void;
+    onErrorCallback?: () => void;
+  };
+}
+
+export const useInitHealthKit = ({options}: IProps = {}): UseMutationResult<
   void,
   unknown,
   HealthKitPermissions | undefined,
@@ -15,9 +22,12 @@ export const useInitHealthKit = (): UseMutationResult<
 > => {
   return useMutation({
     mutationFn: initHealthKit,
-    onSuccess: () => {
-      void queryClient.invalidateQueries(KEYS.all);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(KEYS.all);
+
       console.log('init HealthKit');
+      options?.onSuccessCallback?.();
     },
+    onError: options?.onErrorCallback,
   });
 };

@@ -116,12 +116,56 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
 
   const {mutate: patchMyOnboardProfile} = usePatchMyOnboardProfile();
 
-  const {mutateAsync: initHealthKit} = useInitHealthKit();
-  const {data: healthKitAuthStatus} = useGetHealthKitAuthStatus();
-  const {data: height} = useGetLatestHeight();
-  const {data: weight} = useGetLatestWeight();
-  const {data: gender} = useGetBiologicalSex();
-  const {data: activitySummary} = useGetActivitySummary({
+  const {data: healthKitAuthStatus, refetch: getHealthKitAuthStatus} =
+    useGetHealthKitAuthStatus({
+      options: {
+        enabled: false,
+      },
+    });
+
+  const {mutate: initHealthKit} = useInitHealthKit({
+    options: {
+      onSuccessCallback: async () => {
+        await getHealthKitAuthStatus();
+
+        if (!(healthKitAuthStatus?.isAllLinked ?? false)) {
+          navigation.push('PhysicalInfoScreen');
+        }
+
+        // NOTE(@minimalkim): useInitHealthKit invalidateQueries 미동작 이슈
+        const healthKitData = {
+          height: (await getHeight()).data,
+          weight: (await getWeight()).data,
+          gender: (await getBiologicalSex()).data,
+        };
+        const hasSomeNullData = Object.values(healthKitData).some(
+          value => value == null,
+        );
+
+        if (hasSomeNullData) {
+          navigation.push('PhysicalInfoScreen');
+          return;
+        }
+        patchMyOnboardProfile({
+          // @ts-expect-error NOTE: 위 if 문에서 null check가 되었음을 추론하는 type 추가 필요
+          body: {
+            ...healthKitData,
+            calorieGoal: (await getActivitySummary()).data?.at(-1)
+              ?.appleExerciseTimeGoal,
+            isAppleLinked: true,
+          },
+        });
+      },
+      onErrorCallback: () => {
+        navigation.push('PhysicalInfoScreen');
+      },
+    },
+  });
+
+  const {refetch: getHeight} = useGetLatestHeight();
+  const {refetch: getWeight} = useGetLatestWeight();
+  const {refetch: getBiologicalSex} = useGetBiologicalSex();
+  const {refetch: getActivitySummary} = useGetActivitySummary({
     startDate: dayjs().add(-6, 'month').toISOString(),
   });
 
@@ -153,34 +197,7 @@ export function SignupScreen({navigation}: Props): React.JSX.Element {
 
       navigation.replace('Main');
 
-      try {
-        await initHealthKit(defaultPermissions);
-      } catch (error) {
-        navigation.push('PhysicalInfoScreen');
-      }
-
-      if (!(healthKitAuthStatus?.isAllLinked ?? false)) {
-        navigation.push('PhysicalInfoScreen');
-        return;
-      }
-
-      const healthKitData = {
-        height,
-        weight,
-        gender,
-        calorieGoal: activitySummary?.at(-1)?.appleExerciseTimeGoal,
-      };
-      const hasSomeNullData = Object.values(healthKitData).some(
-        value => value == null,
-      );
-
-      if (hasSomeNullData) {
-        navigation.push('PhysicalInfoScreen');
-        return;
-      }
-      // @ts-expect-error NOTE: 위 if 문에서 null check가 되었음을 추론하는 type 추가 필요
-      patchMyOnboardProfile({body: {...healthKitData, isAppleLinked: true}});
-
+      initHealthKit(defaultPermissions);
       return;
     }
     setStepIndex(index => index + 1);
